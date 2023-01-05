@@ -58,7 +58,7 @@ public class MemberController {
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/{memberId}")
     public MemberResponseDto patchOne(@PathVariable @Positive Long memberId,
-            @RequestBody @Validated MemberPostDto memberPostDto) {
+            @Valid @RequestBody  MemberPostDto memberPostDto) {
 
         Member modifyMember = service.modifyMember(memberId, mapper.memberPostDtoToEntity(memberPostDto));
         return mapper.memberToResponseDto(modifyMember);
