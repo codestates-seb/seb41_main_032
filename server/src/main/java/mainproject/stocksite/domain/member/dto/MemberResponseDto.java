@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @Setter
 public class MemberResponseDto {
 
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
     private Long memberId;
     private String userId;
     private String password;

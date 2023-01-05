@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Validated
 public class MemberController {
 
     private final MemberService service;
@@ -27,7 +30,7 @@ public class MemberController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public MemberResponseDto post(@RequestBody @Validated MemberPostDto memberPostDto) {
+    public MemberResponseDto post(@Valid @RequestBody MemberPostDto memberPostDto) {
         Member member = mapper.memberPostDtoToEntity(memberPostDto);
         Member addMember = service.addMember(member);
         MemberResponseDto memberResponseDto = mapper.memberToResponseDto(addMember);
@@ -35,6 +38,9 @@ public class MemberController {
         return memberResponseDto;
     }
 
+    /**
+     * GETALL 추후 불필요하다면 수정하면 될거같습니다
+     */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<MemberResponseDto> getAll() {
@@ -45,21 +51,22 @@ public class MemberController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{memberId}")
-    public MemberResponseDto getOne(@PathVariable Long memberId) {
+    public MemberResponseDto getOne(@PathVariable @Positive Long memberId) {
         return mapper.memberToResponseDto(service.findById(memberId));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/{memberId}")
-    public MemberResponseDto patchOne(@PathVariable Long memberId,
+    public MemberResponseDto patchOne(@PathVariable @Positive Long memberId,
             @RequestBody @Validated MemberPostDto memberPostDto) {
+
         Member modifyMember = service.modifyMember(memberId, mapper.memberPostDtoToEntity(memberPostDto));
         return mapper.memberToResponseDto(modifyMember);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{memberId}")
-    public void deleteUser(@PathVariable Long memberId) {
+    public void deleteUser(@PathVariable @Positive Long memberId) {
         service.deleteMember(memberId);
     }
 
