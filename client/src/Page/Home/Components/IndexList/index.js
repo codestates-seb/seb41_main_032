@@ -8,6 +8,7 @@ const ItemList = styled.ul`
     list-style: none;
     flex-wrap: nowrap;
     flex-direction: row;
+    list-style: none;
     padding-bottom: 30px;
     border-bottom: 1px solid rgb(227 230 232);
 `;
