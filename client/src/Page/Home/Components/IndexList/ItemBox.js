@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import BlueBox from '../../../../Components/Style/BlueBox';
-import RedBox from '../../../../Components/Style/RedBox';
 import CommaGenerator from '../../../../Components/Function/CommaGenerator';
+import { RedBox, BlueBox } from '../../../../Components/Style/ChgBox';
 
-const Item = styled.div`
+const Item = styled.li`
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
