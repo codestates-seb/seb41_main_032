@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Title } from '../Style';
-import RedBox from '../../../../Components/Style/RedBox';
-import BlueBox from '../../../../Components/Style/BlueBox';
+import { RedBox, BlueBox } from '../../../../Components/Style/ChgBox';
 import NumberToKR from '../../../../Components/Function/NumberToKR';
 import CommaGenerator from '../../../../Components/Function/CommaGenerator';
 import { RedTriangle, BlueTriangle } from '../../../../Components/Style/Triangle';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Table = styled.table`
     width: 100%;
@@ -86,22 +86,27 @@ const BtnContainer = styled.ul`
 `;
 
 const StockList = ({ title, KOSPI = [], KOSDAQ = [] }) => {
+    const navigate = useNavigate();
     const [select, setSelect] = useState(true);
 
-    const handler = () => {
+    const Selecthandler = () => {
         setSelect((current) => !current);
     };
+    const Linkhandler = (data) => {
+        navigate(`/stock/${data[0]}`, { state: { name: data[1], MarketCap: data[2] } });
+    };
+
     return (
         <section>
             <Title>{title}</Title>
             <BtnContainer>
                 <li>
-                    <Button className={select === true ? 'selected' : null} onClick={handler}>
+                    <Button className={select === true ? 'selected' : null} onClick={Selecthandler}>
                         코스피
                     </Button>
                 </li>
                 <li>
-                    <Button className={select === false ? 'selected' : null} onClick={handler}>
+                    <Button className={select === false ? 'selected' : null} onClick={Selecthandler}>
                         코스닥
                     </Button>
                 </li>
@@ -121,7 +126,12 @@ const StockList = ({ title, KOSPI = [], KOSDAQ = [] }) => {
                     {select
                         ? KOSPI.map((el) => {
                               return (
-                                  <tr key={el.srtnCd}>
+                                  <tr
+                                      key={el.srtnCd}
+                                      onClick={(e) => {
+                                          Linkhandler([el.srtnCd, el.itmsNm, NumberToKR(el.mrktTotAmt)]);
+                                      }}
+                                  >
                                       <td>
                                           <div>{el.itmsNm}</div>
                                           <SmallFont>{el.srtnCd}</SmallFont>
@@ -154,7 +164,12 @@ const StockList = ({ title, KOSPI = [], KOSDAQ = [] }) => {
                           })
                         : KOSDAQ.map((el) => {
                               return (
-                                  <tr key={el.srtnCd}>
+                                  <tr
+                                      key={el.srtnCd}
+                                      onClick={(e) => {
+                                          Linkhandler([el.srtnCd, el.itmsNm, NumberToKR(el.mrktTotAmt)]);
+                                      }}
+                                  >
                                       <td>
                                           <div>{el.itmsNm}</div>
                                           <SmallFont>{el.srtnCd}</SmallFont>
