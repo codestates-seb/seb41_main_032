@@ -32,21 +32,21 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // requestSignUp();
+    requestSignUp();
   };
 
   const requestSignUp = () => {
     // TODO: 서버 배포되면 로직 수정
-    const url = `url`;
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    };
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+    // const url = `url`;
+    // const options = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(user),
+    // };
+    // fetch(url, options)
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data))
+    //   .catch((error) => console.log(error));
   };
 
   const inputFieldProps = {
@@ -55,7 +55,6 @@ const Form = () => {
     setUser,
     setIsValidInput,
   };
-
   const passwordInputFieldProps = {
     user,
     isValidInput,
@@ -66,7 +65,6 @@ const Form = () => {
     setPasswordCheck,
     setIsValidPasswordCheck,
   };
-
   const shouldDisableButton = !(
     isValidInput.userId &&
     isValidInput.password &&
@@ -77,10 +75,10 @@ const Form = () => {
 
   return (
     <Container onSubmit={handleSubmit}>
-      <InputField keyName="userId" {...inputFieldProps} />
+      <InputField id="userId" {...inputFieldProps} />
       <PasswordInputField {...passwordInputFieldProps} />
-      <InputField keyName="nickname" {...inputFieldProps} />
-      <InputField keyName="email" {...inputFieldProps} />
+      <InputField id="nickname" {...inputFieldProps} />
+      <InputField id="email" {...inputFieldProps} />
       <Button type="submit" disabled={shouldDisableButton}>
         회원가입
       </Button>
