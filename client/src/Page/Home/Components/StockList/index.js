@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { Title } from '../Style';
+import { Title, SmFont } from '../Style';
 import { RedBox, BlueBox } from '../../../../Components/Style/ChgBox';
 import NumberToKR from '../../../../Components/Function/NumberToKR';
 import CommaGenerator from '../../../../Components/Function/CommaGenerator';
 import { RedTriangle, BlueTriangle } from '../../../../Components/Style/Triangle';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import DateOutput from '../../../../Components/Function/DateOutput';
 const Table = styled.table`
     width: 100%;
     border-collapse: collapse;
@@ -85,20 +85,32 @@ const BtnContainer = styled.ul`
     }
 `;
 
+/**
+ * 주식 정보 (코스피 ,코스닥)을 보여주는 컴포넌트입니다
+ * @param title 컨텐츠의 제목입니다
+ * @param KOSPI 코스피 주식 정보 배열
+ * @param KOSDAQ 코스닥 주식 정보 배열
+ */
 const StockList = ({ title, KOSPI = [], KOSDAQ = [] }) => {
     const navigate = useNavigate();
+
+    // 코스피 또는 코스닥 주식정보를 보여줄지 결정하는 역할입니다
     const [select, setSelect] = useState(true);
 
     const Selecthandler = () => {
         setSelect((current) => !current);
     };
+
+    /** 클릭시 주식코드기준으로 주식상세페이지로 이동합니다
+     * @type {[ 주식코드, 주식이름, 주식시가총액 ]} */
     const Linkhandler = (data) => {
         navigate(`/stock/${data[0]}`, { state: { name: data[1], MarketCap: data[2] } });
     };
-
     return (
         <section>
-            <Title>{title}</Title>
+            <Title>
+                {title} <SmFont>{KOSPI.length > 0 ? `${DateOutput(KOSPI[0].basDt)} 기준` : null}</SmFont>
+            </Title>
             <BtnContainer>
                 <li>
                     <Button className={select === true ? 'selected' : null} onClick={Selecthandler}>
