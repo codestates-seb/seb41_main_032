@@ -13,48 +13,49 @@ const Container = styled.div`
 `;
 
 // 회원가입 페이지에서 아이디, 닉네임, 이메일 인풋 영역
-const InputField = ({ keyName, user, isValidInput, setUser, setIsValidInput }) => {
-  const value = user[keyName];
+const InputField = ({ id, user, isValidInput, setUser, setIsValidInput }) => {
+  const value = user[id];
+
   const [isEntered, setIsEntered] = useState(false);
 
   useEffect(() => {
     if (!isEntered) return;
-    setIsValidInput({ ...isValidInput, [keyName]: validateInput(keyName, value) });
+    setIsValidInput({ ...isValidInput, [id]: validateInput(id, value) });
   }, [value]);
 
-  const handleChange = (event) => {
+  const handleChange = ({ target }) => {
     if (!isEntered) setIsEntered(true);
-    setUser({ ...user, [keyName]: event.target.value });
+    setUser({ ...user, [id]: target.value });
   };
 
   const getLabel = () => {
-    if (keyName === "userId") return "아이디";
-    if (keyName === "nickname") return "닉네임";
-    if (keyName === "email") return "이메일";
+    if (id === "userId") return "아이디";
+    if (id === "nickname") return "닉네임";
+    if (id === "email") return "이메일";
   };
 
   const getPlaceholderText = () => {
-    if (keyName === "userId") return "아이디를 입력해주세요.";
+    if (id === "userId") return "아이디를 입력해주세요.";
     return `${getLabel()}을 입력해주세요.`;
   };
 
   const getWarningText = () => {
-    if (keyName === "email") return "이메일 형식에 맞게 입력해주세요.";
+    if (id === "email") return "이메일 형식에 맞게 입력해주세요.";
     return "5~16글자 사이 영문이나 숫자를 입력해주세요.";
   };
 
   return (
     <Container>
-      <Label htmlFor={keyName}>{getLabel()}</Label>
+      <Label htmlFor={id}>{getLabel()}</Label>
       <Input
         type="text"
-        id={keyName}
+        id={id}
         value={value}
-        isValid={isValidInput[keyName]}
+        isValid={isValidInput[id]}
         placeholder={getPlaceholderText()}
         onChange={handleChange}
       />
-      {isValidInput[keyName] === false && <Warning>{getWarningText()}</Warning>}
+      {isValidInput[id] === false && <Warning>{getWarningText()}</Warning>}
     </Container>
   );
 };
