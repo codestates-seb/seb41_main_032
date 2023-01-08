@@ -15,82 +15,73 @@ const Container = styled.form`
 
 // 회원가입 서식
 const Form = () => {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    userId: "",
+    password: "",
+    nickname: "",
+    email: "",
+  });
+  const [isValidInput, setIsValidInput] = useState({
+    userId: null,
+    password: null,
+    nickname: null,
+    email: null,
+  });
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-
-  const [isValidUserId, setIsValidUserId] = useState(null);
-  const [isValidPassword, setIsValidPassword] = useState(null);
   const [isValidPasswordCheck, setIsValidPasswordCheck] = useState(null);
-  const [isValidNickname, setIsValidNickname] = useState(null);
-  const [isValidEmail, setIsValidEmail] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // requestSignUp();
   };
 
-  const requestSignUp = async () => {
+  const requestSignUp = () => {
     // TODO: 서버 배포되면 로직 수정
     const url = `url`;
-    const userData = {
-      userId,
-      password,
-      nickname,
-      email,
-    };
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(user),
     };
-    try {
-      const response = await fetch(url, options);
-    } catch (error) {
-      console.log(error);
-    }
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+  };
+
+  const inputFieldProps = {
+    user,
+    isValidInput,
+    setUser,
+    setIsValidInput,
   };
 
   const passwordInputFieldProps = {
-    password,
+    user,
+    isValidInput,
     passwordCheck,
-    isValidPassword,
     isValidPasswordCheck,
-    setPassword,
+    setUser,
+    setIsValidInput,
     setPasswordCheck,
-    setIsValidPassword,
     setIsValidPasswordCheck,
   };
 
-  const isDisabled = !(isValidUserId && isValidPassword && isValidPasswordCheck && isValidNickname && isValidEmail);
+  const shouldDisableButton = !(
+    isValidInput.userId &&
+    isValidInput.password &&
+    isValidInput.nickname &&
+    isValidInput.email &&
+    isValidPasswordCheck
+  );
 
   return (
     <Container onSubmit={handleSubmit}>
-      <InputField
-        label="아이디"
-        value={userId}
-        isValid={isValidUserId}
-        setValue={setUserId}
-        setIsValid={setIsValidUserId}
-      />
+      <InputField keyName="userId" {...inputFieldProps} />
       <PasswordInputField {...passwordInputFieldProps} />
-      <InputField
-        label="닉네임"
-        value={nickname}
-        isValid={isValidNickname}
-        setValue={setNickname}
-        setIsValid={setIsValidNickname}
-      />
-      <InputField
-        label="이메일"
-        value={email}
-        isValid={isValidEmail}
-        setValue={setEmail}
-        setIsValid={setIsValidEmail}
-      />
-      <Button type="submit" disabled={isDisabled}>
+      <InputField keyName="nickname" {...inputFieldProps} />
+      <InputField keyName="email" {...inputFieldProps} />
+      <Button type="submit" disabled={shouldDisableButton}>
         회원가입
       </Button>
     </Container>
