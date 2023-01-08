@@ -1,3 +1,9 @@
+/**
+ * 숫자를 한국인이 읽기 쉽게 만,억,조,경 단위로 변환해줍니다
+ * @param data 숫자나 문자열을 넣어주세요
+ * @type {string | number}
+ * @return 347441344410000 => 347조4413억
+ */
 const NumberToKR = (data) => {
     const unitWords = ['', '만', '억', '조', '경'];
     let result = String(data);
@@ -14,6 +20,11 @@ const NumberToKR = (data) => {
         result.length - count,
         result.length - count + 4,
     )}${unitWords[Math.floor(result.length / 4) - 1]}`;
+
+    // 뒤에서 5번째 숫자에 0일경우 제거 1조 0234억 => 1조
+    if (result.charAt(result.length - 5) === '0') {
+        result = `${result.slice(0, result.length - 5)}${result.slice(result.length - 4)}`;
+    }
 
     return result;
 };
