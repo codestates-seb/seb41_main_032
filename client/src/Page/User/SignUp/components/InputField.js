@@ -13,39 +13,49 @@ const Container = styled.div`
 `;
 
 // 회원가입 페이지에서 아이디, 닉네임, 이메일 인풋 영역
-const InputField = ({ label, value, isValid, setValue, setIsValid }) => {
-  const [count, setCount] = useState(0);
+const InputField = ({ id, user, isValidInput, setUser, setIsValidInput }) => {
+  const value = user[id];
+
+  const [isEntered, setIsEntered] = useState(false);
 
   useEffect(() => {
-    if (count === 0) return;
-    setIsValid(validateInput(label, value));
+    if (!isEntered) return;
+    setIsValidInput({ ...isValidInput, [id]: validateInput(id, value) });
   }, [value]);
 
-  const handleChange = (event) => {
-    setCount((prevCount) => prevCount + 1);
-    setValue(event.target.value);
+  const handleChange = ({ target }) => {
+    if (!isEntered) setIsEntered(true);
+    setUser({ ...user, [id]: target.value });
+  };
+
+  const getLabel = () => {
+    if (id === "userId") return "아이디";
+    if (id === "nickname") return "닉네임";
+    if (id === "email") return "이메일";
   };
 
   const getPlaceholderText = () => {
-    return `${label}${label === "아이디" ? "를" : "을"} 입력해주세요.`;
+    if (id === "userId") return "아이디를 입력해주세요.";
+    return `${getLabel()}을 입력해주세요.`;
   };
 
   const getWarningText = () => {
-    return label === "이메일" ? "이메일 형식에 맞게 입력해주세요." : "5~16글자 사이 영문이나 숫자를 입력해주세요.";
+    if (id === "email") return "이메일 형식에 맞게 입력해주세요.";
+    return "5~16글자 사이 영문이나 숫자를 입력해주세요.";
   };
 
   return (
     <Container>
-      <Label htmlFor={`${label}`}>{label}</Label>
+      <Label htmlFor={id}>{getLabel()}</Label>
       <Input
         type="text"
-        id={`${label}`}
+        id={id}
         value={value}
-        isValid={isValid}
+        isValid={isValidInput[id]}
         placeholder={getPlaceholderText()}
         onChange={handleChange}
       />
-      {isValid === false && <Warning>{getWarningText()}</Warning>}
+      {isValidInput[id] === false && <Warning>{getWarningText()}</Warning>}
     </Container>
   );
 };
