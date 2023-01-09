@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import BlueBox from '../../../../Components/Style/BlueBox';
-import RedBox from '../../../../Components/Style/RedBox';
 import CommaGenerator from '../../../../Components/Function/CommaGenerator';
+import { RedBox, BlueBox } from '../../../../Components/Style/ChgBox';
 
-const Item = styled.div`
+const Item = styled.li`
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -22,10 +21,13 @@ const Bold = styled.b`
     font-size: 1.3em;
 `;
 
+/**
+ * 지수 정보 (코스피 ,코스닥) ItemBox
+ */
 const ItemBox = ({ data }) => {
     return (
         <Item>
-            <Name>{data.idxNm ? data.idxNm : data.itmsNm}</Name>
+            <Name>{data.idxNm ? data.idxNm : null}</Name>
             <Bold>{CommaGenerator(data.clpr)}</Bold>
             {data.fltRt > 0 ? <RedBox>{Number(data.fltRt)}%</RedBox> : <BlueBox>{Number(data.fltRt)}%</BlueBox>}
         </Item>
