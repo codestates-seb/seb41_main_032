@@ -17,7 +17,6 @@ public class DomesticStockController {
     // 국내 주식 현재가 시세 조회
     @GetMapping("domestic/present-quotations")
     public ResponseEntity getPresentDomesticStockQuotationsInfo(
-            // 리팩토링 필요
             @RequestHeader(value = "authorization") String authorization,
             @RequestHeader(value = "appkey") String appKey,
             @RequestHeader(value = "appsecret") String appSecret,
@@ -27,7 +26,6 @@ public class DomesticStockController {
 
         Map<String, Object> result = new LinkedHashMap<>();
 
-        // 리팩토링 필요
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", authorization);
         requestHeaders.set("appkey", appKey);
@@ -37,7 +35,6 @@ public class DomesticStockController {
 
         String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price";
 
-        // 리팩토링 필요
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", FID_COND_MRKT_DIV_CODE)
                 .queryParam("FID_INPUT_ISCD", FID_INPUT_ISCD)
@@ -64,7 +61,6 @@ public class DomesticStockController {
     // 국내 주식 기간별 시세 조회 (일/주/월/년)
     @GetMapping("domestic/quotations-by-period")
     public ResponseEntity getDomesticStockQuotationsByPeriodInfo(
-            // 리팩토링 필요
             @RequestHeader(value = "content-type") String contentType,
             @RequestHeader(value = "authorization") String authorization,
             @RequestHeader(value = "appkey") String appKey,
@@ -79,7 +75,6 @@ public class DomesticStockController {
 
         Map<String, Object> result = new LinkedHashMap<>();
 
-        // 리팩토링 필요
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", contentType);
         requestHeaders.set("authorization", authorization);
@@ -90,7 +85,6 @@ public class DomesticStockController {
 
         String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
 
-        // 리팩토링 필요
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", FID_COND_MRKT_DIV_CODE)
                 .queryParam("FID_INPUT_ISCD", FID_INPUT_ISCD)
@@ -121,7 +115,6 @@ public class DomesticStockController {
     // 국내 휴장일 조회
     @GetMapping("domestic/holiday-status")
     public ResponseEntity checkHolidayOfDomesticStock(
-            // 리팩토링 필요
             @RequestHeader(value = "content-type") String contentType,
             @RequestHeader(value = "authorization") String authorization,
             @RequestHeader(value = "appkey") String appKey,
@@ -134,7 +127,6 @@ public class DomesticStockController {
 
         Map<String, Object> result = new LinkedHashMap<>();
 
-        // 리팩토링 필요
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", contentType);
         requestHeaders.set("authorization", authorization);
@@ -146,7 +138,6 @@ public class DomesticStockController {
 
         String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/chk-holiday";
 
-        // 리팩토링 필요
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("BASS_DT", BASS_DT)
                 .queryParam("CTX_AREA_NK", CTX_AREA_NK)
