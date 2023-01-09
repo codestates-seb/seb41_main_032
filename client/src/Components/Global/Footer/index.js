@@ -6,12 +6,13 @@ const Main = styled.footer`
   width: 100%;
   position: relative;
   transfrom: translateY(-100%);
-  background-color: gray;
+  background-color: #144272;
   color: white;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   align-items: center;
+  font-size: 0.7em;
   > div {
     display: flex;
     margin-top: 20px;
@@ -29,7 +30,7 @@ const Footer = () => {
     <Main>
       <div>Codestates SEB41 시가총액32조</div>
       <div>
-        Front 박인우 양우진 이중원{" "}
+        Front 박인우 양우진 이중원
         <svg
           width="10"
           xmlns="http://www.w3.org/2000/svg"
