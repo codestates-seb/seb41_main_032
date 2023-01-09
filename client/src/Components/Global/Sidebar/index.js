@@ -36,13 +36,13 @@ const Sidebar = () => {
     <Main>
       <ul>
         <li>
+          <StyledLink to="/">Home</StyledLink>
+        </li>
+        <li>
+          <StyledLink>게시판</StyledLink>
+        </li>
+        <li>
           <StyledLink>Mypage</StyledLink>
-        </li>
-        <li>
-          <StyledLink>Category</StyledLink>
-        </li>
-        <li>
-          <StyledLink>오늘의 시세</StyledLink>
         </li>
       </ul>
     </Main>
