@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import BlueButton from "../../../../Components/Style/User/BlueButton";
 import Horizon from "../../../../Components/Style/User/Horizon";
+import WhiteButton from "../../../../Components/Style/User/WhiteButton";
 
 const Container = styled.div`
   width: 100%;
@@ -18,17 +18,6 @@ const Subtitle = styled.p`
   font-weight: 500;
 `;
 
-const GoSignUpButton = styled(BlueButton)`
-  width: 100%;
-  color: #006eff;
-  border: 1px solid #006eff;
-  background-color: #fefefe;
-
-  :hover {
-    background-color: #e5f0ff;
-  }
-`;
-
 // 버튼을 클릭하면 회원가입 페이지로 이동하는 영역
 const GoSignUp = () => {
   const navigate = useNavigate();
@@ -37,7 +26,7 @@ const GoSignUp = () => {
     <Container>
       <Horizon />
       <Subtitle>아직 회원이 아니신가요?</Subtitle>
-      <GoSignUpButton onClick={() => navigate("/sign-up")}>회원가입 하기</GoSignUpButton>
+      <WhiteButton onClick={() => navigate("/sign-up")}>회원가입 하기</WhiteButton>
     </Container>
   );
 };
