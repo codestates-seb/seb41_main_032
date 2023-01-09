@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Button from "../../../../Components/Style/User/Button";
+import BlueButton from "../../../../Components/Style/User/BlueButton";
 import InputField from "./InputField";
 import PasswordInputField from "./PasswordInputField";
 
@@ -79,9 +79,9 @@ const Form = () => {
       <PasswordInputField {...passwordInputFieldProps} />
       <InputField id="nickname" {...inputFieldProps} />
       <InputField id="email" {...inputFieldProps} />
-      <Button type="submit" disabled={shouldDisableButton}>
+      <BlueButton type="submit" disabled={shouldDisableButton}>
         회원가입
-      </Button>
+      </BlueButton>
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-// 회원가입, 로그인 등에 사용되는 버튼
-const Button = styled.button`
+// 회원가입, 로그인 등에 사용되는 파란 버튼
+const BlueButton = styled.button`
   width: 100%;
   height: 46px;
   margin: 12px 0 0 0;
@@ -22,4 +22,4 @@ const Button = styled.button`
   }
 `;
 
-export default Button;
+export default BlueButton;

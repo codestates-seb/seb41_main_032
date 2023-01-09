@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../../../../Components/Style/User/Button";
+import BlueButton from "../../../../Components/Style/User/BlueButton";
 import Horizon from "../../../../Components/Style/User/Horizon";
 
 const Container = styled.div`
@@ -18,7 +18,7 @@ const Subtitle = styled.p`
   font-weight: 500;
 `;
 
-const GoSignUpButton = styled(Button)`
+const GoSignUpButton = styled(BlueButton)`
   width: 100%;
   color: #006eff;
   border: 1px solid #006eff;

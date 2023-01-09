@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Button from "../../../../Components/Style/User/Button";
+import BlueButton from "../../../../Components/Style/User/BlueButton";
 import InputField from "./InputField";
 import OptionField from "./OptionField";
 
@@ -51,9 +51,9 @@ const Form = () => {
   return (
     <Container onSubmit={handleSubmit}>
       <InputField {...inputFieldProps} />
-      <Button type="submit" disabled={shouldDisableButton}>
+      <BlueButton type="submit" disabled={shouldDisableButton}>
         로그인
-      </Button>
+      </BlueButton>
       <OptionField {...optionFieldProps} />
     </Container>
   );
