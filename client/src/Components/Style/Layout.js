@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../Global/Header";
-import Sidebar from "../Global/Sidebar";
+import Header from "../Global/Header/index";
+import Sidebar from "../Global/Sidebar/index";
+import Footer from "../Global/Footer/index";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 50px;
   .content {
     margin-left: 120px;
   }
@@ -19,6 +23,7 @@ const Layout = ({ children }) => {
         <Sidebar />
         <div className="content">{children}</div>
       </Wrapper>
+      <Footer />
     </div>
   );
 };
