@@ -2,6 +2,7 @@ package mainproject.stocksite.domain.member.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import mainproject.stocksite.domain.member.dto.MemberPatchDto;
 import mainproject.stocksite.domain.member.dto.MemberPostDto;
 import mainproject.stocksite.domain.member.dto.MemberResponseDto;
 import mainproject.stocksite.domain.member.entity.Member;
@@ -50,23 +51,23 @@ public class MemberController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{memberId}")
-    public MemberResponseDto getOne(@PathVariable @Positive Long memberId) {
+    @GetMapping("/{member-id}")
+    public MemberResponseDto getOne(@PathVariable("member-id") @Positive Long memberId) {
         return mapper.memberToResponseDto(service.findById(memberId));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/{memberId}")
-    public MemberResponseDto patchOne(@PathVariable @Positive Long memberId,
-            @Valid @RequestBody  MemberPostDto memberPostDto) {
+    @PatchMapping("/{member-id}")
+    public MemberResponseDto patchOne(@PathVariable("member-id") @Positive Long memberId,
+                                      @Valid @RequestBody MemberPatchDto memberPatchDto) {
 
-        Member modifyMember = service.modifyMember(memberId, mapper.memberPostDtoToEntity(memberPostDto));
+        Member modifyMember = service.modifyMember(memberId, mapper.memberPatchDtoToEntity(memberPatchDto));
         return mapper.memberToResponseDto(modifyMember);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{memberId}")
-    public void deleteUser(@PathVariable @Positive Long memberId) {
+    @DeleteMapping("/{member-id}")
+    public void deleteUser(@PathVariable("member-id") @Positive Long memberId) {
         service.deleteMember(memberId);
     }
 
