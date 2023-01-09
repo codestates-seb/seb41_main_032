@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Main = styled.div`
-  height: 100%;
+const Main = styled.aside`
+  float: left;
   width: 115px;
   border-right: double 3px #eeeeee;
 

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 // 로고 / 검색창 / 로그인버튼
 // 로그인 버튼 클릭시의 경로는 임시 설정
 
-const Main = styled.div`
+const Main = styled.header`
   display: grid;
   grid-template-columns: 180px 1fr 110px;
   width: 100%;
   height: 63px;
-
+  top: 0px;
   .icon {
     margin-top: 10px;
     margin-left: 30px;
