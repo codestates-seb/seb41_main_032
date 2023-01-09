@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import CommaGenerator from '../../../../Components/Function/CommaGenerator';
 import Chart from 'react-apexcharts';
-
+import DateOutput from '../../../../Components/Function/DateOutput';
 const InfoBox = styled.ul`
     display: flex;
     flex-direction: column;
@@ -38,28 +38,33 @@ const InfoContainer = styled.div`
  * 개인,기관, 외국인의 매매와 매수정보를 이용하여 bar 차트를 그립니다*/
 const SummaryInfo = ({ todayInfo, tradingTrends }) => {
     const MarketCap = useLocation().state.MarketCap;
+    let index = 0;
+    if (tradingTrends) {
+        index = tradingTrends[0].prsn_ntby_qty === '' ? 1 : 0;
+    }
+    console.log(tradingTrends);
     const state = tradingTrends
         ? {
               series: [
                   {
                       name: '개인',
                       data: [
-                          Number(tradingTrends[0].prsn_ntby_qty) > 0 ? tradingTrends[0].prsn_ntby_qty : '0',
-                          Number(tradingTrends[0].prsn_ntby_qty) < 0 ? tradingTrends[0].prsn_ntby_qty.slice(1) : '0',
+                          Number(tradingTrends[index].prsn_ntby_qty) > 0 ? tradingTrends[index].prsn_ntby_qty : '0',
+                          Number(tradingTrends[index].prsn_ntby_qty) < 0 ? tradingTrends[index].prsn_ntby_qty.slice(1) : '0',
                       ],
                   },
                   {
                       name: '외국인',
                       data: [
-                          Number(tradingTrends[0].frgn_ntby_qty) > 0 ? tradingTrends[0].frgn_ntby_qty : '0',
-                          Number(tradingTrends[0].frgn_ntby_qty) < 0 ? tradingTrends[0].frgn_ntby_qty.slice(1) : '0',
+                          Number(tradingTrends[index].frgn_ntby_qty) > 0 ? tradingTrends[index].frgn_ntby_qty : '0',
+                          Number(tradingTrends[index].frgn_ntby_qty) < 0 ? tradingTrends[index].frgn_ntby_qty.slice(1) : '0',
                       ],
                   },
                   {
                       name: '기관계',
                       data: [
-                          Number(tradingTrends[0].orgn_ntby_qty) > 0 ? tradingTrends[0].orgn_ntby_qty : '0',
-                          Number(tradingTrends[0].orgn_ntby_qty) < 0 ? tradingTrends[0].frgn_ntby_qty.slice(1) : '0',
+                          Number(tradingTrends[index].orgn_ntby_qty) > 0 ? tradingTrends[index].orgn_ntby_qty : '0',
+                          Number(tradingTrends[index].orgn_ntby_qty) < 0 ? tradingTrends[index].frgn_ntby_qty.slice(1) : '0',
                       ],
                   },
               ],
@@ -80,7 +85,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                       colors: ['#fff'],
                   },
                   title: {
-                      text: '매매동향',
+                      text: `매매동향 ${DateOutput(tradingTrends[index].stck_bsop_date)}`,
                       offsetY: 5,
                       style: {
                           color: '#ccc',
@@ -121,7 +126,6 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
               },
           }
         : null;
-
     return (
         <InfoContainer>
             {todayInfo ? (
