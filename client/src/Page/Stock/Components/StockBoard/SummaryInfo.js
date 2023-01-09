@@ -42,7 +42,6 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
     if (tradingTrends) {
         index = tradingTrends[0].prsn_ntby_qty === '' ? 1 : 0;
     }
-    console.log(tradingTrends);
     const state = tradingTrends
         ? {
               series: [
