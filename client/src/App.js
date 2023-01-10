@@ -4,7 +4,7 @@ import Home from "./Page/Home";
 import Stock from "./Page/Stock";
 import Login from "./Page/User/Login";
 import SignUp from "./Page/User/SignUp/index";
-
+import Board from "./Page/Board/index";
 function App() {
   return (
     <Layout>
@@ -13,6 +13,7 @@ function App() {
         <Route path="/stock/:id" element={<Stock />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/board" element={<Board />} />
       </Routes>
     </Layout>
   );

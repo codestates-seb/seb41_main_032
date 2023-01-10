@@ -39,7 +39,7 @@ const Sidebar = () => {
           <StyledLink to="/">Home</StyledLink>
         </li>
         <li>
-          <StyledLink>게시판</StyledLink>
+          <StyledLink to="/board">게시판</StyledLink>
         </li>
         <li>
           <StyledLink>Mypage</StyledLink>
