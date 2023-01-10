@@ -33,7 +33,7 @@ public interface BoardMapper {
 
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.nickname", target = "nickname")
-    @Mapping(source = "member.userId", target = "userId")
+    @Mapping(source = "member.username", target = "username")
     BoardResponseDto boardToResponseDto(Board board);
 
 }

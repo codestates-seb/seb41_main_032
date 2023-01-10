@@ -13,6 +13,6 @@ public class BoardResponseDto extends time {
     private Long memberId;
     private String title;
     private String content;
-    private String userId;
+    private String username;
     private String nickname;
 }
