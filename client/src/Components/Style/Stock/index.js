@@ -97,6 +97,11 @@ export const SelectBtnContainer = styled.ul`
         border-radius: 15px;
         border: 1px solid gray;
         margin-right: 10px;
+        cursor: pointer;
+
+        :hover {
+            transform: scale(1.1);
+        }
     }
     .select {
         font-weight: 600;
