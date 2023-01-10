@@ -1,0 +1,6 @@
+.idea/
+.gradle
+build
+gradle
+application-secret.yml
+application-api-key.yml
