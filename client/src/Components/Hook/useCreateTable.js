@@ -33,6 +33,8 @@ const Table = styled.table`
         border-bottom: 1px solid #eee;
         font-size: 1.1em;
         height: 70px;
+        cursor: pointer;
+
         .red {
             color: red;
         }
