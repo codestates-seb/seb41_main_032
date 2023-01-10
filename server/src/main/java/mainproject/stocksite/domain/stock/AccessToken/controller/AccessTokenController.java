@@ -1,10 +1,13 @@
 package mainproject.stocksite.domain.stock.AccessToken.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,7 @@ public class AccessTokenController {
     private String appSecret;
 
     // 증권사 API 접근 토큰 발급
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")    // 매일 자정
     @PostMapping("access-token")
     public ResponseEntity getAccessToken() {
 
@@ -54,6 +58,8 @@ public class AccessTokenController {
         HttpStatus httpStatus = response.getStatusCode();
 
         if (httpStatus.is2xxSuccessful()) System.out.println("Access Token Issued Successfully!");
+
+        System.out.println("AccessToken = " + response.getBody());
 
         return new ResponseEntity<>(result, httpStatus);
     }
