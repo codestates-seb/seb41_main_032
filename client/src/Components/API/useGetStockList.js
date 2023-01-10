@@ -2,15 +2,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 /**
- * 주식 지수 정보를 가져오는 API 입니다
+ * 주식 리스트 정보를 가져오는 API 입니다
+ *
+ * 인자로 sort, compare, length를 넣어주면 정렬된 데이터를 리턴합니다
+ * @author 이중원
  * @param {string} Parameters1 KOSPI query parameter를 넣어주세요
  * @param {string} Parameters2 KOSDAQ query parameter를 넣어주세요
  * @param {Function} sort 정렬를 위한 함수를 넣어주세요 (필수 X )
  * @param {string} compare 정렬할때 사용할 기준을 넣어주세요 (필수 X )
  * @param {number} length 정렬후 length길이만큼만 배열을 생성합니다 (필수 X )
- * @type { string }
- * @returns KOSPI와 KOSDAQ별로 나뉘어서 주식 정보 리스트를 리턴합니다
- * 인자로 sort, compare, length를 넣어주면 정렬된 데이터를 리턴합니다
+ * @returns [ KOSPI, setKOSPI, KOSDAQ, setKOSDAQ ]
  * @see https://www.data.go.kr/data/15094808/openapi.do
  */
 const useGetStockList = (Parameters1, Parameters2, sort, compare, length) => {
