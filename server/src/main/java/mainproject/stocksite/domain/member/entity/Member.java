@@ -1,6 +1,9 @@
 package mainproject.stocksite.domain.member.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mainproject.stocksite.domain.time.time;
 import mainproject.stocksite.domain.board.entity.Board;
 
@@ -10,6 +13,9 @@ import java.util.List;
 
 
 @Data
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity(name = "MEMBERS")
 public class Member extends time {
 
@@ -18,7 +24,7 @@ public class Member extends time {
     private Long memberId;
 
     @Column(nullable = false)
-    private String userId;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -29,6 +35,7 @@ public class Member extends time {
     @Column(nullable = false, unique = true)
     private String email;
 
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
 
@@ -38,8 +45,14 @@ public class Member extends time {
         if (board.getMember() != this) {
             board.setMember(this);
         }
+    public Member(String email) {
+        this.email = email;
+
     }
 
+    // 사용자의 권한을 등록하기 위한 권한 테이블을 생성
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
 
 }

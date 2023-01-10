@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Main = styled.div`
-  height: 100%;
+const Main = styled.aside`
+  float: left;
   width: 115px;
   border-right: double 3px #eeeeee;
 
@@ -36,13 +36,13 @@ const Sidebar = () => {
     <Main>
       <ul>
         <li>
+          <StyledLink to="/">Home</StyledLink>
+        </li>
+        <li>
+          <StyledLink to="/board">게시판</StyledLink>
+        </li>
+        <li>
           <StyledLink>Mypage</StyledLink>
-        </li>
-        <li>
-          <StyledLink>Category</StyledLink>
-        </li>
-        <li>
-          <StyledLink>오늘의 시세</StyledLink>
         </li>
       </ul>
     </Main>
