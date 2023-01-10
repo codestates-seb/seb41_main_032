@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class MemberPostDto {
 
     @NotBlank
-    private String userId;
+    private String username;
 
     @NotBlank
     private String password;
