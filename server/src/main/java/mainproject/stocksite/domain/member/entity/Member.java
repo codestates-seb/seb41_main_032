@@ -45,9 +45,10 @@ public class Member extends time {
         if (board.getMember() != this) {
             board.setMember(this);
         }
+    }
+
     public Member(String email) {
         this.email = email;
-
     }
 
     // 사용자의 권한을 등록하기 위한 권한 테이블을 생성
