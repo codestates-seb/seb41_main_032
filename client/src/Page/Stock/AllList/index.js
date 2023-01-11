@@ -1,5 +1,4 @@
 import useGetStockList from '../../../Components/API/useGetStockList';
-import { Descend } from '../../../Components/Function/Sort';
 import { Title, SmTitle } from '../../../Components/Style/Stock';
 import DateOutput from '../../../Components/Function/DateOutput';
 import StockTable from './Components/StockTable';
@@ -22,7 +21,7 @@ const AllList = () => {
     const day = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
     const AllKOSPI = `&numOfRows=1000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSPI`;
     const AllKOSDAQ = `&numOfRows=2000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSDAQ`;
-    const [allKOSPI, setAllKOSPI, allKOSDAQ, setAllKOSDAQ] = useGetStockList(AllKOSPI, AllKOSDAQ, Descend, 'mrktTotAmt', 2000);
+    const [allKOSPI, setAllKOSPI, allKOSDAQ, setAllKOSDAQ] = useGetStockList(AllKOSPI, AllKOSDAQ);
 
     return (
         <Main>
