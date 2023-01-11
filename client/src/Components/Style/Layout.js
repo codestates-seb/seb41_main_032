@@ -6,11 +6,14 @@ import Footer from "../Global/Footer/index";
 
 const Div = styled.div`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Wrapper = styled.main`
   display: flex;
   flex-direction: row;
+
   height: auto;
   position: relative;
   min-height: 100%;
