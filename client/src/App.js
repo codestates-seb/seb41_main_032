@@ -7,6 +7,7 @@ import Login from "./Page/User/Login";
 import SignUp from "./Page/User/SignUp/index";
 import Board from "./Page/Board/ArticleList";
 import NewArticle from "./Page/Board/NewArticle";
+import Article from "./Page/Board/Detail";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/board" element={<Board />} />
         <Route path="/board/new" element={<NewArticle />} />
+        <Route path="/board/detail/:num" element={<Article />} />
       </Routes>
     </Layout>
   );

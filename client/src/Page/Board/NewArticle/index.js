@@ -1,4 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
@@ -39,19 +42,44 @@ const Button = styled.button`
 `;
 
 const NewArticle = () => {
+  // const navigate = useNavigate();
+  // 글 데이터
+  const [data, setData] = useState({
+    memberId: "",
+    title: "테스트",
+    content: "테스트",
+  });
   const HandleSubmit = (e) => {
     e.preventDefault();
+    // TODO : 서버 배포되면 기능 마저 구현
+    // const url = `url`;
+    // const options = {
+    //   method: "POST",
+    //   data: data,
+    // };
+    console.log(data);
+    // axios(url, options).then((res) => {
+    //   console.log(res);
+    //   navigate("/board");
+    //  });
   };
   return (
     <form onSubmit={HandleSubmit}>
       <Div>
         <h1>새 글 작성</h1>
         <input
-          className="ti"
+          type="text"
+          id="title"
+          onChange={(e) => setData({ ...data, [e.target.id]: e.target.value })}
           placeholder="제목을 입력해주세요(20자까지)"
           maxLength="20"
         ></input>
-        <textarea className="form" placeholder="본문을 입력해주세요"></textarea>
+        <textarea
+          type="text"
+          id="content"
+          onChange={(e) => setData({ ...data, [e.target.id]: e.target.value })}
+          placeholder="본문을 입력해주세요"
+        ></textarea>
         <Button type="submit">등록</Button>
       </Div>
     </form>
