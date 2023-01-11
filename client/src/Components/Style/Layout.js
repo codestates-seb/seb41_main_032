@@ -4,29 +4,34 @@ import Header from "../Global/Header/index";
 import Sidebar from "../Global/Sidebar/index";
 import Footer from "../Global/Footer/index";
 
+const Div = styled.div`
+  height: 100%;
+`;
+
 const Wrapper = styled.main`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: auto;
+  position: relative;
   min-height: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 250px;
   .content {
     margin-top: 100px;
     margin-left: 120px;
-    height: 100%;
+    width: 100%;
   }
 `;
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <Div>
       <Header />
       <Wrapper>
         <Sidebar />
         <section className="content">{children}</section>
       </Wrapper>
       <Footer />
-    </div>
+    </Div>
   );
 };
 
