@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const Main = styled.header`
   display: grid;
   position: fixed;
+  z-index: 100;
   background-color: white;
   grid-template-columns: 180px 1fr 110px;
   width: 100%;

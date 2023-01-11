@@ -26,7 +26,7 @@ const Div = styled.div`
   }
 `;
 
-const Article = ({ data }) => {
+const ArticleThumbnail = ({ data }) => {
   return (
     <Div>
       <div className="box">
@@ -41,4 +41,4 @@ const Article = ({ data }) => {
   );
 };
 
-export default Article;
+export default ArticleThumbnail;
