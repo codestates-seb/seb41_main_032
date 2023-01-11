@@ -17,8 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+// 추후 멤버 변수, requestBody에 대한 리팩토링 필요
 @RestController
-@RequestMapping("/stock")
 @CrossOrigin(originPatterns = "https://openapi.koreainvestment.com")
 public class AccessTokenController {
 
@@ -32,10 +32,7 @@ public class AccessTokenController {
 
     // 증권사 API 접근 토큰 발급
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")    // 매일 자정
-    @PostMapping("access-token")
-    public ResponseEntity getAccessToken() {
-
-        Map<String, Object> result = new LinkedHashMap<>();
+    public String getAccessToken() {
 
         Map<String, String> requestBody = new LinkedHashMap<>();
         requestBody.put("grant_type", grantType);
@@ -46,21 +43,17 @@ public class AccessTokenController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response =
+        ResponseEntity<String> response =
                 restTemplate.exchange(
                         "https://openapi.koreainvestment.com:9443/oauth2/tokenP",
                         HttpMethod.POST,
                         requestMessage,
-                        Object.class
+                        String.class
                 );
 
-        result.put("responseBody", response.getBody());
-        HttpStatus httpStatus = response.getStatusCode();
+        String[] responseBody = response.getBody().split("\"");
+        String accessToken = responseBody[3];
 
-        if (httpStatus.is2xxSuccessful()) System.out.println("Access Token Issued Successfully!");
-
-        System.out.println("AccessToken = " + response.getBody());
-
-        return new ResponseEntity<>(result, httpStatus);
+        return accessToken;
     }
 }
