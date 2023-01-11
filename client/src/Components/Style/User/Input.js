@@ -17,6 +17,11 @@ const Input = styled.input`
     border-color: ${(props) => (props.isValid === false ? "#f00001" : "#126fff")};
   }
 
+  :disabled {
+    padding-left: 0;
+    border: none;
+  }
+
   ::placeholder {
     color: #999999;
   }
