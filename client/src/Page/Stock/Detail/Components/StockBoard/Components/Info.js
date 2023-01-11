@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router';
-import { RedTriangle, BlueTriangle } from '../../../../Components/Style/Triangle';
-import CommaGenerator from '../../../../Components/Function/CommaGenerator';
+import { RedTriangle, BlueTriangle } from '../../../../../../Components/Style/Stock';
+import CommaGenerator from '../../../../../../Components/Function/CommaGenerator';
 import { useLocation } from 'react-router';
 
 const PriceContainer = styled.div`
@@ -33,7 +33,7 @@ const BluePrice = styled.span`
 const Info = ({ todayInfo }) => {
     const params = useParams();
     const { state } = useLocation();
-    return todayInfo ? (
+    return (
         <section>
             <p>{`한국증권 거래소 #${todayInfo.bstp_kor_isnm}`}</p>
             <h2>
@@ -57,7 +57,7 @@ const Info = ({ todayInfo }) => {
                 )}
             </PriceContainer>
         </section>
-    ) : null;
+    );
 };
 
 export default Info;

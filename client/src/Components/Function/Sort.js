@@ -1,5 +1,6 @@
 /**
  * 오름차순으로 정렬해주는 함수입니다
+ * @author 이중원
  * @param {Array|object} data 배열이나 객체를 넣어주세요
  * @param {string} compare 정렬을 할 기준을 넣어주세요
  * @param {number} length 정렬후 length만큼 배열을 반환합니다 (기본값: 전부반환)
@@ -24,6 +25,7 @@ export const Ascend = (data = [], compare, length = data.length) => {
 
 /**
  * 내림차순으로 정렬해주는 함수입니다
+ * @author 이중원
  * @param {Array|object} data 배열이나 객체를 넣어주세요
  * @param {string} compare 정렬을 할 기준을 넣어주세요
  * @param {number} length 정렬후 length만큼 배열을 반환합니다 (기본값: 전부반환)

@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import NumberToKR from '../../../../Components/Function/NumberToKR';
-import CommaGenerator from '../../../../Components/Function/CommaGenerator';
-import DateOutput from '../../../../Components/Function/DateOutput';
-import { RedTriangle, BlueTriangle } from '../../../../Components/Style/Triangle';
+import NumberToKR from '../../../../../Components/Function/NumberToKR';
+import CommaGenerator from '../../../../../Components/Function/CommaGenerator';
+import DateOutput from '../../../../../Components/Function/DateOutput';
+import { RedTriangle, BlueTriangle } from '../../../../../Components/Style/Stock';
+import usePagination from '../../../../../Components/Hook/usePagination';
 const Title = styled.h2`
     font-size: 1.1em;
     margin-top: 20px;
@@ -93,62 +93,7 @@ const PageList = styled.ul`
  * 
     종가 최고가 최저가 거래량 · 거래대금을 출력합니다*/
 const DailyInfo = ({ infoByDate }) => {
-    const [data, setData] = useState(infoByDate);
-    const [currentPage, setCurrentPage] = useState(1); //현재 페이지
-    const [itemsPerPage, setItemsPerPage] = useState(10); //아이템 갯수
-    const [pageLimit, setPageLimit] = useState(5); // 페이지 버튼갯수
-
-    // 페이지이동시 버튼값 변경을 위한 값
-    const [maxPageLimit, setMaxPageLimit] = useState(5);
-    const [minPageLimit, setMinPageLimit] = useState(0);
-
-    /**현재 페이지를 가리킴 */
-    const handleClick = (event) => {
-        setCurrentPage(Number(event.target.id));
-    };
-
-    /** 페이지버튼 총 갯수 */
-    const pages = [];
-    // Math.ceil -> 나눴을때 발생하는 소수점 처리
-    for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
-        pages.push(i);
-    }
-
-    // 현재 페이지를 기준으로 데이터를 잘라서 보여줌 (itemsPerPage = 아이템 갯수 ,currentPage= 현재 페이지 )
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
-    /** 페이지 버튼 생성 */
-    const renderPageNumbers = pages.map((num) => {
-        if (num < maxPageLimit + 1 && num > minPageLimit) {
-            return (
-                <PageBtn key={num} id={num} onClick={handleClick} className={currentPage === num ? 'active' : null}>
-                    {num}
-                </PageBtn>
-            );
-        } else {
-            return null;
-        }
-    });
-
-    /**페이지 뒤로가기 이벤트 */
-    const handlePrevBtn = () => {
-        setCurrentPage(currentPage - 1);
-        if ((currentPage - 1) % pageLimit === 0) {
-            setMinPageLimit(minPageLimit - pageLimit);
-            setMaxPageLimit(maxPageLimit - pageLimit);
-        }
-    };
-
-    /**  페이지 앞으로가기 이벤트*/
-    const handleNextBtn = () => {
-        setCurrentPage(currentPage + 1);
-        if (currentPage + 1 > maxPageLimit) {
-            setMinPageLimit(minPageLimit + pageLimit);
-            setMaxPageLimit(maxPageLimit + pageLimit);
-        }
-    };
+    const [currentItems, currentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn] = usePagination(infoByDate);
 
     return (
         <Container>

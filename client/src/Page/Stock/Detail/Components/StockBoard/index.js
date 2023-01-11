@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import Info from './Info';
-import Chart from './Chart';
-import SummaryInfo from './SummaryInfo';
+import Info from './Components/Info';
+import Chart from './Components/Chart';
+import SummaryInfo from './Components/SummaryInfo';
+
 const Board = styled.section`
     background-color: #212223;
     padding: 20px;
