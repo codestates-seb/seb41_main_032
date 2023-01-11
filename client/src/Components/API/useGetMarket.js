@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 /**
  * 주식 지수 정보를 가져오는 API 입니다
+ * @author 이중원
  * @param {string} Parameters1 KOSPI query parameter를 넣어주세요
  * @param {string} Parameters2 KOSDAQ query parameter를 넣어주세요
  * @type { string }

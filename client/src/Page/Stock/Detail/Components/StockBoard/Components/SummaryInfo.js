@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import CommaGenerator from '../../../../Components/Function/CommaGenerator';
+import CommaGenerator from '../../../../../../Components/Function/CommaGenerator';
 import Chart from 'react-apexcharts';
-import DateOutput from '../../../../Components/Function/DateOutput';
+import DateOutput from '../../../../../../Components/Function/DateOutput';
 const InfoBox = styled.ul`
     display: flex;
     flex-direction: column;
@@ -17,6 +17,7 @@ const InfoItem = styled.li`
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    margin-bottom: 5px;
     .red {
         color: #ff4747;
     }
@@ -127,79 +128,71 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
         : null;
     return (
         <InfoContainer>
-            {todayInfo ? (
-                <>
-                    <section>
-                        <h3>투자 정보</h3>
-                        <InfoBox>
-                            <InfoItem>
-                                <p>종가</p>
-                                <p>{CommaGenerator(todayInfo.stck_prpr - todayInfo.prdy_vrss)}</p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>시가</p>
-                                <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_prpr ? 'red' : 'blue'}>
-                                    {CommaGenerator(todayInfo.stck_prpr)}
-                                </p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>고가</p>
-                                <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_hgpr ? 'red' : 'blue'}>
-                                    {CommaGenerator(todayInfo.stck_hgpr)}
-                                </p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>저가</p>
-                                <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_lwpr ? 'red' : 'blue'}>
-                                    {CommaGenerator(todayInfo.stck_lwpr)}
-                                </p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>52주일 최고가</p>
-                                <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.w52_hgpr ? 'red' : 'blue'}>
-                                    {CommaGenerator(todayInfo.w52_hgpr)}
-                                </p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>52주일 최저가</p>
-                                <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.w52_lwpr ? 'red' : 'blue'}>
-                                    {CommaGenerator(todayInfo.w52_lwpr)}
-                                </p>
-                            </InfoItem>
-                        </InfoBox>
-                    </section>
-                    <section>
-                        <h3>투자 지표</h3>
-                        <InfoBox>
-                            <InfoItem>
-                                <p>시가총액</p>
-                                <p>{MarketCap}</p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>거래 회전율</p>
-                                <p>{todayInfo.vol_tnrt}</p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>PER</p>
-                                <p>{todayInfo.per}</p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>PBR</p>
-                                <p>{todayInfo.pbr}</p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>EPS</p>
-                                <p>{CommaGenerator(Math.floor(todayInfo.eps))}</p>
-                            </InfoItem>
-                            <InfoItem>
-                                <p>BPS</p>
-                                <p>{CommaGenerator(Math.floor(todayInfo.bps))}</p>
-                            </InfoItem>
-                        </InfoBox>
-                    </section>
-                    {state ? <Chart options={state.options} series={state.series} type="bar" width={600} height={180} /> : null}
-                </>
-            ) : null}
+            <section>
+                <h3>투자 정보</h3>
+                <InfoBox>
+                    <InfoItem>
+                        <p>전일</p>
+                        <p>{CommaGenerator(todayInfo.stck_prpr - todayInfo.prdy_vrss)}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>시가</p>
+                        <p className={todayInfo.stck_oprc > todayInfo.stck_prpr - todayInfo.prdy_vrss ? 'red' : 'blue'}>
+                            {CommaGenerator(todayInfo.stck_oprc)}
+                        </p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>고가</p>
+                        <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_hgpr ? 'red' : 'blue'}>
+                            {CommaGenerator(todayInfo.stck_hgpr)}
+                        </p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>저가</p>
+                        <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_lwpr ? 'red' : 'blue'}>
+                            {CommaGenerator(todayInfo.stck_lwpr)}
+                        </p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>52주일 최고가</p>
+                        <p>{CommaGenerator(todayInfo.w52_hgpr)}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>52주일 최저가</p>
+                        <p>{CommaGenerator(todayInfo.w52_lwpr)}</p>
+                    </InfoItem>
+                </InfoBox>
+            </section>
+            <section>
+                <h3>투자 지표</h3>
+                <InfoBox>
+                    <InfoItem>
+                        <p>시가총액</p>
+                        <p>{MarketCap}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>거래 회전율</p>
+                        <p>{todayInfo.vol_tnrt}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>PER</p>
+                        <p>{todayInfo.per}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>PBR</p>
+                        <p>{todayInfo.pbr}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>EPS</p>
+                        <p>{CommaGenerator(Math.floor(todayInfo.eps))}</p>
+                    </InfoItem>
+                    <InfoItem>
+                        <p>BPS</p>
+                        <p>{CommaGenerator(Math.floor(todayInfo.bps))}</p>
+                    </InfoItem>
+                </InfoBox>
+            </section>
+            {state ? <Chart options={state.options} series={state.series} type="bar" width={600} height={180} /> : null}
         </InfoContainer>
     );
 };

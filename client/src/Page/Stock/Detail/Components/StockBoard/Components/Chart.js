@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
-import { Ascend } from '../../../../Components/Function/Sort';
+import { Ascend } from '../../../../../../Components/Function/Sort';
 const Section = styled.section`
     padding-top: 20px;
     border-top: 1px solid #333;
@@ -12,11 +12,16 @@ const Section = styled.section`
 /** 빨간색과 파란색으로 표시되는 캔들 차트를 출력하는 컴포넌트입니다*/
 const Areachart = ({ infoByDate }) => {
     const sortedData = Ascend(infoByDate, 'stck_bsop_date');
+
+    /**
+     * @param x 날짜
+     * @param y [시가,최고가,최저가,종가]
+     */
     const dataList = sortedData
         ? sortedData.map((el) => {
               const data = {
                   x: `${el.stck_bsop_date.slice(2, 4)}/${el.stck_bsop_date.slice(4, 6)}/${el.stck_bsop_date.slice(6, 8)}`,
-                  y: [Number(el.stck_clpr - el.prdy_vrss), Number(el.stck_hgpr), Number(el.stck_lwpr), Number(el.stck_clpr)],
+                  y: [Number(el.stck_oprc), Number(el.stck_hgpr), Number(el.stck_lwpr), Number(el.stck_clpr)],
               };
               return data;
           })

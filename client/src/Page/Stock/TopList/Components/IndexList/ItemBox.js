@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import CommaGenerator from '../../../../Components/Function/CommaGenerator';
-import { RedBox, BlueBox } from '../../../../Components/Style/ChgBox';
+import CommaGenerator from '../../../../../Components/Function/CommaGenerator';
+import { RedBox, BlueBox } from '../../../../../Components/Style/Stock';
 
 const Item = styled.li`
     display: flex;

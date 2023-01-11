@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 /**
  * 주식현재가 시세 정보를 가져오는 API 입니다
+ * @author 이중원
  * @param {string} Parameters query parameter를 넣어주세요
  * @type { string }
  * @return 1차원 배열안에 다수의 객체를 리턴합니다
@@ -21,6 +22,7 @@ export const useStockDetails = (Parameters) => {
 
 /**
  * 국내주식기간별(1일 단위) 시세 정보를 가져오는 API 입니다
+ * @author 이중원
  * @param {string} Parameters query parameter를 넣어주세요
  * @type { string }
  * @return1차원 배열안에 다수의 객체를 리턴합니다
@@ -39,6 +41,7 @@ export const useStockDayList = (Parameters) => {
 
 /**
  * 주식의 투자자 (개인,외국인,기업의 매수,매도) 정보를 가져오는 API 입니다
+ * @author 이중원
  * @param {string} Parameters query parameter를 넣어주세요
  * @type { string }
  * @return 1차원 배열안에 다수의 객체를 리턴합니다

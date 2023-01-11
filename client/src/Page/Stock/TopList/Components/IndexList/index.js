@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import useGetMarket from '../../../../Components/API/useGetMarket';
+import useGetMarket from '../../../../../Components/API/useGetMarket';
 import ItemBox from './ItemBox';
-import { Title, SmFont } from '../Style';
-import DateOutput from '../../../../Components/Function/DateOutput';
+import { Title, SmTitle } from '../../../../../Components/Style/Stock';
+import DateOutput from '../../../../../Components/Function/DateOutput';
 const ItemList = styled.ul`
     display: flex;
     list-style: none;
@@ -10,7 +10,6 @@ const ItemList = styled.ul`
     flex-direction: row;
     list-style: none;
     padding-bottom: 30px;
-    border-bottom: 1px solid rgb(227 230 232);
 `;
 
 /**
@@ -32,7 +31,7 @@ const IndexList = () => {
         <section>
             <Title>
                 국내지수
-                {kospi ? <SmFont>{`${DateOutput(kospi.basDt)} 기준`}</SmFont> : null}
+                {kospi ? <SmTitle>{`${DateOutput(kospi.basDt)} 기준`}</SmTitle> : null}
             </Title>
             <ItemList>
                 {kospi ? <ItemBox data={kospi}></ItemBox> : null}
