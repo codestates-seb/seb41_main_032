@@ -1,7 +1,15 @@
 import { useParams } from 'react-router';
+import styled from 'styled-components';
 import { useStockDayList, useStockDetails, useStockInvestor } from '../../../Components/API/useGetStockDetails';
+import Loading from '../../../Components/Style/Loading';
 import DailyInfo from './Components/DailyInfo';
 import StockBoard from './Components/StockBoard';
+
+const Main = styled.main`
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+`;
 
 /**
  * 주식의 상세정보를 보여주는 페이지 입니다
@@ -30,14 +38,16 @@ const StockDetail = () => {
     const [infoByDate, setInfoByDate] = useStockDayList(InfoByDateQuery);
 
     return (
-        <main>
+        <Main>
             {todayInfo && tradingTrends && infoByDate ? (
                 <>
                     <StockBoard todayInfo={todayInfo} tradingTrends={tradingTrends} infoByDate={infoByDate} />
                     <DailyInfo infoByDate={infoByDate} />
                 </>
-            ) : null}
-        </main>
+            ) : (
+                <Loading />
+            )}
+        </Main>
     );
 };
 

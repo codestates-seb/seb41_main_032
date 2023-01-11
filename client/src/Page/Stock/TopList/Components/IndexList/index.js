@@ -3,6 +3,8 @@ import useGetMarket from '../../../../../Components/API/useGetMarket';
 import ItemBox from './ItemBox';
 import { Title, SmTitle } from '../../../../../Components/Style/Stock';
 import DateOutput from '../../../../../Components/Function/DateOutput';
+import Loading from '../../../../../Components/Style/Loading';
+
 const ItemList = styled.ul`
     display: flex;
     list-style: none;
@@ -10,6 +12,11 @@ const ItemList = styled.ul`
     flex-direction: row;
     list-style: none;
     padding-bottom: 30px;
+`;
+const Section = styled.section`
+    position: relative;
+    width: 100%;
+    min-height: 150px;
 `;
 
 /**
@@ -23,21 +30,29 @@ const IndexList = () => {
     date.setDate(date.getDate() - 4);
     const day = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
 
-    const KOSPI = `&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스피`;
-    const KOSDAQ = `&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스닥`;
-    const [kospi, setKospi, kosdaq, setKosdaq] = useGetMarket(KOSPI, KOSDAQ);
-
+    const kospiQuery = `&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스피`;
+    const kosdaqQuery = `&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스닥`;
+    const [KOSPI, setKOSPI, KOSDAQ, setKOSDAQ] = useGetMarket(kospiQuery, kosdaqQuery);
     return (
-        <section>
-            <Title>
-                국내지수
-                {kospi ? <SmTitle>{`${DateOutput(kospi.basDt)} 기준`}</SmTitle> : null}
-            </Title>
-            <ItemList>
-                {kospi ? <ItemBox data={kospi}></ItemBox> : null}
-                {kosdaq ? <ItemBox data={kosdaq}></ItemBox> : null}
-            </ItemList>
-        </section>
+        <Section>
+            {KOSPI && KOSDAQ ? (
+                <>
+                    <Title>
+                        국내지수
+                        {KOSPI ? <SmTitle>{`${DateOutput(KOSPI.basDt)} 기준`}</SmTitle> : null}
+                    </Title>
+                    <ItemList>
+                        {KOSPI ? <ItemBox data={KOSPI}></ItemBox> : null}
+                        {KOSDAQ ? <ItemBox data={KOSDAQ}></ItemBox> : null}
+                    </ItemList>
+                </>
+            ) : (
+                <>
+                    <Title>국내지수</Title>
+                    <Loading />
+                </>
+            )}
+        </Section>
     );
 };
 
