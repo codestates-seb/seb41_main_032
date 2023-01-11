@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import BlueButton from "../../../../Components/Style/User/BlueButton";
 import InputField from "./InputField";
@@ -13,7 +13,7 @@ const Container = styled.form`
   gap: 16px;
 `;
 
-// 회원가입 서식
+// 회원정보 수정 서식
 const Form = () => {
   const [user, setUser] = useState({
     userId: "",
@@ -22,20 +22,33 @@ const Form = () => {
     email: "",
   });
   const [isValidInput, setIsValidInput] = useState({
-    userId: null,
     password: null,
-    nickname: null,
-    email: null,
+    nickname: true,
+    email: true,
   });
   const [passwordCheck, setPasswordCheck] = useState("");
   const [isValidPasswordCheck, setIsValidPasswordCheck] = useState(null);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    requestSignUp();
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = () => {
+    // TODO: 유저 정보 가져오는 로직 수정
+    const data = {
+      userId: "aaaaa",
+      nickname: "aaaaa",
+      email: "a@a.a",
+    };
+    setUser({ ...user, ...data });
   };
 
-  const requestSignUp = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    requestEditProfile();
+  };
+
+  const requestEditProfile = () => {
     // TODO: 서버 배포되면 로직 수정
     // const url = `url`;
     // const options = {
@@ -66,7 +79,6 @@ const Form = () => {
     setIsValidPasswordCheck,
   };
   const shouldDisableButton = !(
-    isValidInput.userId &&
     isValidInput.password &&
     isValidInput.nickname &&
     isValidInput.email &&
@@ -75,12 +87,12 @@ const Form = () => {
 
   return (
     <Container onSubmit={handleSubmit}>
-      <InputField id="userId" {...inputFieldProps} />
+      <InputField id="userId" {...inputFieldProps} disabled />
       <PasswordInputField {...passwordInputFieldProps} />
       <InputField id="nickname" {...inputFieldProps} />
       <InputField id="email" {...inputFieldProps} />
       <BlueButton type="submit" disabled={shouldDisableButton}>
-        회원가입
+        수정하기
       </BlueButton>
     </Container>
   );

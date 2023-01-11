@@ -1,29 +1,23 @@
 import { useState } from "react";
 import styled from "styled-components";
-import BlueButton from "../../../../Components/Style/User/BlueButton";
-import InputField from "./InputField";
-import OptionField from "./OptionField";
+import Button from "../../../../Components/Style/User/BlueButton";
+import PasswordCheckInput from "./PasswordCheckInput";
 
 const Container = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  gap: 2px;
+  align-items: center;
 `;
 
-// 로그인 서식
-const Form = () => {
+// 본인 확인 영역
+const PasswordCheck = ({ setPasswordCheck }) => {
   const [user, setUser] = useState({
-    userId: "",
+    userId: "DUMMY",
     password: "",
-    keepLogin: false,
   });
-  const [isValidInput, setIsValidInput] = useState({
-    userId: null,
-    password: null,
-  });
+  const [isValidPassword, setIsValidPassword] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,19 +38,16 @@ const Form = () => {
     //   .catch((error) => console.log(error));
   };
 
-  const inputFieldProps = { user, isValidInput, setUser, setIsValidInput };
-  const optionFieldProps = { user, setUser };
-  const shouldDisableButton = !isValidInput.userId || !isValidInput.password;
+  const inputFieldProps = { user, isValidPassword, setUser, setIsValidPassword };
 
   return (
     <Container onSubmit={handleSubmit}>
-      <InputField {...inputFieldProps} />
-      <BlueButton type="submit" disabled={shouldDisableButton}>
-        로그인
-      </BlueButton>
-      <OptionField {...optionFieldProps} />
+      <PasswordCheckInput {...inputFieldProps} />
+      <Button type="submit" disabled={!isValidPassword}>
+        확인
+      </Button>
     </Container>
   );
 };
 
-export default Form;
+export default PasswordCheck;
