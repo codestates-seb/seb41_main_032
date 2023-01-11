@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import Article from "./Article";
+import Article from "./ArticleThumbnail";
+
+// 게시판의 글 목록 조회 페이지 입니다. 각 목록은 ArticleThumbnail
 
 const Div = styled.div`
   min-height: 100%;
@@ -78,7 +80,7 @@ const Board = () => {
     <Div>
       <div className="top">
         <h1> 게시판</h1>
-        <NewArticle>새 글 작성</NewArticle>
+        <NewArticle to="/board/new">새 글 작성</NewArticle>
       </div>
       <div className="listcontainer">
         {data.slice(10 * currentPage - 9, 10 * currentPage).map((el) => (
