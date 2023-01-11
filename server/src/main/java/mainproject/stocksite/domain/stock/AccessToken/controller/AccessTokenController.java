@@ -42,6 +42,5 @@ public class AccessTokenController {
         String[] responseBody = response.getBody().split("\"");
 
         accessToken = responseBody[3];
-        System.out.println("메서드 요청 accessToken = " + accessToken);
     }
 }
