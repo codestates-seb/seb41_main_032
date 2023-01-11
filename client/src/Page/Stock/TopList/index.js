@@ -5,7 +5,7 @@ import StockTable from './Components/StockTable';
 import { Ascend, Descend } from '../../../Components/Function/Sort';
 
 const Main = styled.main`
-    padding: 20px 50px;
+    padding: 0px 50px;
 `;
 
 /**
@@ -37,9 +37,9 @@ const TopList = () => {
     return (
         <Main>
             <IndexItem />
-            {topKOSPI && topKOSDAQ ? <StockTable title={`시가총액 TOP10`} KOSPI={topKOSPI} KOSDAQ={topKOSDAQ} /> : null}
-            {upKOSPI && upKOSDAQ ? <StockTable title={`상승 TOP10`} KOSPI={upKOSPI} KOSDAQ={upKOSDAQ} /> : null}
-            {lowKOSPI && lowKOSDAQ ? <StockTable title={`하락 TOP10`} KOSPI={lowKOSPI} KOSDAQ={lowKOSDAQ} /> : null}
+            <StockTable title={`시가총액 TOP10`} KOSPI={topKOSPI} KOSDAQ={topKOSDAQ} />
+            <StockTable title={`상승 TOP10`} KOSPI={upKOSPI} KOSDAQ={upKOSDAQ} />
+            <StockTable title={`하락 TOP10`} KOSPI={lowKOSPI} KOSDAQ={lowKOSDAQ} />
         </Main>
     );
 };
