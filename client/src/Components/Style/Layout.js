@@ -9,10 +9,11 @@ const Wrapper = styled.main`
   flex-direction: column;
   height: auto;
   min-height: 100%;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
   .content {
     margin-top: 100px;
     margin-left: 120px;
+    height: 100%;
   }
 `;
 
