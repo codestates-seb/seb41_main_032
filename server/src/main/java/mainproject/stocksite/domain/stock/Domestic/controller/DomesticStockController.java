@@ -51,6 +51,37 @@ public class DomesticStockController {
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
+    // 국내 주식 현재가 투자자
+    @GetMapping("domestic/investors")
+    public ResponseEntity getInvestorsOfPresentDomesticStock(@RequestParam("FID_INPUT_ISCD") String FID_INPUT_ISCD) {
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.set("authorization", "Bearer " + accessToken);
+        requestHeaders.set("appkey", appKey);
+        requestHeaders.set("appsecret", appSecret);
+        requestHeaders.set("tr_id", "FHKST01010900");
+        HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
+
+        String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-investor";
+
+        UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("FID_COND_MRKT_DIV_CODE", "J")
+                .queryParam("FID_INPUT_ISCD", FID_INPUT_ISCD)
+                .build(true);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Object> response =
+                restTemplate.exchange(
+                        uriBuilder.toString(),
+                        HttpMethod.GET,
+                        requestMessage,
+                        Object.class
+                );
+
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+    }
+
     // 국내 주식 기간별 시세 조회 (일/주/월/년)
     @GetMapping("domestic/quotations-by-period")
     public ResponseEntity getDomesticStockQuotationsByPeriodInfo(
@@ -65,7 +96,7 @@ public class DomesticStockController {
         requestHeaders.set("authorization", "Bearer " + accessToken);
         requestHeaders.set("appkey", appKey);
         requestHeaders.set("appsecret", appSecret);
-        requestHeaders.set("tr_id", "FHKST01010100");
+        requestHeaders.set("tr_id", "FHKST03010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
         String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
