@@ -7,7 +7,8 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     SIGNUP_EXISTS_EMAIL(409, "This is a registered email"),
     SIGNUP_EXISTS_NICKNAME(409, "This is a registered nickname"),
-    LOGIN_REQUIRED(401, "You need to login");
+    LOGIN_REQUIRED(401, "You need to login"),
+    UNABLE_TO_REQUEST_AGAIN(503, "Your Request Exceeded");
 
 
     @Getter

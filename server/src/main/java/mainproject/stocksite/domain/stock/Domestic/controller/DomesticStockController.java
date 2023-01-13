@@ -1,9 +1,7 @@
 package mainproject.stocksite.domain.stock.Domestic.controller;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import mainproject.stocksite.domain.exception.ExceptionCode;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,9 +18,11 @@ import static mainproject.stocksite.domain.stock.AccessToken.dto.AccessTokenRequ
 @RequestMapping("/stock")
 public class DomesticStockController {
 
+    private static int countOfRequest;
+
     // 국내 주식 현재가 시세 조회
     @GetMapping("domestic/present-quotations")
-    public ResponseEntity getPresentDomesticStockQuotationsInfo(@RequestParam("FID_INPUT_ISCD") String FID_INPUT_ISCD) {
+    public ResponseEntity getPresentDomesticStockQuotationsInfo(@RequestParam("FID_INPUT_ISCD") String FID_INPUT_ISCD) throws InterruptedException {
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", "Bearer " + accessToken);
@@ -40,20 +40,36 @@ public class DomesticStockController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response =
-                restTemplate.exchange(
-                        uriBuilder.toString(),
-                        HttpMethod.GET,
-                        requestMessage,
-                        Object.class
-                );
+        ResponseEntity<Object> response = null;
+
+        try {
+            response = restTemplate.exchange(
+                    uriBuilder.toString(),
+                    HttpMethod.GET,
+                    requestMessage,
+                    Object.class
+            );
+        } catch (Exception e) {
+            String[] errorMessage = e.getMessage().split("\"");
+
+            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
+                if (countOfRequest == 2) {
+                    countOfRequest = 0;
+                    return new ResponseEntity(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+                } else if (countOfRequest < 2) {
+                    Thread.sleep(1000);
+                    countOfRequest++;
+                    getPresentDomesticStockQuotationsInfo(FID_INPUT_ISCD);
+                }
+            }
+        }
 
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
     // 국내 주식 현재가 투자자
     @GetMapping("domestic/investors")
-    public ResponseEntity getInvestorsOfPresentDomesticStock(@RequestParam("FID_INPUT_ISCD") String FID_INPUT_ISCD) {
+    public ResponseEntity getInvestorsOfPresentDomesticStock(@RequestParam("FID_INPUT_ISCD") String FID_INPUT_ISCD) throws InterruptedException {
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", "Bearer " + accessToken);
@@ -71,13 +87,29 @@ public class DomesticStockController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response =
-                restTemplate.exchange(
-                        uriBuilder.toString(),
-                        HttpMethod.GET,
-                        requestMessage,
-                        Object.class
-                );
+        ResponseEntity<Object> response = null;
+
+        try {
+            response = restTemplate.exchange(
+                    uriBuilder.toString(),
+                    HttpMethod.GET,
+                    requestMessage,
+                    Object.class
+            );
+        } catch (Exception e) {
+            String[] errorMessage = e.getMessage().split("\"");
+
+            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
+                if (countOfRequest == 2) {
+                    countOfRequest = 0;
+                    return new ResponseEntity(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+                } else if (countOfRequest < 2) {
+                    Thread.sleep(1000);
+                    countOfRequest++;
+                    getInvestorsOfPresentDomesticStock(FID_INPUT_ISCD);
+                }
+            }
+        }
 
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
@@ -89,7 +121,7 @@ public class DomesticStockController {
             @RequestParam("FID_INPUT_DATE_1") String FID_INPUT_DATE_1,
             @RequestParam("FID_INPUT_DATE_2") String FID_INPUT_DATE_2,
             @RequestParam("FID_PERIOD_DIV_CODE") String FID_PERIOD_DIV_CODE,
-            @RequestParam("FID_ORG_ADJ_PRC") String FID_ORG_ADJ_PRC) {
+            @RequestParam("FID_ORG_ADJ_PRC") String FID_ORG_ADJ_PRC) throws InterruptedException {
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
@@ -112,20 +144,36 @@ public class DomesticStockController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response =
-                restTemplate.exchange(
-                        uriBuilder.toString(),
-                        HttpMethod.GET,
-                        requestMessage,
-                        Object.class
-                );
+        ResponseEntity<Object> response = null;
+
+        try {
+            response = restTemplate.exchange(
+                    uriBuilder.toString(),
+                    HttpMethod.GET,
+                    requestMessage,
+                    Object.class
+            );
+        } catch (Exception e) {
+            String[] errorMessage = e.getMessage().split("\"");
+
+            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
+                if (countOfRequest == 2) {
+                    countOfRequest = 0;
+                    return new ResponseEntity(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+                } else if (countOfRequest < 2) {
+                    Thread.sleep(1000);
+                    countOfRequest++;
+                    getDomesticStockQuotationsByPeriodInfo(FID_INPUT_ISCD, FID_INPUT_DATE_1, FID_INPUT_DATE_2, FID_PERIOD_DIV_CODE, FID_ORG_ADJ_PRC);
+                }
+            }
+        }
 
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
     // 국내 휴장일 조회
     @GetMapping("domestic/holiday-status")
-    public ResponseEntity checkHolidayOfDomesticStock(@RequestParam("BASS_DT") String BASS_DT) {
+    public ResponseEntity checkHolidayOfDomesticStock(@RequestParam("BASS_DT") String BASS_DT) throws InterruptedException {
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
@@ -146,13 +194,29 @@ public class DomesticStockController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response =
-                restTemplate.exchange(
-                        uriBuilder.toString(),
-                        HttpMethod.GET,
-                        requestMessage,
-                        Object.class
-                );
+        ResponseEntity<Object> response = null;
+
+        try {
+            response = restTemplate.exchange(
+                    uriBuilder.toString(),
+                    HttpMethod.GET,
+                    requestMessage,
+                    Object.class
+            );
+        } catch (Exception e) {
+            String[] errorMessage = e.getMessage().split("\"");
+
+            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
+                if (countOfRequest == 2) {
+                    countOfRequest = 0;
+                    return new ResponseEntity(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+                } else if (countOfRequest < 2) {
+                    Thread.sleep(1000);
+                    countOfRequest++;
+                    checkHolidayOfDomesticStock(BASS_DT);
+                }
+            }
+        }
 
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
