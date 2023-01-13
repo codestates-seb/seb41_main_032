@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,5 +18,5 @@ public class MemberResponseDto {
     private String password;
     private String nickname;
     private String email;
-
+    private List<MBResponseDto> boardList = new ArrayList<>();
 }

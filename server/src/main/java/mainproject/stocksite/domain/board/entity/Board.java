@@ -2,6 +2,7 @@ package mainproject.stocksite.domain.board.entity;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mainproject.stocksite.domain.comment.entity.Comment;
 import mainproject.stocksite.domain.member.entity.Member;
 import mainproject.stocksite.domain.time.time;
 import lombok.Data;
@@ -9,6 +10,8 @@ import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -29,5 +32,8 @@ public class Board extends time {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList  = new ArrayList<>();
 
 }
