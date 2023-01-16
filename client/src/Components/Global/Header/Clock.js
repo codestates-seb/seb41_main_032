@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Div = styled.div`
-  width: auto;
-  height: auto;
+  width: 100px;
+  height: 60px;
   padding: 15px;
   font-size: 1.2em;
   font-family: "Oswald";
