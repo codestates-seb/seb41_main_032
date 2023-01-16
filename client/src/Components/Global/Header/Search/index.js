@@ -38,15 +38,20 @@ const Search = () => {
   const [keyword, setKeyword] = useState("");
   const [focus, setFocus] = useState(false);
   return (
-    <Div>
+    <Div
+      onFocus={() => {
+        setFocus(true);
+      }}
+      onBlur={() => {
+        setFocus(false);
+      }}
+    >
       <div className="box">
         <Input
           placeholder="어떤 종목이 궁금하세요?"
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
         ></Input>
         <button onClick={() => setKeyword("")}>⌫</button>
       </div>

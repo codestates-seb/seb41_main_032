@@ -23,14 +23,7 @@ const Autocomplete = ({ keyword, setKeyword }) => {
   const [selected, setSelected] = useState("white");
   const [similar, setSimilar] = useState([]);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setSimilar(
-        data.filter((el) => el.itmsNm.includes(keyword.toUpperCase()))
-      );
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
+    setSimilar(data.filter((el) => el.itmsNm.includes(keyword.toUpperCase())));
   }, [keyword]);
 
   return (
@@ -47,6 +40,7 @@ const Autocomplete = ({ keyword, setKeyword }) => {
           }}
           onMouseOver={() => setSelected(el.srtnCd)}
           color={selected === el.srtnCd ? "#f7f7f7" : "white"}
+          onMouseDown={(e) => e.preventDefault()}
         >
           {el.itmsNm} ⇨
         </List>
