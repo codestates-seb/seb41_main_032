@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 const Main = styled.footer`
   display: flex;
+  grid-area: footer;
   height: 250px;
   width: 100%;
-  position: relative;
-  transfrom: translateY(-100%);
   background-color: #144272;
   color: white;
   flex-direction: column;

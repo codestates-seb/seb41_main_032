@@ -9,6 +9,7 @@ import Clock from "./Clock";
 
 const Main = styled.header`
   display: grid;
+  grid-area: header;
   position: fixed;
   z-index: 100;
   background-color: white;
