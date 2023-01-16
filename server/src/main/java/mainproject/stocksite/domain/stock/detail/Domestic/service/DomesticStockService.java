@@ -108,8 +108,55 @@ public class DomesticStockService {
     }
 
     // 수정 사항
-    public ResponseEntity<Object> findQuotationsByPeriod() {
-        return new ResponseEntity<>(null, HttpStatus.OK);
+    public ResponseEntity<Object> findQuotationsByPeriod(String itemId, String startDay, String endDay, String periodCode, String code) throws InterruptedException {
+
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.set("content-type", "application/json; charset=utf-8");
+        requestHeaders.set("authorization", "Bearer " + accessToken);
+        requestHeaders.set("appkey", appKey);
+        requestHeaders.set("appsecret", appSecret);
+        requestHeaders.set("tr_id", "FHKST03010100");
+        HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
+
+        String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
+
+        UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("FID_COND_MRKT_DIV_CODE", "J")
+                .queryParam("FID_INPUT_ISCD", itemId)
+                .queryParam("FID_INPUT_DATE_1", startDay)
+                .queryParam("FID_INPUT_DATE_2", endDay)
+                .queryParam("FID_PERIOD_DIV_CODE", periodCode)
+                .queryParam("FID_ORG_ADJ_PRC", code)
+                .build(true);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Object> response = null;
+
+        try {
+            response = restTemplate.exchange(
+                    uriBuilder.toString(),
+                    HttpMethod.GET,
+                    requestMessage,
+                    Object.class
+            );
+        } catch (Exception e) {
+            String[] errorMessage = e.getMessage().split("\"");
+
+            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
+                if (countOfRequest == 2) {
+                    countOfRequest = 0;
+                    return new ResponseEntity<>(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+                } else if (countOfRequest < 2) {
+                    Thread.sleep(1000);
+                    countOfRequest++;
+                    findQuotationsByPeriod(itemId, startDay, endDay, periodCode, code);
+                }
+            }
+        }
+        assert response != null;
+
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
     public ResponseEntity<Object> findHolidays(String baseDate) throws InterruptedException {
