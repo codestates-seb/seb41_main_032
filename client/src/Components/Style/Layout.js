@@ -5,34 +5,27 @@ import Sidebar from "../Global/Sidebar/index";
 import Footer from "../Global/Footer/index";
 
 const Div = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: 63px auto 250px;
+  grid-template-columns: 112px auto;
+  grid-template-areas:
+    "header header"
+    "side main"
+    "footer footer";
 `;
 
 const Wrapper = styled.main`
-  display: flex;
-  flex-direction: row;
-
-  height: auto;
-  position: relative;
-  min-height: 100%;
-  padding-bottom: 250px;
-  .content {
-    margin-top: 100px;
-    margin-left: 120px;
-    width: 100%;
-  }
+  display: grid;
+  grid-area: main;
 `;
 
 const Layout = ({ children }) => {
   return (
     <Div>
       <Header />
-      <Wrapper>
-        <Sidebar />
-        <section className="content">{children}</section>
-      </Wrapper>
+      <Sidebar />
+      <Wrapper>{children}</Wrapper>
       <Footer />
     </Div>
   );
