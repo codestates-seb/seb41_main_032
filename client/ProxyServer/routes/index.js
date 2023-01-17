@@ -37,8 +37,7 @@ router.get('/', cache('1 minutes'), async (req, res, next) => {
 
         // Log the request to the public API
         if (process.env.NODE_ENV !== 'production') {
-            console.log(`REQUEST: ${API_BASE_URL}/uapi/domestic-stock/v1/quotations/inquire-price?${params}`);
-            console.log(stockHeaders);
+            // console.log(`REQUEST: ${API_BASE_URL}/uapi/domestic-stock/v1/quotations/inquire-price?${params}`);
         }
 
         res.status(200).json(data);
