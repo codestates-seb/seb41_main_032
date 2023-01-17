@@ -12,6 +12,7 @@ const Main = styled.footer`
   text-align: center;
   align-items: center;
   font-size: 0.7em;
+  z-index: 1;
   > div {
     display: flex;
     margin-top: 20px;
