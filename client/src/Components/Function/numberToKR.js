@@ -5,7 +5,7 @@
  * @type {string | number}
  * @return 347441344410000 => 347조4413억
  */
-const NumberToKR = (data) => {
+const numberToKR = (data) => {
     const unitWords = ['', '만', '억', '조', '경'];
     let result = String(data);
     if (result.length < 5) return result;
@@ -30,4 +30,4 @@ const NumberToKR = (data) => {
     return result;
 };
 
-export default NumberToKR;
+export default numberToKR;

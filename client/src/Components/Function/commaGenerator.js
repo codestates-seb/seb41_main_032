@@ -5,8 +5,8 @@
  * @type {string | number}
  * @return 문자열을 반환합니다
  */
-const CommaGenerator = (data) => {
+const commaGenerator = (data) => {
     return data.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 };
 
-export default CommaGenerator;
+export default commaGenerator;
