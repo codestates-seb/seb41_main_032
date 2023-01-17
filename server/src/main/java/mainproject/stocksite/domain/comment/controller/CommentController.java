@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
