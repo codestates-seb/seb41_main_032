@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const Main = styled.main`
     width: 100%;
     min-height: 800px;
+    margin-bottom: 100px;
 `;
 
 /**

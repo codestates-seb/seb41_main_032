@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Main = styled.aside`
-  float: left;
-  width: 115px;
-  border-right: double 3px #eeeeee;
-
+const Aside = styled.aside`
+  display: flex;
+  grid-area: side;
   position: fixed;
+  float: left;
+  width: 112px;
+  height: 70%;
+  border-right: double 3px #eeeeee;
   top: 100px;
   bottom: 0;
   > ul li {
@@ -19,17 +21,23 @@ const Main = styled.aside`
 
 const StyledLink = styled(Link)`
   display: block;
-  width: 90px;
+  width: 100%;
   text-decoration: none;
   color: gray;
   font-size: 0.8em;
   padding: 10px;
   border-radius: 7px;
+
   &:hover {
     background-color: #f0f0f0;
+    transform: scale(1.1);
   }
   margin: 10px 10px 0 10px;
-  background-color: ${(props) => props.bgcolor};
+
+  &.select {
+    background-color: #f48225;
+    color: white;
+  }
 `;
 
 // 호버 시 회색으로 백그라운드 색들어오게
@@ -45,16 +53,32 @@ const Sidebar = () => {
     setNow(location.pathname);
   }, [location.pathname]);
   return (
-    <Main>
+    <Aside>
       <ul>
         <li>
-          <StyledLink bgcolor={now === "/" ? "orange" : "white"} to="/">
+          <StyledLink className={now === "/" ? "select" : null} to="/">
             Home
           </StyledLink>
         </li>
         <li>
           <StyledLink
-            bgcolor={now === "/board" ? "orange" : "white"}
+            className={now === "/stock/top" ? "select" : null}
+            to="/stock/top"
+          >
+            Top 10
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink
+            className={now === "/stock/List" ? "select" : null}
+            to="/stock/List"
+          >
+            전체 목록
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink
+            className={now === "/board" ? "select" : null}
             to="/board"
           >
             게시판
@@ -64,7 +88,7 @@ const Sidebar = () => {
           <StyledLink>Mypage</StyledLink>
         </li>
       </ul>
-    </Main>
+    </Aside>
   );
 };
 

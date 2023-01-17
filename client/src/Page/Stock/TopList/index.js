@@ -6,6 +6,7 @@ import { Ascend, Descend } from '../../../Components/Function/Sort';
 
 const Main = styled.main`
     padding: 0px 50px;
+    margin-bottom: 100px;
 `;
 
 /**

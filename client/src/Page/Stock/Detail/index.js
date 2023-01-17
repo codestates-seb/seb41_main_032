@@ -9,6 +9,7 @@ const Main = styled.main`
     position: relative;
     width: 100%;
     min-height: 500px;
+    margin-bottom: 100px;
 `;
 
 /**

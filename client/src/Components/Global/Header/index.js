@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+import Search from "./Search/index";
 import Clock from "./Clock";
 // 헤더 기본 구조
 // 로고 / 검색창 / 로그인버튼
@@ -7,6 +9,7 @@ import Clock from "./Clock";
 
 const Main = styled.header`
   display: grid;
+  grid-area: header;
   position: fixed;
   z-index: 100;
   background-color: white;
@@ -42,15 +45,6 @@ const Main = styled.header`
   }
 `;
 
-const Search = styled.input`
-  width: 500px;
-  height: 30px;
-  border: solid 1.5px #495464;
-  border-radius: 3px;
-  margin: 15px 10px 15px 0;
-  padding-left: 9px;
-`;
-
 const LogDiv = styled.div`
   .user {
     margin: 15px auto auto 40px;
@@ -82,10 +76,11 @@ const Header = () => {
       </div>
       <div className="search">
         <div>
-          <Search placeholder="오늘의 주가는?" type="text"></Search>
+          <Search />
           <svg
             className="sicon"
             width="20"
+            height="60"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
           >

@@ -35,6 +35,7 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
+    @Transactional(readOnly = true)
     public Board getBoard(long boardId) {
         Board findBoard = boardRepository.findById(boardId).get();
         return findBoard;
