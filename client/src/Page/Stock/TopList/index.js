@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import IndexItem from './Components/IndexList';
 import useGetStockList from '../../../Components/API/useGetStockList';
 import StockTable from './Components/StockTable';
-import { Ascend, Descend } from '../../../Components/Function/Sort';
+import { ascend, descend } from '../../../Components/Function/sort';
 
 const Main = styled.main`
     padding: 0px 50px;
@@ -25,15 +25,15 @@ const TopList = () => {
 
     const TopKOSPI = `&numOfRows=30&pageNo=1&resultType=json&beginBasDt=${day}&beginMrktTotAmt=20000000000000&mrktCls=KOSPI`;
     const TopKOSDAQ = `&numOfRows=30&pageNo=1&resultType=json&beginBasDt=${day}&beginMrktTotAmt=1300000000000&mrktCls=KOSDAQ`;
-    const [topKOSPI, setTopKOSPI, topKOSDAQ, setTopKOSDAQ] = useGetStockList(TopKOSPI, TopKOSDAQ, Descend, 'mrktTotAmt', 10);
+    const [topKOSPI, setTopKOSPI, topKOSDAQ, setTopKOSDAQ] = useGetStockList(TopKOSPI, TopKOSDAQ, descend, 'mrktTotAmt', 10);
 
     const UpKOSPI = `&numOfRows=50&pageNo=1&resultType=json&beginBasDt=${day}&beginFltRt=5&mrktCls=KOSPI`;
     const UpKOSDAQ = `&numOfRows=50&pageNo=1&resultType=json&beginBasDt=${day}&beginFltRt=10&mrktCls=KOSDAQ`;
-    const [upKOSPI, setUpKOSPI, upKOSDAQ, setUpKOSDAQ] = useGetStockList(UpKOSPI, UpKOSDAQ, Descend, 'fltRt', 10);
+    const [upKOSPI, setUpKOSPI, upKOSDAQ, setUpKOSDAQ] = useGetStockList(UpKOSPI, UpKOSDAQ, descend, 'fltRt', 10);
 
     const LowKOSPI = `&numOfRows=100&pageNo=1&resultType=json&beginBasDt=${day}&endFltRt=-2&mrktCls=KOSPI`;
     const LowKOSDAQ = `&numOfRows=100&pageNo=1&resultType=json&beginBasDt=${day}&endFltRt=-4&mrktCls=KOSDAQ`;
-    const [lowKOSPI, setLowKOSPI, lowKOSDAQ, setLowKOSDAQ] = useGetStockList(LowKOSPI, LowKOSDAQ, Ascend, 'fltRt', 10);
+    const [lowKOSPI, setLowKOSPI, lowKOSDAQ, setLowKOSDAQ] = useGetStockList(LowKOSPI, LowKOSDAQ, ascend, 'fltRt', 10);
 
     return (
         <Main>

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { SmFont, SmFontContainer, RedBox, BlueBox, RedTriangle, BlueTriangle } from '../Style/Stock';
-import CommaGenerator from '../Function/CommaGenerator';
-import NumberToKR from '../Function/NumberToKR';
+import commaGenerator from '../Function/commaGenerator';
+import numberToKR from '../Function/numberToKR';
 import styled from 'styled-components';
 
 const Table = styled.table`
@@ -88,7 +88,7 @@ const useCreateTable = (data) => {
                               <tr
                                   key={el.srtnCd}
                                   onClick={(e) => {
-                                      Linkhandler([el.srtnCd, el.itmsNm, NumberToKR(el.mrktTotAmt)]);
+                                      Linkhandler([el.srtnCd, el.itmsNm, numberToKR(el.mrktTotAmt)]);
                                   }}
                               >
                                   <td>
@@ -97,7 +97,7 @@ const useCreateTable = (data) => {
                                   </td>
                                   {el.fltRt > 0 ? (
                                       <td>
-                                          <div className="red">{CommaGenerator(el.clpr)}</div>
+                                          <div className="red">{commaGenerator(el.clpr)}</div>
                                           <SmFontContainer>
                                               <RedTriangle />
                                               <span className="red">{el.vs}</span>
@@ -105,7 +105,7 @@ const useCreateTable = (data) => {
                                       </td>
                                   ) : (
                                       <td>
-                                          <div className="blue">{CommaGenerator(el.clpr)}</div>
+                                          <div className="blue">{commaGenerator(el.clpr)}</div>
                                           <SmFontContainer>
                                               <BlueTriangle />
                                               <span className="blue">{el.vs}</span>
@@ -113,10 +113,10 @@ const useCreateTable = (data) => {
                                       </td>
                                   )}
                                   <td>{el.fltRt > 0 ? <RedBox>{Number(el.fltRt)}%</RedBox> : <BlueBox>{Number(el.fltRt)}%</BlueBox>}</td>
-                                  <td>{NumberToKR(el.mrktTotAmt)}</td>
+                                  <td>{numberToKR(el.mrktTotAmt)}</td>
                                   <td>
-                                      <div>{CommaGenerator(el.trqu)}</div>
-                                      <SmFont>{NumberToKR(el.trPrc)}</SmFont>
+                                      <div>{commaGenerator(el.trqu)}</div>
+                                      <SmFont>{numberToKR(el.trPrc)}</SmFont>
                                   </td>
                               </tr>
                           );

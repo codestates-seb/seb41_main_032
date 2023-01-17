@@ -1,6 +1,6 @@
 import useGetStockList from '../../../Components/API/useGetStockList';
 import { Title, SmTitle } from '../../../Components/Style/Stock';
-import DateOutput from '../../../Components/Function/DateOutput';
+import dateOutput from '../../../Components/Function/dateOutput';
 import StockTable from './Components/StockTable';
 import Loading from '../../../Components/Style/Loading';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ const AllList = () => {
         <Main>
             {allKOSDAQ && allKOSPI ? (
                 <>
-                    <Title>전체 목록{<SmTitle>{`${DateOutput(allKOSPI[0].basDt)} 기준`}</SmTitle>}</Title>
+                    <Title>전체 목록{<SmTitle>{`${dateOutput(allKOSPI[0].basDt)} 기준`}</SmTitle>}</Title>
                     {<StockTable allKOSPI={allKOSPI} allKOSDAQ={allKOSDAQ} setAllKOSPI={setAllKOSPI} setAllKOSDAQ={setAllKOSDAQ} />}
                 </>
             ) : (

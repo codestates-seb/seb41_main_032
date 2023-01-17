@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Title, SmTitle, SelectBtnContainer } from '../../../../../Components/Style/Stock';
 import { Link } from 'react-router-dom';
-import DateOutput from '../../../../../Components/Function/DateOutput';
+import dateOutput from '../../../../../Components/Function/dateOutput';
 import useCreateTable from '../../../../../Components/Hook/useCreateTable';
 import { useEffect, useState } from 'react';
 import Loading from '../../../../../Components/Style/Loading';
@@ -45,7 +45,7 @@ const StockTable = ({ title, KOSPI, KOSDAQ }) => {
                 <>
                     <Title>
                         {title}
-                        <SmTitle>{KOSPI.length > 0 ? `${DateOutput(KOSPI[0].basDt)} 기준` : null}</SmTitle>
+                        <SmTitle>{KOSPI.length > 0 ? `${dateOutput(KOSPI[0].basDt)} 기준` : null}</SmTitle>
                     </Title>
                     <SelectBtnContainer>
                         <li>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CommaGenerator from '../../../../../Components/Function/CommaGenerator';
+import commaGenerator from '../../../../../Components/Function/commaGenerator';
 import { RedBox, BlueBox } from '../../../../../Components/Style/Stock';
 
 const Item = styled.li`
@@ -28,7 +28,7 @@ const ItemBox = ({ data }) => {
     return (
         <Item>
             <Name>{data.idxNm ? data.idxNm : null}</Name>
-            <Bold>{CommaGenerator(data.clpr)}</Bold>
+            <Bold>{commaGenerator(data.clpr)}</Bold>
             {data.fltRt > 0 ? <RedBox>{Number(data.fltRt)}%</RedBox> : <BlueBox>{Number(data.fltRt)}%</BlueBox>}
         </Item>
     );

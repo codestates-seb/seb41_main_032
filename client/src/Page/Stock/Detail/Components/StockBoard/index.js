@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Info from './Components/Info';
-import Chart from './Components/Chart';
+import CandlestickChar from './Components/CandlestickChar';
 import SummaryInfo from './Components/SummaryInfo';
 
 const Board = styled.section`
@@ -42,7 +42,7 @@ const StockBoard = ({ todayInfo, tradingTrends, infoByDate }) => {
         <Board>
             <Info todayInfo={todayInfo} />
             <SummaryInfo todayInfo={todayInfo} tradingTrends={tradingTrends} />
-            <Chart infoByDate={infoByDate} />
+            <CandlestickChar infoByDate={infoByDate} />
         </Board>
     );
 };

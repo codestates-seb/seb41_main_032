@@ -2,7 +2,7 @@ import usePagination from '../../../../Components/Hook/usePagination';
 import styled from 'styled-components';
 import useCreateTable from '../../../../Components/Hook/useCreateTable';
 import { useEffect, useState } from 'react';
-import { Ascend, Descend } from '../../../../Components/Function/Sort';
+import { ascend, descend } from '../../../../Components/Function/sort';
 import { SelectBtnContainer } from '../../../../Components/Style/Stock';
 import { PageBtn, PageList } from '../../../../Components/Style/PageBtn';
 
@@ -69,19 +69,19 @@ const StockTable = ({ allKOSPI, allKOSDAQ }) => {
         setSortSelect(select);
         switch (select) {
             case 'MarketCap':
-                setData((current) => Descend(current, 'mrktTotAmt'));
+                setData((current) => descend(current, 'mrktTotAmt'));
                 break;
             case 'High':
-                setData((current) => Descend(current, 'fltRt'));
+                setData((current) => descend(current, 'fltRt'));
                 break;
             case 'Low':
-                setData((current) => Ascend(current, 'fltRt'));
+                setData((current) => ascend(current, 'fltRt'));
                 break;
             case 'Volume':
-                setData((current) => Descend(current, 'trqu'));
+                setData((current) => descend(current, 'trqu'));
                 break;
             case 'Amount':
-                setData((current) => Descend(current, 'trPrc'));
+                setData((current) => descend(current, 'trPrc'));
                 break;
             default:
                 break;
