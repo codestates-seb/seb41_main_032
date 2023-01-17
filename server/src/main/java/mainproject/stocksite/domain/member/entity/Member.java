@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mainproject.stocksite.domain.comment.entity.Comment;
 import mainproject.stocksite.domain.time.time;
 import mainproject.stocksite.domain.board.entity.Board;
 
@@ -37,6 +38,9 @@ public class Member extends time {
 
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList  = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
 
 
@@ -49,6 +53,7 @@ public class Member extends time {
 
     public Member(String email) {
         this.email = email;
+
     }
 
     // 사용자의 권한을 등록하기 위한 권한 테이블을 생성
