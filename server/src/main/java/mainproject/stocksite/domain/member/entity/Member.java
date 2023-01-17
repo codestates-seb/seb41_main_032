@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.comment.entity.Comment;
 import mainproject.stocksite.domain.time.time;
 import mainproject.stocksite.domain.board.entity.Board;
@@ -60,5 +61,6 @@ public class Member extends time {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "member")
+    private List<Bookmark> bookmarks = new ArrayList<>();
 }
