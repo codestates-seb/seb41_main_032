@@ -55,7 +55,6 @@ const Board = () => {
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     axios.get(url).then((res) => {
-      console.log(res.data.slice(10 * currentPage - 9, 10 * currentPage));
       setData(res.data);
     });
   }, [currentPage]);
@@ -87,7 +86,9 @@ const Board = () => {
           <Article key={el.id} data={el} />
         ))}
       </div>
-      <div className="pagebutton">{pageRender(data.length / 10 + 1)}</div>
+      <div className="pagebutton">
+        {pageRender(data.length % 10 ? data.length / 10 + 1 : data.length / 10)}
+      </div>
     </Div>
   );
 };

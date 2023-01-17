@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
-  height: auto;
-  min-height: 100%;
+
   flex-direction: column;
   margin: 30px 50px;
   padding: 50px 50px;
