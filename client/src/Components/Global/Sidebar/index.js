@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Main = styled.aside`
+const Aside = styled.aside`
+  display: flex;
+  grid-area: side;
+  positon: fixed;
   float: left;
-  width: 115px;
+  width: 112px;
   border-right: double 3px #eeeeee;
 
-  position: fixed;
   top: 100px;
   bottom: 0;
   > ul li {
@@ -19,7 +21,7 @@ const Main = styled.aside`
 
 const StyledLink = styled(Link)`
   display: block;
-  width: 90px;
+  width: 100%;
   text-decoration: none;
   color: gray;
   font-size: 0.8em;
@@ -45,7 +47,7 @@ const Sidebar = () => {
     setNow(location.pathname);
   }, [location.pathname]);
   return (
-    <Main>
+    <Aside>
       <ul>
         <li>
           <StyledLink bgcolor={now === "/" ? "orange" : "white"} to="/">
@@ -64,7 +66,7 @@ const Sidebar = () => {
           <StyledLink>Mypage</StyledLink>
         </li>
       </ul>
-    </Main>
+    </Aside>
   );
 };
 
