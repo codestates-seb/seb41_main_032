@@ -7,13 +7,11 @@ import Footer from "../Global/Footer/index";
 const Div = styled.div`
   display: grid;
   min-height: 100vh;
-  grid-template-rows: 63px 15px auto 15px 250px;
+  grid-template-rows: 63px auto 250px;
   grid-template-columns: 112px auto;
   grid-template-areas:
     "header header"
-    ". ."
     "side main"
-    ". ."
     "footer footer";
 `;
 
