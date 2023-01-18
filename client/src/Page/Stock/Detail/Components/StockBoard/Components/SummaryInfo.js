@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import commaGenerator from '../../../../../../Components/Function/commaGenerator';
 import Chart from 'react-apexcharts';
 import dateOutput from '../../../../../../Components/Function/dateOutput';
+import Tooltip from '../../../../../../Components/Function/Tooltip';
+import described from './tooltipText';
 const InfoBox = styled.ul`
     display: flex;
     flex-direction: column;
@@ -170,26 +172,36 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                         <p>시가총액</p>
                         <p>{MarketCap}</p>
                     </InfoItem>
-                    <InfoItem>
-                        <p>거래 회전율</p>
-                        <p>{todayInfo.vol_tnrt}</p>
-                    </InfoItem>
-                    <InfoItem>
-                        <p>PER</p>
-                        <p>{todayInfo.per}</p>
-                    </InfoItem>
-                    <InfoItem>
-                        <p>PBR</p>
-                        <p>{todayInfo.pbr}</p>
-                    </InfoItem>
-                    <InfoItem>
-                        <p>EPS</p>
-                        <p>{commaGenerator(Math.floor(todayInfo.eps))}</p>
-                    </InfoItem>
-                    <InfoItem>
-                        <p>BPS</p>
-                        <p>{commaGenerator(Math.floor(todayInfo.bps))}</p>
-                    </InfoItem>
+                    <Tooltip text={described.turnoverRatio}>
+                        <InfoItem>
+                            <p>거래 회전율</p>
+                            <p>{todayInfo.vol_tnrt}</p>
+                        </InfoItem>
+                    </Tooltip>
+                    <Tooltip text={described.PER}>
+                        <InfoItem>
+                            <p>PER</p>
+                            <p>{todayInfo.per}</p>
+                        </InfoItem>
+                    </Tooltip>
+                    <Tooltip text={described.PBR}>
+                        <InfoItem>
+                            <p>PBR</p>
+                            <p>{todayInfo.pbr}</p>
+                        </InfoItem>
+                    </Tooltip>
+                    <Tooltip text={described.EPS}>
+                        <InfoItem>
+                            <p>EPS</p>
+                            <p>{commaGenerator(Math.floor(todayInfo.eps))}</p>
+                        </InfoItem>
+                    </Tooltip>
+                    <Tooltip text={described.BPS}>
+                        <InfoItem>
+                            <p>BPS</p>
+                            <p>{commaGenerator(Math.floor(todayInfo.bps))}</p>
+                        </InfoItem>
+                    </Tooltip>
                 </InfoBox>
             </section>
             {state ? <Chart options={state.options} series={state.series} type="bar" width={600} height={180} /> : null}
