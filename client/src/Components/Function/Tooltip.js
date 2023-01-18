@@ -3,8 +3,9 @@ import React, { useState, useRef } from 'react';
 import Portal from './Portal';
 
 const StyledTooltip = styled.span.attrs((p) => ({
-    bg: p.bg || 'dark',
-    delay: p.delay || 0.01,
+    background: p.background || '#373e47',
+    color: p.color || '#eee',
+    delay: p.delay || 0.1,
 }))`
     position: fixed;
     top: ${(p) => p.posRef.current.y}px;
@@ -21,9 +22,15 @@ const StyledTooltip = styled.span.attrs((p) => ({
     display: inline-block;
     white-space: pre-wrap;
     opacity: ${(p) => p.show};
+
+    transition-property: transform, opacity !important;
+    transition-duration: 0.1s !important;
+    transition-timing-function: cubic-bezier(0.25, 0.25, 0.75, 1) !important;
+    transition-delay: ${(p) => (p.show ? p.delay : 0.1)}s !important;
+    transform: scale(${(p) => (p.show ? 1 : 0.5)});
 `;
 
-/** @param {string} placement 툴팁의 위치값 입니다*/
+/** @param {string} placement 툴팁의 위치값 입니다 */
 const position = (placement) => ({
     current: placement,
     negate() {
@@ -124,12 +131,12 @@ const getPoint = (el, tooltip, placement, space) => {
  * 툴팁을 보여주는 기능입니다
  * @author 이중원
  * @param  {string} text 툴팁으로 보여줄 텍스트를 넣어주세요
- * @param  {string} placement 툴팁을 보여줄 위치를 설정해주세요 기본값='bottom'
+ * @param  {string} placement 툴팁을 보여줄 위치를 설정해주세요
  * @param  {number} space 툴팁과 요소간의 간격입니다
- * @param  {string} background 툴팁의 background-color 설정 입니다 // css
- * @param  {string} color 툴팁의 color 설정 입니다 // css
+ * @param  {string} background 툴팁의 background-color 설정 입니다
+ * @param  {string} color 툴팁의 color 설정 입니다
  */
-function Tooltip({ text, placement = 'bottom', space = 10, background = 'rgba(0, 0, 0, 0.9)', color = '#eee', delay, children }) {
+function Tooltip({ text, placement = 'bottom', space = 10, background, color, delay, children }) {
     /**
      * 툴팁을 리엑트dom(id='root') 외부에 생성하고 //css 상속을 피하기 위해
      * cloneElement로 자식요소에 마우스이벤트를 추가하여 복사후 대체를 하고
