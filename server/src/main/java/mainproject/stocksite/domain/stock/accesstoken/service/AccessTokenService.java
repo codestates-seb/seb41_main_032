@@ -1,6 +1,6 @@
-package mainproject.stocksite.domain.stock.detail.AccessToken.service;
+package mainproject.stocksite.domain.stock.accesstoken.service;
 
-import mainproject.stocksite.domain.stock.detail.AccessToken.dto.AccessTokenRequestInfo;
+import mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

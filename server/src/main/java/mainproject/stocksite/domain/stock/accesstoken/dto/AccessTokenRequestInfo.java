@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.stock.detail.AccessToken.dto;
+package mainproject.stocksite.domain.stock.accesstoken.dto;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

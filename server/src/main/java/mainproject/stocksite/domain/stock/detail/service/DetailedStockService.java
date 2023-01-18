@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.stock.detail.Domestic.service;
+package mainproject.stocksite.domain.stock.detail.service;
 
 import mainproject.stocksite.domain.exception.ExceptionCode;
 import org.springframework.http.*;
@@ -7,17 +7,17 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static mainproject.stocksite.domain.stock.detail.AccessToken.dto.AccessTokenRequestInfo.appKey;
-import static mainproject.stocksite.domain.stock.detail.AccessToken.dto.AccessTokenRequestInfo.appSecret;
-import static mainproject.stocksite.domain.stock.detail.AccessToken.service.AccessTokenService.accessToken;
+import static mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo.appKey;
+import static mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo.appSecret;
+import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
 
 // try-catch문 리팩토링
 @Service
-public class DomesticStockService {
+public class DetailedStockService {
 
     private static int countOfRequest;
 
-    public ResponseEntity<Object> findPresentQuotations(String itemId) throws InterruptedException {
+    public ResponseEntity<Object> findPresentQuotations(String stockCode) throws InterruptedException {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", "Bearer " + accessToken);
         requestHeaders.set("appkey", appKey);
@@ -29,7 +29,7 @@ public class DomesticStockService {
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
-                .queryParam("FID_INPUT_ISCD", itemId)
+                .queryParam("FID_INPUT_ISCD", stockCode)
                 .build(true);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -53,7 +53,7 @@ public class DomesticStockService {
                 } else if (countOfRequest < 2) {
                     Thread.sleep(1000);
                     countOfRequest++;
-                    findPresentQuotations(itemId);
+                    findPresentQuotations(stockCode);
                 }
             }
         }
@@ -62,7 +62,7 @@ public class DomesticStockService {
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
-    public ResponseEntity<Object> findInvestors(String itemId) throws InterruptedException {
+    public ResponseEntity<Object> findInvestors(String stockCode) throws InterruptedException {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", "Bearer " + accessToken);
         requestHeaders.set("appkey", appKey);
@@ -74,7 +74,7 @@ public class DomesticStockService {
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
-                .queryParam("FID_INPUT_ISCD", itemId)
+                .queryParam("FID_INPUT_ISCD", stockCode)
                 .build(true);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -98,7 +98,7 @@ public class DomesticStockService {
                 } else if (countOfRequest < 2) {
                     Thread.sleep(1000);
                     countOfRequest++;
-                    findInvestors(itemId);
+                    findInvestors(stockCode);
                 }
             }
         }
@@ -108,7 +108,7 @@ public class DomesticStockService {
     }
 
     // 수정 사항
-    public ResponseEntity<Object> findQuotationsByPeriod(String itemId, String startDay, String endDay, String periodCode, String code) throws InterruptedException {
+    public ResponseEntity<Object> findQuotationsByPeriod(String stockCode, String startDay, String endDay, String periodCode, String code) throws InterruptedException {
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
@@ -122,7 +122,7 @@ public class DomesticStockService {
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
-                .queryParam("FID_INPUT_ISCD", itemId)
+                .queryParam("FID_INPUT_ISCD", stockCode)
                 .queryParam("FID_INPUT_DATE_1", startDay)
                 .queryParam("FID_INPUT_DATE_2", endDay)
                 .queryParam("FID_PERIOD_DIV_CODE", periodCode)
@@ -150,7 +150,7 @@ public class DomesticStockService {
                 } else if (countOfRequest < 2) {
                     Thread.sleep(1000);
                     countOfRequest++;
-                    findQuotationsByPeriod(itemId, startDay, endDay, periodCode, code);
+                    findQuotationsByPeriod(stockCode, startDay, endDay, periodCode, code);
                 }
             }
         }
