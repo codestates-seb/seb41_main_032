@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import CommaGenerator from '../../../../../../Components/Function/CommaGenerator';
+import commaGenerator from '../../../../../../Components/Function/commaGenerator';
 import Chart from 'react-apexcharts';
-import DateOutput from '../../../../../../Components/Function/DateOutput';
+import dateOutput from '../../../../../../Components/Function/dateOutput';
 const InfoBox = styled.ul`
     display: flex;
     flex-direction: column;
@@ -85,7 +85,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                       colors: ['#fff'],
                   },
                   title: {
-                      text: `매매동향 ${DateOutput(tradingTrends[index].stck_bsop_date)}`,
+                      text: `매매동향 ${dateOutput(tradingTrends[index].stck_bsop_date)}`,
                       offsetY: 5,
                       style: {
                           color: '#ccc',
@@ -133,33 +133,33 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                 <InfoBox>
                     <InfoItem>
                         <p>전일</p>
-                        <p>{CommaGenerator(todayInfo.stck_prpr - todayInfo.prdy_vrss)}</p>
+                        <p>{commaGenerator(todayInfo.stck_prpr - todayInfo.prdy_vrss)}</p>
                     </InfoItem>
                     <InfoItem>
                         <p>시가</p>
                         <p className={todayInfo.stck_oprc > todayInfo.stck_prpr - todayInfo.prdy_vrss ? 'red' : 'blue'}>
-                            {CommaGenerator(todayInfo.stck_oprc)}
+                            {commaGenerator(todayInfo.stck_oprc)}
                         </p>
                     </InfoItem>
                     <InfoItem>
                         <p>고가</p>
                         <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_hgpr ? 'red' : 'blue'}>
-                            {CommaGenerator(todayInfo.stck_hgpr)}
+                            {commaGenerator(todayInfo.stck_hgpr)}
                         </p>
                     </InfoItem>
                     <InfoItem>
                         <p>저가</p>
                         <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_lwpr ? 'red' : 'blue'}>
-                            {CommaGenerator(todayInfo.stck_lwpr)}
+                            {commaGenerator(todayInfo.stck_lwpr)}
                         </p>
                     </InfoItem>
                     <InfoItem>
                         <p>52주일 최고가</p>
-                        <p>{CommaGenerator(todayInfo.w52_hgpr)}</p>
+                        <p>{commaGenerator(todayInfo.w52_hgpr)}</p>
                     </InfoItem>
                     <InfoItem>
                         <p>52주일 최저가</p>
-                        <p>{CommaGenerator(todayInfo.w52_lwpr)}</p>
+                        <p>{commaGenerator(todayInfo.w52_lwpr)}</p>
                     </InfoItem>
                 </InfoBox>
             </section>
@@ -184,11 +184,11 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                     </InfoItem>
                     <InfoItem>
                         <p>EPS</p>
-                        <p>{CommaGenerator(Math.floor(todayInfo.eps))}</p>
+                        <p>{commaGenerator(Math.floor(todayInfo.eps))}</p>
                     </InfoItem>
                     <InfoItem>
                         <p>BPS</p>
-                        <p>{CommaGenerator(Math.floor(todayInfo.bps))}</p>
+                        <p>{commaGenerator(Math.floor(todayInfo.bps))}</p>
                     </InfoItem>
                 </InfoBox>
             </section>

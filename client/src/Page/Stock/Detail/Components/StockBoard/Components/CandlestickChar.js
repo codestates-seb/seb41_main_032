@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
-import { Ascend } from '../../../../../../Components/Function/Sort';
+import { ascend } from '../../../../../../Components/Function/sort';
 const Section = styled.section`
     padding-top: 20px;
     border-top: 1px solid #333;
@@ -10,8 +10,8 @@ const Section = styled.section`
 `;
 
 /** 빨간색과 파란색으로 표시되는 캔들 차트를 출력하는 컴포넌트입니다*/
-const Areachart = ({ infoByDate }) => {
-    const sortedData = Ascend(infoByDate, 'stck_bsop_date');
+const CandlestickChar = ({ infoByDate }) => {
+    const sortedData = ascend(infoByDate, 'stck_bsop_date');
 
     /**
      * @param x 날짜
@@ -95,4 +95,4 @@ const Areachart = ({ infoByDate }) => {
     return <Section>{dataList ? <Chart options={chartData.options} series={chartData.series} type="candlestick" height={300} /> : null}</Section>;
 };
 
-export default Areachart;
+export default CandlestickChar;

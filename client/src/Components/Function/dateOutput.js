@@ -5,8 +5,8 @@
  * @type {string}
  * @return 20230102 => 23/01/02
  */
-const DateOutput = (data) => {
+const dateOutput = (data) => {
     return data ? `${data.slice(2, 4)}/${data.slice(4, 6)}/${data.slice(6, 8)}` : null;
 };
 
-export default DateOutput;
+export default dateOutput;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { RedTriangle, BlueTriangle } from '../../../../../../Components/Style/Stock';
-import CommaGenerator from '../../../../../../Components/Function/CommaGenerator';
+import commaGenerator from '../../../../../../Components/Function/commaGenerator';
 import { useLocation } from 'react-router';
 
 const PriceContainer = styled.div`
@@ -43,14 +43,14 @@ const Info = ({ todayInfo }) => {
                 {todayInfo.prdy_vrss > 0 ? (
                     <>
                         <RedTriangle />
-                        <Price>{CommaGenerator(todayInfo.stck_prpr)}</Price>
+                        <Price>{commaGenerator(todayInfo.stck_prpr)}</Price>
                         <RedPrice>{`${todayInfo.prdy_vrss}`}</RedPrice>
                         <RedPrice>{`${todayInfo.prdy_ctrt}%`}</RedPrice>
                     </>
                 ) : (
                     <>
                         <BlueTriangle />
-                        <Price>{CommaGenerator(todayInfo.stck_prpr)}</Price>
+                        <Price>{commaGenerator(todayInfo.stck_prpr)}</Price>
                         <BluePrice>{`${todayInfo.prdy_vrss}`}</BluePrice>
                         <BluePrice>{`${todayInfo.prdy_ctrt}%`}</BluePrice>
                     </>

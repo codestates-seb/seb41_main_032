@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import NumberToKR from '../../../../../Components/Function/NumberToKR';
-import CommaGenerator from '../../../../../Components/Function/CommaGenerator';
-import DateOutput from '../../../../../Components/Function/DateOutput';
+import numberToKR from '../../../../../Components/Function/numberToKR';
+import commaGenerator from '../../../../../Components/Function/commaGenerator';
+import dateOutput from '../../../../../Components/Function/dateOutput';
 import { RedTriangle, BlueTriangle } from '../../../../../Components/Style/Stock';
 import usePagination from '../../../../../Components/Hook/usePagination';
 const Title = styled.h2`
@@ -112,10 +112,10 @@ const DailyInfo = ({ infoByDate }) => {
                     {currentItems.map((el) => {
                         return (
                             <tr key={el.stck_bsop_date}>
-                                <td>{DateOutput(el.stck_bsop_date)}</td>
+                                <td>{dateOutput(el.stck_bsop_date)}</td>
                                 {el.prdy_vrss > 0 ? (
                                     <td>
-                                        <div className="red">{CommaGenerator(el.stck_clpr)}</div>
+                                        <div className="red">{commaGenerator(el.stck_clpr)}</div>
                                         <SmallFont>
                                             <RedTriangle />
                                             <span className="red">+{el.prdy_vrss}</span>
@@ -123,18 +123,18 @@ const DailyInfo = ({ infoByDate }) => {
                                     </td>
                                 ) : (
                                     <td>
-                                        <div className="blue">{CommaGenerator(el.stck_clpr)}</div>
+                                        <div className="blue">{commaGenerator(el.stck_clpr)}</div>
                                         <SmallFont>
                                             <BlueTriangle />
                                             <span className="blue">{el.prdy_vrss}</span>
                                         </SmallFont>
                                     </td>
                                 )}
-                                <td>{CommaGenerator(el.stck_hgpr)}</td>
-                                <td>{CommaGenerator(el.stck_lwpr)}</td>
+                                <td>{commaGenerator(el.stck_hgpr)}</td>
+                                <td>{commaGenerator(el.stck_lwpr)}</td>
                                 <td>
-                                    <div>{CommaGenerator(el.acml_vol)}</div>
-                                    <SmallFont>{NumberToKR(el.acml_tr_pbmn)}</SmallFont>
+                                    <div>{commaGenerator(el.acml_vol)}</div>
+                                    <SmallFont>{numberToKR(el.acml_tr_pbmn)}</SmallFont>
                                 </td>
                             </tr>
                         );

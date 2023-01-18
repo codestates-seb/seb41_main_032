@@ -6,7 +6,7 @@
  * @param {number} length 정렬후 length만큼 배열을 반환합니다 (기본값: 전부반환)
  * @return [2,1,3] => [1,2,3]
  */
-export const Ascend = (data = [], compare, length = data.length) => {
+export const ascend = (data = [], compare, length = data.length) => {
     if (typeof data !== 'object') return;
 
     let result;
@@ -31,7 +31,7 @@ export const Ascend = (data = [], compare, length = data.length) => {
  * @param {number} length 정렬후 length만큼 배열을 반환합니다 (기본값: 전부반환)
  * @return [2,1,3] => [3,2,1]
  */
-export const Descend = (data = [], compare, length = data.length) => {
+export const descend = (data = [], compare, length = data.length) => {
     if (typeof data !== 'object') return;
 
     let result;

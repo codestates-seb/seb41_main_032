@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import useGetMarket from '../../../../../Components/API/useGetMarket';
 import ItemBox from './ItemBox';
 import { Title, SmTitle } from '../../../../../Components/Style/Stock';
-import DateOutput from '../../../../../Components/Function/DateOutput';
+import dateOutput from '../../../../../Components/Function/dateOutput';
 import Loading from '../../../../../Components/Style/Loading';
 
 const ItemList = styled.ul`
@@ -39,7 +39,7 @@ const IndexList = () => {
                 <>
                     <Title>
                         국내지수
-                        {KOSPI ? <SmTitle>{`${DateOutput(KOSPI.basDt)} 기준`}</SmTitle> : null}
+                        {KOSPI ? <SmTitle>{`${dateOutput(KOSPI.basDt)} 기준`}</SmTitle> : null}
                     </Title>
                     <ItemList>
                         {KOSPI ? <ItemBox data={KOSPI}></ItemBox> : null}
