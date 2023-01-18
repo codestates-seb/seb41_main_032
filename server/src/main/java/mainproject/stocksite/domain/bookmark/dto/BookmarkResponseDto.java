@@ -9,4 +9,5 @@ public class BookmarkResponseDto {
     private long bookmarkId;
     private String stockCode;
     private String stockName;
+    private long memberId;
 }

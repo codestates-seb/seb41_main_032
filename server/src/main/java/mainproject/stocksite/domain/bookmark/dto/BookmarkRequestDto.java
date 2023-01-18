@@ -1,9 +1,9 @@
 package mainproject.stocksite.domain.bookmark.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 public class BookmarkRequestDto {
 
@@ -14,10 +14,12 @@ public class BookmarkRequestDto {
 
         @NotBlank
         private String stockName;
+
+        @Positive
+        private long memberId;
     }
 
     @Getter
-    @Setter
     public static class Patch {
         private long bookmarkId;
 
@@ -27,6 +29,8 @@ public class BookmarkRequestDto {
         @NotBlank
         private String stockName;
 
-
+        public void setBookmarkId(long bookmarkId) {
+            this.bookmarkId = bookmarkId;
+        }
     }
 }

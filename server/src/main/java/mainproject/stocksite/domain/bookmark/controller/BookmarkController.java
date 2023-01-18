@@ -36,8 +36,8 @@ public class BookmarkController {
     }
 
     @PatchMapping("/{bookmark-id}")
-    public ResponseEntity<BookmarkResponseDto> patchBookmark(@PathVariable("bookmark-id") @Positive Long bookmarkId,
-                                        @Valid @RequestBody BookmarkRequestDto.Patch requestBody) {
+    public ResponseEntity<BookmarkResponseDto> patchBookmark(@PathVariable("bookmark-id") @Positive long bookmarkId,
+                                                             @Valid @RequestBody BookmarkRequestDto.Patch requestBody) {
 
         requestBody.setBookmarkId(bookmarkId);
         Bookmark bookmark = bookmarkService.updateBookmark(bookmarkMapper.bookmarkPatchDtoToBookmark(requestBody));
@@ -46,23 +46,22 @@ public class BookmarkController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<BookmarkResponseDto>> getBookmarks() {
-        List<Bookmark> bookmarks = bookmarkService.findBookmarks();
+    @GetMapping("/member/{member-id}")
+    public ResponseEntity<List<BookmarkResponseDto>> getBookmarks(@PathVariable("member-id") @Positive long memberId) {
+        List<Bookmark> bookmarks = bookmarkService.findBookmarks(memberId);
         List<BookmarkResponseDto> response = bookmarkMapper.bookmarksToBookmarkResponseDtos(bookmarks);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/{bookmark-id}")
     public void deleteBookmark(@PathVariable("bookmark-id") @Positive long bookmarkId) {
         bookmarkService.deleteBookmark(bookmarkId);
     }
 
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteBookmarks() {
-        bookmarkService.deleteBookmarks();
+    @DeleteMapping("/member/{member-id}")
+    public ResponseEntity<HttpStatus> deleteBookmarks(@PathVariable("member-id") @Positive long memberId) {
+        bookmarkService.deleteBookmarks(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

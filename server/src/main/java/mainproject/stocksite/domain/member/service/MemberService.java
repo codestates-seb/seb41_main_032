@@ -2,15 +2,17 @@ package mainproject.stocksite.domain.member.service;
 
 
 import mainproject.stocksite.domain.auth.utils.CustomAuthorityUtils;
+import mainproject.stocksite.domain.exception.BusinessLogicException;
+import mainproject.stocksite.domain.exception.ExceptionCode;
 import mainproject.stocksite.domain.member.entity.Member;
 import mainproject.stocksite.domain.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.List;
 
 @Transactional
 @Service
@@ -69,8 +71,8 @@ public class MemberService {
         findMember.setEmail(member.getEmail());
     }
 
-
-
+    public void verifyExistsMember(long memberId) {
+        Optional<Member> optionalMember = repository.findById(memberId);
+        optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
 }
-
-

@@ -16,15 +16,22 @@ import javax.persistence.*;
 public class Bookmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bookmarkId;
+    private Long bookmarkId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String stockCode;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String stockName;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+        if (!this.member.getBookmarks().contains(this)) {
+            this.member.getBookmarks().add(this);
+        }
+    }
 }
