@@ -86,12 +86,7 @@ const useCreateTable = (data) => {
                 {Data
                     ? Data.map((el) => {
                           return (
-                              <tr
-                                  key={el.srtnCd}
-                                  onClick={(e) => {
-                                      linkHandler([el.srtnCd, el.itmsNm, numberToKR(el.mrktTotAmt)]);
-                                  }}
-                              >
+                              <tr key={el.srtnCd} onClick={(e) => linkHandler([el.srtnCd, el.itmsNm])}>
                                   <td>
                                       <div>{el.itmsNm}</div>
                                       <SmFont>{el.srtnCd}</SmFont>
