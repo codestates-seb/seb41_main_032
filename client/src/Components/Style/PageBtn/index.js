@@ -18,9 +18,7 @@ export const PageBtn = styled.li`
 /** 페이지네이션을 구현했을 시 사용할 버튼들을 감싸는 ul태그 css 입니다 */
 export const PageList = styled.ul`
     display: flex;
-    margin: 30px;
-    margin-top: 80px;
-    margin-bottom: 40px;
+    margin-top: 40px;
     .active {
         background-color: #f48225;
         color: white;
