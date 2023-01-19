@@ -17,6 +17,7 @@ const Section = styled.section`
     width: 100%;
     min-height: 150px;
     margin-bottom: 100px;
+    padding: 20px;
 `;
 
 /**
