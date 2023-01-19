@@ -4,9 +4,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mainproject.stocksite.domain.board.entity.Board;
+import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.comment.entity.Comment;
 import mainproject.stocksite.domain.time.time;
-import mainproject.stocksite.domain.board.entity.Board;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class Member extends time {
 
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Comment> commentList  = new ArrayList<>();
+    private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<>();
@@ -60,5 +61,13 @@ public class Member extends time {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
+    public void setBookmark(Bookmark bookmark) {
+        bookmarks.add(bookmark);
+        if (bookmark.getMember() != this) {
+            bookmark.setMember(this);
+        }
+    }
 }
