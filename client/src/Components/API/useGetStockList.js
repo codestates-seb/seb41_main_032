@@ -40,7 +40,7 @@ const useGetStockList = (Parameters1, Parameters2, sort, compare, length) => {
                 }),
             )
             .catch((el) => console.error(el));
-    }, []);
+    }, [BaseUrl, ServiceKey, Parameters1, Parameters2, sort, compare, length]);
     return [KOSPI, setKOSPI, KOSDAQ, setKOSDAQ];
 };
 

@@ -16,7 +16,7 @@ export const useStockDetails = (Parameters) => {
         axios.get(`${BaseUrl}${Parameters}`).then((res) => {
             setData(res.data.output ? res.data.output : null);
         });
-    }, []);
+    }, [BaseUrl, Parameters]);
     return [data, setData];
 };
 
@@ -35,7 +35,7 @@ export const useStockDayList = (Parameters) => {
         axios.get(`${BaseUrl}${Parameters}`).then((res) => {
             setData(res.data.output2 ? res.data.output2 : null);
         });
-    }, []);
+    }, [BaseUrl, Parameters]);
     return [data, setData];
 };
 
@@ -51,9 +51,12 @@ export const useStockInvestor = (Parameters) => {
     const [data, setData] = useState();
     const BaseUrl = `http://localhost:5000/api/investor`;
     useEffect(() => {
-        axios.get(`${BaseUrl}${Parameters}`).then((res) => {
-            setData(res.data.output ? res.data.output : null);
-        });
-    }, []);
+        axios
+            .get(`${BaseUrl}${Parameters}`)
+            .then((res) => {
+                setData(res.data.output ? res.data.output : null);
+            })
+            .catch((e) => console.error(e));
+    }, [BaseUrl, Parameters]);
     return [data, setData];
 };
