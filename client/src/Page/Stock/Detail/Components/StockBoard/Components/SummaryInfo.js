@@ -40,7 +40,6 @@ const InfoContainer = styled.div`
  *
  * 개인,기관, 외국인의 매매와 매수정보를 이용하여 bar 차트를 그립니다*/
 const SummaryInfo = ({ todayInfo, tradingTrends }) => {
-    const MarketCap = useLocation().state.MarketCap;
     let index = 0;
     if (tradingTrends) {
         index = tradingTrends[0].prsn_ntby_qty === '' ? 1 : 0;
@@ -168,10 +167,6 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
             <section>
                 <h3>투자 지표</h3>
                 <InfoBox>
-                    <InfoItem>
-                        <p>시가총액</p>
-                        <p>{MarketCap}</p>
-                    </InfoItem>
                     <Tooltip text={described.turnoverRatio}>
                         <InfoItem>
                             <p>거래 회전율</p>
