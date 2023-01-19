@@ -35,7 +35,7 @@ const IndexBtnContainer = styled.ul`
 const StockTable = ({ allKOSPI, allKOSDAQ }) => {
     const [indexSelect, setIndexSelect] = useState('KOSPI');
     const [sortSelect, setSortSelect] = useState();
-    const [currentItems, currentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(allKOSPI);
+    const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(allKOSPI);
     const [table, setTable] = useCreateTable();
 
     /** 데이터를 나누는(페이지네이션) usePagination 의 currentItems(현재 출력해야될 데이터들) 값이 변경될때마다 실행되고
@@ -54,11 +54,13 @@ const StockTable = ({ allKOSPI, allKOSDAQ }) => {
             setIndexSelect('KOSPI');
             setData(allKOSPI);
             setSortSelect(null);
+            setCurrentPage(1);
         } else if (select === 'KOSDAQ') {
             if (!allKOSDAQ) return;
             setIndexSelect('KOSDAQ');
             setData(allKOSDAQ);
             setSortSelect(null);
+            setCurrentPage(1);
         }
     };
 
@@ -70,18 +72,23 @@ const StockTable = ({ allKOSPI, allKOSDAQ }) => {
         switch (select) {
             case 'MarketCap':
                 setData((current) => descend(current, 'mrktTotAmt'));
+                setCurrentPage(1);
                 break;
             case 'High':
                 setData((current) => descend(current, 'fltRt'));
+                setCurrentPage(1);
                 break;
             case 'Low':
                 setData((current) => ascend(current, 'fltRt'));
+                setCurrentPage(1);
                 break;
             case 'Volume':
                 setData((current) => descend(current, 'trqu'));
+                setCurrentPage(1);
                 break;
             case 'Amount':
                 setData((current) => descend(current, 'trPrc'));
+                setCurrentPage(1);
                 break;
             default:
                 break;
