@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.stock.AccessToken.dto;
+package mainproject.stocksite.domain.stock.accesstoken.dto;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class AccessTokenRequestDto {
+public class AccessTokenRequestInfo {
 
     public static String appKey;
     public static String appSecret;
