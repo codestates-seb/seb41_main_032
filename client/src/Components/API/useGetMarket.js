@@ -37,7 +37,7 @@ const useGetMarket = (Parameters1, Parameters2) => {
                 }),
             )
             .catch((e) => console.error(e));
-    }, [BaseUrl, ServiceKey, Parameters1, Parameters2]);
+    }, []);
     return [KOSPI, setKOSPI, KOSDAQ, setKOSDAQ];
 };
 
