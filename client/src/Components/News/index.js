@@ -8,6 +8,7 @@ const Section = styled.section`
     width: 100%;
     min-height: 500px;
     margin-bottom: 100px;
+    padding: 20px;
 `;
 
 const SearchInput = styled.input`
@@ -20,8 +21,13 @@ const SearchInput = styled.input`
     padding-left: 5px;
 `;
 
-const News = ({ keyword }) => {
-    const [news, , , setKeyword] = useGetSearchNews(keyword);
+/** 네이버 api를 사용하여 뉴스 정보를 검색하는 기능입니다
+ * @author 이중원
+ * @param {string} searchWord 검색하고자 하는 키워드
+ * @return 검색된 뉴스리스트를 출력하는 컴포넌트를 리턴합니다
+ */
+const News = ({ searchWord }) => {
+    const [news, , keyword, setKeyword] = useGetSearchNews(searchWord);
     const [value, setValue, ChangeValue] = useInput();
     const Submit = (e) => {
         if (e.key === 'Enter') {
