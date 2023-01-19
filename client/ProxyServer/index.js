@@ -8,21 +8,20 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-// Rate limiting
+// 속도 제한
 const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 Mins
+    windowMs: 10 * 60 * 1000, // 10 분
     max: 600,
 });
 app.use(limiter);
 app.set('trust proxy', 1);
 
-// Enable cors
+// cors
 app.use(cors());
 
-// Routes
 app.use('/api', require('./routes'));
 
-// Error handler middleware
+// Error handler
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

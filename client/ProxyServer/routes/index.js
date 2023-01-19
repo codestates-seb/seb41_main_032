@@ -10,12 +10,12 @@ const router = express.Router();
 const needle = require('needle');
 const apicache = require('apicache');
 
-// Env vars
+// 환경 변수
 const API_BASE_URL = process.env.API_BASE_URL;
 const APP_KEY = process.env.APP_KEY;
 const API_APP_SECRET = process.env.API_APP_SECRET;
 
-// Init cache
+// 캐시
 let cache = apicache.middleware;
 
 const tokenBody = {
@@ -42,7 +42,7 @@ router.get('/', cache('1 minutes'), async (req, res, next) => {
         const apiRes = await needle('get', `${API_BASE_URL}/uapi/domestic-stock/v1/quotations/inquire-price?${params}`, null, stockHeaders);
         const data = apiRes.body;
 
-        // Log the request to the public API
+        // API에 대한 요청 기록
         if (process.env.NODE_ENV !== 'production') {
             // console.log(`REQUEST: ${API_BASE_URL}/uapi/domestic-stock/v1/quotations/inquire-price?${params}`);
         }
@@ -104,7 +104,7 @@ router.get('/investor', cache('1 minutes'), async (req, res, next) => {
         const apiRes = await needle('get', `${API_BASE_URL}/uapi/domestic-stock/v1/quotations/inquire-investor?${params}`, null, stockHeaders);
         const data = apiRes.body;
 
-        // Log the request to the public API
+        // API에 대한 요청 기록
         if (process.env.NODE_ENV !== 'production') {
             // console.log(`REQUEST: ${API_BASE_URL}/uapi/domestic-stock/v1/quotations/inquire-investor?${params}`);
         }
@@ -132,7 +132,7 @@ router.get('/search/news', cache('1 minutes'), async (req, res, next) => {
         const apiRes = await needle('get', `https://openapi.naver.com/v1/search/news?${params}`, null, newsHeaders);
         const data = apiRes.body;
 
-        // Log the request to the public API
+        // API에 대한 요청 기록
         if (process.env.NODE_ENV !== 'production') {
             console.log(`REQUEST: https://openapi.naver.com/v1/search/news?${params}`);
         }
