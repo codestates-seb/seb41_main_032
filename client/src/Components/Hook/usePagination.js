@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const PageBtn = styled.li`
@@ -18,25 +18,9 @@ const PageBtn = styled.li`
  * 1페이지당 10개씩 출력합니다 페이지버튼은 5개씩 출력합니다
  * @author 이중원
  * @param {Array} data2 배열을 넣어주세요
- * @returns
- *
- * 현재 페이지의 데이터,
- *
- * 현재 페이지의 페이지 번호,
- *
- * 페이지버튼 총 갯수,
- *
- * 페이지버튼을 생성하는 함수,
- *
- * 페이지 뒤로가기 이벤트,
- *
- * 페이지 앞으로가기 이벤트,
- *
- * data,
- *
- * setData
+ * @returns [현재 페이지의 데이터, 현재 페이지의 페이지 번호, 페이지버튼 총 갯수, 페이지버튼, 페이지 뒤로가기, 페이지 앞으로가기, data, setData]
  */
-const usePagination = (data = [], sort) => {
+const usePagination = (data = []) => {
     const [Data, setData] = useState(data);
     const [currentPage, setCurrentPage] = useState(1); //현재 페이지
     const [itemsPerPage, setItemsPerPage] = useState(10); //아이템 갯수
@@ -93,7 +77,7 @@ const usePagination = (data = [], sort) => {
         }
     };
 
-    return [currentItems, currentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData];
+    return [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData];
 };
 
 export default usePagination;
