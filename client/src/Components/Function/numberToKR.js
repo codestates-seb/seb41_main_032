@@ -22,7 +22,7 @@ const numberToKR = (data) => {
         result.length - count + 4,
     )}${unitWords[Math.floor(result.length / 4) - 1]}`;
 
-    // 뒤에서 5번째 숫자에 0일경우 제거 1조 0234억 => 1조
+    // 뒤에서 5번째 숫자에 0일경우 제거 1조 0234억 => 1조 234억
     if (result.charAt(result.length - 5) === '0') {
         result = `${result.slice(0, result.length - 5)}${result.slice(result.length - 4)}`;
     }
