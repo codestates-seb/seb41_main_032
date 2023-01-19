@@ -2,6 +2,7 @@ package mainproject.stocksite.domain.stock.detail.service;
 
 import mainproject.stocksite.domain.exception.ExceptionCode;
 import mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo;
+import mainproject.stocksite.domain.stock.detail.dto.DetailedStockOptions;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -35,7 +36,7 @@ public class DetailedStockService {
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
                 .queryParam("FID_INPUT_ISCD", stockCode)
-                .build(true);
+                .build();
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -80,7 +81,7 @@ public class DetailedStockService {
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
                 .queryParam("FID_INPUT_ISCD", stockCode)
-                .build(true);
+                .build();
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -112,8 +113,7 @@ public class DetailedStockService {
         return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
-    // 수정 사항
-    public ResponseEntity<Object> findQuotationsByPeriod(String stockCode, String startDay, String endDay, String periodCode, String code) throws InterruptedException {
+    public ResponseEntity<Object> findQuotationsByPeriod(String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
@@ -128,11 +128,11 @@ public class DetailedStockService {
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
                 .queryParam("FID_INPUT_ISCD", stockCode)
-                .queryParam("FID_INPUT_DATE_1", startDay)
-                .queryParam("FID_INPUT_DATE_2", endDay)
-                .queryParam("FID_PERIOD_DIV_CODE", periodCode)
-                .queryParam("FID_ORG_ADJ_PRC", code)
-                .build(true);
+                .queryParam("FID_INPUT_DATE_1", detailedStockOptions.getStartDay())
+                .queryParam("FID_INPUT_DATE_2", detailedStockOptions.getEndDay())
+                .queryParam("FID_PERIOD_DIV_CODE", detailedStockOptions.getPeriodCode())
+                .queryParam("FID_ORG_ADJ_PRC", detailedStockOptions.getCode())
+                .build();
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -155,7 +155,7 @@ public class DetailedStockService {
                 } else if (countOfRequest < 2) {
                     Thread.sleep(1000);
                     countOfRequest++;
-                    findQuotationsByPeriod(stockCode, startDay, endDay, periodCode, code);
+                    findQuotationsByPeriod(stockCode, detailedStockOptions);
                 }
             }
         }
@@ -180,7 +180,7 @@ public class DetailedStockService {
                 .queryParam("BASS_DT", baseDate)
                 .queryParam("CTX_AREA_NK", (Object) null)
                 .queryParam("CTX_AREA_FK", (Object) null)
-                .build(true);
+                .build();
 
         RestTemplate restTemplate = new RestTemplate();
 
