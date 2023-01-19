@@ -5,8 +5,7 @@ import Loading from '../../../Components/Style/Loading';
 import DailyInfo from './Components/DailyInfo';
 import StockBoard from './Components/StockBoard';
 
-const Main = styled.main`
-    position: relative;
+const Container = styled.div`
     width: 100%;
     min-height: 500px;
     margin-bottom: 100px;
@@ -39,7 +38,7 @@ const StockDetail = () => {
     const [infoByDate, setInfoByDate] = useStockDayList(InfoByDateQuery);
 
     return (
-        <Main>
+        <Container>
             {todayInfo && tradingTrends && infoByDate ? (
                 <>
                     <StockBoard todayInfo={todayInfo} tradingTrends={tradingTrends} infoByDate={infoByDate} />
@@ -48,7 +47,7 @@ const StockDetail = () => {
             ) : (
                 <Loading />
             )}
-        </Main>
+        </Container>
     );
 };
 

@@ -10,6 +10,7 @@ const Item = styled.li`
     justify-content: center;
     text-decoration-line: none;
     color: black;
+    margin-top: 10px;
     margin-right: 30px;
 `;
 

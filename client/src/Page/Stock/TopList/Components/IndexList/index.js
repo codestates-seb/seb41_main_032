@@ -14,9 +14,9 @@ const ItemList = styled.ul`
     padding-bottom: 30px;
 `;
 const Section = styled.section`
-    position: relative;
     width: 100%;
     min-height: 150px;
+    margin-bottom: 100px;
 `;
 
 /**
@@ -37,10 +37,10 @@ const IndexList = () => {
         <Section>
             {KOSPI && KOSDAQ ? (
                 <>
-                    <Title>
-                        국내지수
+                    <header>
+                        <Title>국내지수</Title>
                         {KOSPI ? <SmTitle>{`${dateOutput(KOSPI.basDt)} 기준`}</SmTitle> : null}
-                    </Title>
+                    </header>
                     <ItemList>
                         {KOSPI ? <ItemBox data={KOSPI}></ItemBox> : null}
                         {KOSDAQ ? <ItemBox data={KOSDAQ}></ItemBox> : null}
@@ -48,7 +48,9 @@ const IndexList = () => {
                 </>
             ) : (
                 <>
-                    <Title>국내지수</Title>
+                    <header>
+                        <Title>국내지수</Title>
+                    </header>
                     <Loading />
                 </>
             )}

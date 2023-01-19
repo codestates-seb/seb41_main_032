@@ -5,7 +5,7 @@ import StockTable from './Components/StockTable';
 import Loading from '../../../Components/Style/Loading';
 import styled from 'styled-components';
 
-const Main = styled.main`
+const Container = styled.div`
     width: 100%;
     min-height: 800px;
     margin-bottom: 100px;
@@ -25,16 +25,19 @@ const AllList = () => {
     const [allKOSPI, setAllKOSPI, allKOSDAQ, setAllKOSDAQ] = useGetStockList(AllKOSPI, AllKOSDAQ);
 
     return (
-        <Main>
+        <Container>
             {allKOSDAQ && allKOSPI ? (
                 <>
-                    <Title>전체 목록{<SmTitle>{`${dateOutput(allKOSPI[0].basDt)} 기준`}</SmTitle>}</Title>
+                    <header>
+                        <Title>전체 목록{<SmTitle>{`${dateOutput(allKOSPI[0].basDt)} 기준`}</SmTitle>}</Title>
+                    </header>
+
                     {<StockTable allKOSPI={allKOSPI} allKOSDAQ={allKOSDAQ} setAllKOSPI={setAllKOSPI} setAllKOSDAQ={setAllKOSDAQ} />}
                 </>
             ) : (
                 <Loading />
             )}
-        </Main>
+        </Container>
     );
 };
 
