@@ -8,18 +8,21 @@ import { useEffect, useState } from 'react';
  * @returns [news, setNews]
  * @see https://developers.naver.com/docs/serviceapi/search/news/news.md#http-%EB%A9%94%EC%84%9C%EB%93%9C
  */
-const useGetSearchNews = (Parameters) => {
+const useGetSearchNews = (searchWord) => {
     const [data, setData] = useState();
+    const [keyword, setKeyword] = useState(searchWord);
+
     const BaseUrl = `http://localhost:5000/api/search/news`;
+    const parameters = `?query=${keyword}&display=100&start=1&sort=date`;
     useEffect(() => {
         axios
-            .get(`${BaseUrl}${Parameters}`)
+            .get(`${BaseUrl}${parameters}`)
             .then((res) => {
                 setData(res.data.items);
             })
             .catch((e) => console.error(e));
-    }, [BaseUrl, Parameters]);
-    return [data, setData];
+    }, [keyword]);
+    return [data, setData, keyword, setKeyword];
 };
 
 export default useGetSearchNews;
