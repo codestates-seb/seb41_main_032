@@ -1,7 +1,8 @@
 package mainproject.stocksite.domain.stock.detail.controller;
 
+import mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService;
 import mainproject.stocksite.domain.stock.detail.service.DetailedStockService;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,6 +20,7 @@ public class DetailedStockController {
     @GetMapping("/quotations/{stock-code}")
     public ResponseEntity getPresentQuotations(@PathVariable("stock-code") String stockCode) throws InterruptedException {
         ResponseEntity response = detailedStockService.findPresentQuotations(stockCode);
+        System.out.println("accessToken = " + AccessTokenService.accessToken);
 
         return response;
     }

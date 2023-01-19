@@ -1,27 +1,32 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
 import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo.appKey;
-import static mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo.appSecret;
 import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
 
-// try-catch문 리팩토링
+// try-catch문 리팩토링 필요
 @Service
 public class DetailedStockService {
 
     private static int countOfRequest;
 
+    private final AccessTokenRequestInfo accessTokenRequestInfo;
+
+    public DetailedStockService(AccessTokenRequestInfo accessTokenRequestInfo) {
+        this.accessTokenRequestInfo = accessTokenRequestInfo;
+    }
+
     public ResponseEntity<Object> findPresentQuotations(String stockCode) throws InterruptedException {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", appKey);
-        requestHeaders.set("appsecret", appSecret);
+        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
+        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
         requestHeaders.set("tr_id", "FHKST01010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
@@ -65,8 +70,8 @@ public class DetailedStockService {
     public ResponseEntity<Object> findInvestors(String stockCode) throws InterruptedException {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", appKey);
-        requestHeaders.set("appsecret", appSecret);
+        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
+        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
         requestHeaders.set("tr_id", "FHKST01010900");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
@@ -113,8 +118,8 @@ public class DetailedStockService {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
         requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", appKey);
-        requestHeaders.set("appsecret", appSecret);
+        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
+        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
         requestHeaders.set("tr_id", "FHKST03010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
@@ -163,8 +168,8 @@ public class DetailedStockService {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
         requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", appKey);
-        requestHeaders.set("appsecret", appSecret);
+        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
+        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
         requestHeaders.set("tr_id", "CTCA0903R");
         requestHeaders.set("custtype", "P");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
