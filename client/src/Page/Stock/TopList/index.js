@@ -6,8 +6,7 @@ import { ascend, descend } from '../../../Components/Function/sort';
 import News from '../../../Components/News';
 
 const Container = styled.div`
-    padding: 0px 50px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 `;
 
 /**
@@ -42,7 +41,7 @@ const TopList = () => {
             <StockTable title={`시가총액 TOP10`} KOSPI={topKOSPI} KOSDAQ={topKOSDAQ} />
             <StockTable title={`상승 TOP10`} KOSPI={upKOSPI} KOSDAQ={upKOSDAQ} />
             <StockTable title={`하락 TOP10`} KOSPI={lowKOSPI} KOSDAQ={lowKOSDAQ} />
-            <News keyword={'증시'} />
+            <News searchWord={'증시'} />
         </Container>
     );
 };
