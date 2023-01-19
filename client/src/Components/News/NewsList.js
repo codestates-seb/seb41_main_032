@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import timeForToday from '../Function/timeForToday';
 import usePagination from '../Hook/usePagination';
 import { PageBtn, PageList } from '../Style/PageBtn';
 
@@ -66,7 +67,7 @@ const NewsList = ({ news }) => {
                     <li key={index} onClick={() => window.open(el.link)}>
                         <h3 className="title" dangerouslySetInnerHTML={{ __html: el.title }}></h3>
                         <p className="description" dangerouslySetInnerHTML={{ __html: el.description }}></p>
-                        <p className="date">{el.pubDate}</p>
+                        <p className="date">{timeForToday(el.pubDate)}</p>
                     </li>
                 ))}
             </Container>
