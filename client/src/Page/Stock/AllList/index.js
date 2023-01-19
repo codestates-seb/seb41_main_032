@@ -29,7 +29,8 @@ const AllList = () => {
             {allKOSDAQ && allKOSPI ? (
                 <>
                     <header>
-                        <Title>전체 목록{<SmTitle>{`${dateOutput(allKOSPI[0].basDt)} 기준`}</SmTitle>}</Title>
+                        <Title>전체 목록</Title>
+                        {<SmTitle>{`${dateOutput(allKOSPI[0].basDt)} 기준`}</SmTitle>}
                     </header>
 
                     {<StockTable allKOSPI={allKOSPI} allKOSDAQ={allKOSDAQ} setAllKOSPI={setAllKOSPI} setAllKOSDAQ={setAllKOSDAQ} />}
