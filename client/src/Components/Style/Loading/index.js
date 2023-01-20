@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import loadingImg from './loading.gif';
+import loadingImg from '../../Img/loading.gif';
 
 const LoadingView = styled.div`
     display: flex;

@@ -3,7 +3,7 @@ import IndexItem from './Components/IndexList';
 import useGetStockList from '../../../Components/API/useGetStockList';
 import StockTable from './Components/StockTable';
 import { ascend, descend } from '../../../Components/Function/sort';
-import News from '../../../Components/News';
+import News from '../../../Components/Function/News';
 
 const Container = styled.div`
     margin-bottom: 50px;

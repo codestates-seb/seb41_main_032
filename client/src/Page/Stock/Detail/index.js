@@ -4,7 +4,8 @@ import { useStockDayList, useStockDetails, useStockInvestor } from '../../../Com
 import Loading from '../../../Components/Style/Loading';
 import DailyInfo from './Components/DailyInfo';
 import StockBoard from './Components/StockBoard';
-import News from '../../../Components/News';
+import News from '../../../Components/Function/News';
+
 const Container = styled.div`
     width: 100%;
     min-height: 500px;
