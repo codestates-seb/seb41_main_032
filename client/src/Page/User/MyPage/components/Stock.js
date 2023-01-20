@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import commaGenerator from "../../../../Components/Function/commaGenerator";
 
 const Container = styled.div`
   width: 250px;
@@ -69,7 +70,7 @@ const Stock = ({ name, number, count, price }) => {
         <Count>{count}주</Count>
       </LeftSide>
       <RightSide>
-        <Balance>{price}원</Balance>
+        <Balance>{commaGenerator(price)}원</Balance>
         <Profit>-500,000원 (5.0%)</Profit>
       </RightSide>
     </Container>
