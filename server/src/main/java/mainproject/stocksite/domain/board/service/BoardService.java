@@ -8,6 +8,7 @@ import mainproject.stocksite.domain.member.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +44,9 @@ public class BoardService {
 
     public void deleteBoard(long boardId) {
         boardRepository.deleteById(boardId);
+    }
+
+    public List<Board> getBoardList() {
+        return boardRepository.findAll();
     }
 }

@@ -8,6 +8,8 @@ import mainproject.stocksite.domain.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
 
@@ -29,6 +31,11 @@ public interface BoardMapper {
         board.setContent(boardPatchDto.getContent());
         return board;
     }
+
+    default List<BoardResponseDto> boardListToResponseDto(List<Board> boardList) {
+        return boardList.stream().map(this::boardToResponseDto).toList();
+    }
+
 
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.nickname", target = "nickname")
