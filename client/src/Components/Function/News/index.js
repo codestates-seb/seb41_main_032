@@ -41,7 +41,7 @@ const News = ({ searchWord }) => {
             <header>
                 <Title>{keyword} 뉴스</Title>
             </header>
-            <SearchInput type="text" placeholder="검색" onChange={ChangeValue} Value={value} setValue={setValue} onKeyPress={Submit} />
+            <SearchInput type="text" placeholder="검색" onChange={ChangeValue} value={value} onKeyPress={Submit} />
             {news ? <NewsList news={news}></NewsList> : null}
         </Section>
     );
