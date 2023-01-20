@@ -76,7 +76,7 @@ const Stocks = () => {
     <Container>
       <Subtitle>보유 주식</Subtitle>
       <Price>
-        <Balance>{sum}</Balance>
+        <Balance>{sum}원</Balance>
         <Profit>-2,000,000원 (20.0%)</Profit>
       </Price>
       <StockContent>
