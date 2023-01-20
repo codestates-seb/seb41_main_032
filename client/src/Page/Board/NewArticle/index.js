@@ -71,7 +71,7 @@ const NewArticle = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Div>
-        <h1>새 글 작성</h1>
+        <h2>새 글 작성</h2>
         <Input
           type="text"
           id="title"
