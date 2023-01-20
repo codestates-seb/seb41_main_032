@@ -4,7 +4,7 @@ import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Main = styled.main`
+const Container = styled.div`
     background: rgb(232, 203, 192);
     background: linear-gradient(0deg, rgba(232, 203, 192, 1) 0%, rgba(99, 111, 164, 1) 100%);
     color: #fff;
@@ -64,44 +64,44 @@ const Home = () => {
         AOS.init();
     }, []);
     return (
-        <Main>
+        <Container>
             <header>
                 <h1 data-aos="flip-down" data-aos-duration="1000">
                     시가총액 32조
                 </h1>
             </header>
-            <div className="cards">
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+            <ol className="cards">
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     주식이 처음이신가요?
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     주식으로 손해를 본적이 있으신가요?
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     주식매매가 두려우신가요?
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     그래서 준비했습니다
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     저희는 계좌계설 필요없이 회원가입만 하면
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     모의투자를 위한 1000만원을 지원해드립니다
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     가상의 돈으로 마음껏 매매를 해보세요
-                </div>
-                <div className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="card" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     모의 투자로 자신감과 경험을 얻으세요
-                </div>
-                <div className="startBtn" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+                </li>
+                <li className="startBtn" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
                     <Link to="/stock/top">
                         <button> 시작하기 </button>
                     </Link>
-                </div>
-            </div>
-        </Main>
+                </li>
+            </ol>
+        </Container>
     );
 };
 export default Home;

@@ -3,10 +3,10 @@ import IndexItem from './Components/IndexList';
 import useGetStockList from '../../../Components/API/useGetStockList';
 import StockTable from './Components/StockTable';
 import { ascend, descend } from '../../../Components/Function/sort';
+import News from '../../../Components/News';
 
-const Main = styled.main`
-    padding: 0px 50px;
-    margin-bottom: 100px;
+const Container = styled.div`
+    margin-bottom: 50px;
 `;
 
 /**
@@ -36,12 +36,13 @@ const TopList = () => {
     const [lowKOSPI, setLowKOSPI, lowKOSDAQ, setLowKOSDAQ] = useGetStockList(LowKOSPI, LowKOSDAQ, ascend, 'fltRt', 10);
 
     return (
-        <Main>
+        <Container>
             <IndexItem />
             <StockTable title={`시가총액 TOP10`} KOSPI={topKOSPI} KOSDAQ={topKOSDAQ} />
             <StockTable title={`상승 TOP10`} KOSPI={upKOSPI} KOSDAQ={upKOSDAQ} />
             <StockTable title={`하락 TOP10`} KOSPI={lowKOSPI} KOSDAQ={lowKOSDAQ} />
-        </Main>
+            <News searchWord={'증시'} />
+        </Container>
     );
 };
 

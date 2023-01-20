@@ -1,12 +1,11 @@
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import styled from 'styled-components';
 import { useStockDayList, useStockDetails, useStockInvestor } from '../../../Components/API/useGetStockDetails';
 import Loading from '../../../Components/Style/Loading';
 import DailyInfo from './Components/DailyInfo';
 import StockBoard from './Components/StockBoard';
-
-const Main = styled.main`
-    position: relative;
+import News from '../../../Components/News';
+const Container = styled.div`
     width: 100%;
     min-height: 500px;
     margin-bottom: 100px;
@@ -18,6 +17,7 @@ const Main = styled.main`
  */
 const StockDetail = () => {
     const params = useParams();
+    const { state } = useLocation();
 
     //오늘 주식데이터를 가져옴
     const TodayQuery = `?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=${params.id}`;
@@ -39,16 +39,17 @@ const StockDetail = () => {
     const [infoByDate, setInfoByDate] = useStockDayList(InfoByDateQuery);
 
     return (
-        <Main>
+        <Container>
             {todayInfo && tradingTrends && infoByDate ? (
                 <>
                     <StockBoard todayInfo={todayInfo} tradingTrends={tradingTrends} infoByDate={infoByDate} />
                     <DailyInfo infoByDate={infoByDate} />
+                    <News searchWord={state.name}></News>
                 </>
             ) : (
                 <Loading />
             )}
-        </Main>
+        </Container>
     );
 };
 

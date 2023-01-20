@@ -93,8 +93,7 @@ const PageList = styled.ul`
  * 
     종가 최고가 최저가 거래량 · 거래대금을 출력합니다*/
 const DailyInfo = ({ infoByDate }) => {
-    const [currentItems, currentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn] = usePagination(infoByDate);
-
+    const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(infoByDate);
     return (
         <Container>
             <Title>일별 시세</Title>
@@ -143,13 +142,11 @@ const DailyInfo = ({ infoByDate }) => {
             </Table>
             <PageList>
                 <PageBtn onClick={handlePrevBtn} disabled={currentPage === pages[0] ? true : false}>
-                    Prev
+                    이전
                 </PageBtn>
-
                 {renderPageNumbers}
-
                 <PageBtn onClick={handleNextBtn} disabled={currentPage === pages[pages.length - 1] ? true : false}>
-                    Next
+                    다음
                 </PageBtn>
             </PageList>
         </Container>

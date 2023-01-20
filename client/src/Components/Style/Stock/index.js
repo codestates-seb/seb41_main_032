@@ -4,8 +4,7 @@ import styled from 'styled-components';
 
 /** 제목 css 입니다 */
 export const Title = styled.h2`
-    margin-top: 50px;
-    margin-bottom: 15px;
+    display: inline;
 `;
 
 /** 작은 폰트를 사용할때 사용합니다
@@ -22,7 +21,7 @@ export const SmFont = styled.span`
  */
 export const SmTitle = styled.span`
     margin-left: 5px;
-    font-size: 0.4em;
+    font-size: 0.7em;
 `;
 
 /** fonst-size : 0.8em
@@ -91,7 +90,7 @@ export const SelectBtnContainer = styled.ul`
     width: 100%;
     list-style: none;
     margin-right: 10px;
-    margin: 20px 0px;
+    margin-top: 20px;
     button {
         padding: 10px 20px;
         border-radius: 15px;

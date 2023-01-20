@@ -10,9 +10,10 @@ const StyledLink = styled(Link)`
     text-decoration-line: none;
 `;
 const Section = styled.section`
-    position: relative;
     width: 100%;
     min-height: 500px;
+    margin-bottom: 100px;
+    padding: 20px;
 `;
 /**
  * 주식 정보 (코스피 ,코스닥)을 테이블로(표)로 보여주는 컴포넌트입니다
@@ -43,10 +44,10 @@ const StockTable = ({ title, KOSPI, KOSDAQ }) => {
         <Section>
             {KOSPI && KOSDAQ ? (
                 <>
-                    <Title>
-                        {title}
+                    <header>
+                        <Title>{title}</Title>
                         <SmTitle>{KOSPI.length > 0 ? `${dateOutput(KOSPI[0].basDt)} 기준` : null}</SmTitle>
-                    </Title>
+                    </header>
                     <SelectBtnContainer>
                         <li>
                             <button className={indexSelect === 'KOSPI' ? 'select' : null} onClick={() => handleSelect(KOSPI, 'KOSPI')}>
