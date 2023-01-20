@@ -1,8 +1,12 @@
 package mainproject.stocksite.domain.stock.detail.controller;
 
+import mainproject.stocksite.domain.stock.detail.dto.DetailedStockOptions;
 import mainproject.stocksite.domain.stock.detail.service.DetailedStockService;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -33,14 +37,8 @@ public class DetailedStockController {
 
     // 국내 주식 기간별 시세 조회 (일/주/월/년)
     @GetMapping("/quotations/{stock-code}/day")
-    public ResponseEntity getQuotationsByPeriod(
-            @PathVariable("stock-code") String stockCode,
-            @RequestParam("start") String startDay,
-            @RequestParam("end") String endDay,
-            @RequestParam("period-code") String periodCode,
-            @RequestParam("code") String code) throws InterruptedException {
-
-        ResponseEntity response = detailedStockService.findQuotationsByPeriod(stockCode, startDay, endDay, periodCode, code);
+    public ResponseEntity getQuotationsByPeriod(@PathVariable("stock-code") String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
+        ResponseEntity response = detailedStockService.findQuotationsByPeriod(stockCode, detailedStockOptions);
 
         return response;
     }
