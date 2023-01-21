@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookmarkService {
@@ -24,7 +25,11 @@ public class BookmarkService {
 
     @Transactional
     public Bookmark createBookmark(Bookmark bookmark) {
+        checkBookmarkListFull(bookmark);
+
         memberService.verifyExistsMember(bookmark.getMember().getMemberId());
+
+        verifyExistsBookmark(bookmark);
 
         return saveBookmark(bookmark);
     }
@@ -63,7 +68,21 @@ public class BookmarkService {
         return findBookmark.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOOKMARK_NOT_FOUND));
     }
 
+    private void verifyExistsBookmark(Bookmark bookmark) {
+        List<Bookmark> BookmarkListOfSpecificMember = bookmarkRepository.findAllByMember_MemberId(bookmark.getMember().getMemberId());
+        List<String> stockCodeListOfSpecificMember = BookmarkListOfSpecificMember.stream().map(Bookmark::getStockCode).collect(Collectors.toList());
+
+        if (stockCodeListOfSpecificMember.stream().anyMatch(stockCode -> stockCode.equals(bookmark.getStockCode())))
+            throw new BusinessLogicException(ExceptionCode.ALREADY_EXISTED_BO0MARK);
+    }
+
     private Bookmark saveBookmark(Bookmark bookmark) {
         return bookmarkRepository.save(bookmark);
+    }
+
+    public void checkBookmarkListFull(Bookmark bookmark) {
+        List<Bookmark> bookmarkList = findBookmarks(bookmark.getMember().getMemberId());
+        if (bookmarkList.size() == 5)
+            throw new BusinessLogicException(ExceptionCode.BOOKMARK_LIST_ARE_FULL);
     }
 }
