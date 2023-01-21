@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
 import commaGenerator from '../../../../../../Components/Function/commaGenerator';
 import Chart from 'react-apexcharts';
 import dateOutput from '../../../../../../Components/Function/dateOutput';
-import Tooltip from '../../../../../../Components/Function/Tooltip';
+import Tooltip from '../../../../../../Components/Global/Tooltip';
 import described from './tooltipText';
+import QuestionMark from '../../../../../../Components/Img/Help/white.png';
+
 const InfoBox = styled.ul`
     display: flex;
     flex-direction: column;
@@ -26,6 +27,9 @@ const InfoItem = styled.li`
     .blue {
         color: #3a74ff;
     }
+    p {
+        display: flex;
+    }
 `;
 
 const InfoContainer = styled.div`
@@ -34,6 +38,10 @@ const InfoContainer = styled.div`
     section {
         margin-right: 20px;
     }
+`;
+
+const QuestionMarkImg = styled.img`
+    margin-left: 5px;
 `;
 
 /** 매매동향을 차트로 그려주는 컴포넌트입니다
@@ -169,31 +177,41 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                 <InfoBox>
                     <Tooltip text={described.turnoverRatio}>
                         <InfoItem>
-                            <p>거래 회전율</p>
+                            <p>
+                                거래 회전율 <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                            </p>
                             <p>{todayInfo.vol_tnrt}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.PER}>
                         <InfoItem>
-                            <p>PER</p>
+                            <p>
+                                PER <QuestionMarkImg src={QuestionMark} alt="tooltip" />{' '}
+                            </p>
                             <p>{todayInfo.per}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.PBR}>
                         <InfoItem>
-                            <p>PBR</p>
+                            <p>
+                                PBR <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                            </p>
                             <p>{todayInfo.pbr}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.EPS}>
                         <InfoItem>
-                            <p>EPS</p>
+                            <p>
+                                EPS <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                            </p>
                             <p>{commaGenerator(Math.floor(todayInfo.eps))}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.BPS}>
                         <InfoItem>
-                            <p>BPS</p>
+                            <p>
+                                BPS <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                            </p>
                             <p>{commaGenerator(Math.floor(todayInfo.bps))}</p>
                         </InfoItem>
                     </Tooltip>

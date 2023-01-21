@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import useGetSearchNews from '../API/useGetSearch';
-import useInput from '../Hook/useInput';
-import { Title } from '../Style/Stock';
+import useGetSearchNews from '../../../Components/API/useGetSearch';
+import useInput from '../../../Components/Hook/useInput';
+import { Title } from '../../../Components/Style/Stock';
 import NewsList from './NewsList';
 
 const Section = styled.section`
@@ -41,7 +41,7 @@ const News = ({ searchWord }) => {
             <header>
                 <Title>{keyword} 뉴스</Title>
             </header>
-            <SearchInput type="text" placeholder="검색" onChange={ChangeValue} Value={value} setValue={setValue} onKeyPress={Submit} />
+            <SearchInput type="text" placeholder="검색" onChange={ChangeValue} value={value} onKeyPress={Submit} />
             {news ? <NewsList news={news}></NewsList> : null}
         </Section>
     );
