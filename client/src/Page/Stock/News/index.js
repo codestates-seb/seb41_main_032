@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import useGetSearchNews from '../../API/useGetSearch';
-import useInput from '../../Hook/useInput';
-import { Title } from '../../Style/Stock';
+import useGetSearchNews from '../../../Components/API/useGetSearch';
+import useInput from '../../../Components/Hook/useInput';
+import { Title } from '../../../Components/Style/Stock';
 import NewsList from './NewsList';
 
 const Section = styled.section`

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import commaGenerator from '../../../../../../Components/Function/commaGenerator';
 import Chart from 'react-apexcharts';
 import dateOutput from '../../../../../../Components/Function/dateOutput';
-import Tooltip from '../../../../../../Components/Function/Tooltip';
+import Tooltip from '../../../../../../Components/Global/Tooltip';
 import described from './tooltipText';
 import QuestionMark from '../../../../../../Components/Img/Help/white.png';
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import timeForToday from '../timeForToday';
-import usePagination from '../../Hook/usePagination';
-import { PageBtn, PageList } from '../../Style/PageBtn';
+import timeForToday from '../../../Components/Function/timeForToday';
+import usePagination from '../../../Components/Hook/usePagination';
+import { PageBtn, PageList } from '../../../Components/Style/PageBtn';
 
 const Container = styled.ul`
     display: flex;
