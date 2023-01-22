@@ -1,6 +1,6 @@
 import { useLocation, useParams } from 'react-router';
 import styled from 'styled-components';
-import { useStockDayList, useStockDetails, useStockInvestor } from '../../../Components/API/useGetStockDetails';
+import { useStockDayList } from '../../../Components/API/useGetStockDetails';
 import Loading from '../../../Components/Style/Loading';
 import DailyInfo from './Components/DailyInfo';
 import StockBoard from './Components/StockBoard';
@@ -20,13 +20,6 @@ const StockDetail = () => {
     const params = useParams();
     const { state } = useLocation();
 
-    //오늘 주식데이터를 가져옴
-    const TodayQuery = `?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=${params.id}`;
-    const [todayInfo, setTodayInfo] = useStockDetails(TodayQuery);
-
-    // 매매동향 정보를 가져옴
-    const [tradingTrends, setTradingTrends] = useStockInvestor(TodayQuery);
-
     // 오늘부터 100일전까지의 주식정보 데이터를 가져옴 (업데이트가 느림 - 오늘날짜 데이터 누락이 있을 수 있음)
     let startDate = new Date();
     startDate.setDate(startDate.getDate() - 100);
@@ -38,12 +31,11 @@ const StockDetail = () => {
 
     const InfoByDateQuery = `?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=${params.id}&FID_INPUT_DATE_1=${Start}&FID_INPUT_DATE_2=${EndDate}&FID_PERIOD_DIV_CODE=D&FID_ORG_ADJ_PRC=0`;
     const [infoByDate, setInfoByDate] = useStockDayList(InfoByDateQuery);
-
     return (
         <Container>
-            {todayInfo && tradingTrends && infoByDate ? (
+            {infoByDate ? (
                 <>
-                    <StockBoard todayInfo={todayInfo} tradingTrends={tradingTrends} infoByDate={infoByDate} />
+                    <StockBoard infoByDate={infoByDate} />
                     <DailyInfo infoByDate={infoByDate} />
                     <News searchWord={state.name}></News>
                 </>

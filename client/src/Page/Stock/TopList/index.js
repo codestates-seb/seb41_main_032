@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import IndexItem from './Components/IndexList';
-import useGetStockList from '../../../Components/API/useGetStockList';
 import StockTable from './Components/StockTable';
 import { ascend, descend } from '../../../Components/Function/sort';
 import News from '../News';
+import { useKOSDAQList, useKOSPIList } from '../../../Components/API/ReactQueryContainer';
 
 const Container = styled.div`
     margin-bottom: 50px;
@@ -14,33 +14,15 @@ const Container = styled.div`
  * @author 이중원
  */
 const TopList = () => {
-    /**
-     * 정부에서 제공하는 api 업데이트가 늦을때는 4일까지 지연됨
-     * 그래서 4일전 부터 오늘까지의 데이터를 요청후
-     * 가장 최신일의 데이터만 가져옴
-     */
-    let date = new Date();
-    date.setDate(date.getDate() - 4);
-    const day = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
-
-    const TopKOSPI = `&numOfRows=30&pageNo=1&resultType=json&beginBasDt=${day}&beginMrktTotAmt=20000000000000&mrktCls=KOSPI`;
-    const TopKOSDAQ = `&numOfRows=30&pageNo=1&resultType=json&beginBasDt=${day}&beginMrktTotAmt=1300000000000&mrktCls=KOSDAQ`;
-    const [topKOSPI, setTopKOSPI, topKOSDAQ, setTopKOSDAQ] = useGetStockList(TopKOSPI, TopKOSDAQ, descend, 'mrktTotAmt', 10);
-
-    const UpKOSPI = `&numOfRows=50&pageNo=1&resultType=json&beginBasDt=${day}&beginFltRt=5&mrktCls=KOSPI`;
-    const UpKOSDAQ = `&numOfRows=50&pageNo=1&resultType=json&beginBasDt=${day}&beginFltRt=10&mrktCls=KOSDAQ`;
-    const [upKOSPI, setUpKOSPI, upKOSDAQ, setUpKOSDAQ] = useGetStockList(UpKOSPI, UpKOSDAQ, descend, 'fltRt', 10);
-
-    const LowKOSPI = `&numOfRows=100&pageNo=1&resultType=json&beginBasDt=${day}&endFltRt=-2&mrktCls=KOSPI`;
-    const LowKOSDAQ = `&numOfRows=100&pageNo=1&resultType=json&beginBasDt=${day}&endFltRt=-4&mrktCls=KOSDAQ`;
-    const [lowKOSPI, setLowKOSPI, lowKOSDAQ, setLowKOSDAQ] = useGetStockList(LowKOSPI, LowKOSDAQ, ascend, 'fltRt', 10);
+    const KOSPI = useKOSPIList();
+    const KOSDAQ = useKOSDAQList();
 
     return (
         <Container>
             <IndexItem />
-            <StockTable title={`시가총액 TOP10`} KOSPI={topKOSPI} KOSDAQ={topKOSDAQ} />
-            <StockTable title={`상승 TOP10`} KOSPI={upKOSPI} KOSDAQ={upKOSDAQ} />
-            <StockTable title={`하락 TOP10`} KOSPI={lowKOSPI} KOSDAQ={lowKOSDAQ} />
+            <StockTable title={`시가총액 TOP10`} KOSPI={descend(KOSPI, 'mrktTotAmt', 10)} KOSDAQ={descend(KOSDAQ, 'mrktTotAmt', 10)} />
+            <StockTable title={`상승 TOP10`} KOSPI={descend(KOSPI, 'fltRt', 10)} KOSDAQ={descend(KOSDAQ, 'fltRt', 10)} />
+            <StockTable title={`하락 TOP10`} KOSPI={ascend(KOSPI, 'fltRt', 10)} KOSDAQ={ascend(KOSDAQ, 'fltRt', 10)} />
             <News searchWord={'증시'} />
         </Container>
     );
