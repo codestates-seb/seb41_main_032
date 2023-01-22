@@ -1,37 +1,51 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
+import mainproject.stocksite.domain.config.AccessTokenRequestInfo;
+import mainproject.stocksite.domain.exception.BusinessLogicException;
 import mainproject.stocksite.domain.exception.ExceptionCode;
-import mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo;
-import mainproject.stocksite.domain.stock.detail.dto.DetailedStockOptions;
-import org.springframework.http.*;
+import mainproject.stocksite.domain.stock.detail.count.CountingRequest;
+import mainproject.stocksite.domain.stock.detail.options.DetailedStockOptions;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
 
-// try-catch문 리팩토링 필요
 @Service
 public class DetailedStockService {
 
-    private static int countOfRequest;
-
     private final AccessTokenRequestInfo accessTokenRequestInfo;
+    private final CountingRequest countingRequest;
+    private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
 
-    public DetailedStockService(AccessTokenRequestInfo accessTokenRequestInfo) {
+    public DetailedStockService(AccessTokenRequestInfo accessTokenRequestInfo, CountingRequest countingRequest) {
         this.accessTokenRequestInfo = accessTokenRequestInfo;
+        this.countingRequest = countingRequest;
     }
 
-    public ResponseEntity<Object> findPresentQuotations(String stockCode) throws InterruptedException {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
-        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
+    public HttpHeaders baseHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("authorization", "Bearer " + accessToken);
+        headers.set("appkey", accessTokenRequestInfo.getAppKey());
+        headers.set("appsecret", accessTokenRequestInfo.getAppSecret());
+        return headers;
+    }
+
+    public String findPresentQuotations(String stockCode) throws InterruptedException {
+        AtomicInteger count = countingRequest.getCountOfRequest();
+
+        HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("tr_id", "FHKST01010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-price";
+        String url = STOCK_DEFAULT_URL + "inquire-price";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -40,43 +54,54 @@ public class DetailedStockService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = null;
+        ResponseEntity<String> response;
 
         try {
+            count.getAndIncrement();
+
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    Object.class
+                    String.class
             );
+
+            return response.getBody();
+
         } catch (Exception e) {
             String[] errorMessage = e.getMessage().split("\"");
+            String errorCode = errorMessage[8];
 
-            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
-                if (countOfRequest == 2) {
-                    countOfRequest = 0;
-                    return new ResponseEntity<>(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
-                } else if (countOfRequest < 2) {
-                    Thread.sleep(1000);
-                    countOfRequest++;
-                    findPresentQuotations(stockCode);
-                }
+            switch (errorCode) {
+                case "EGW00001":    // 일시적인 오류
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+                case "EGW00002":    // 서버 에러
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+                case "EGW00121":    // 유효하지 않은 토큰
+                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
+                case "EGW00201":    // 초당 거래건수 초과
+                    if (countingRequest.checkCountOfRequest(count)) {
+                        Thread.sleep(1000);
+                        findPresentQuotations(stockCode);
+                    } else {
+                        count.set(0);
+                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
+                    }
+                    break;
             }
         }
-        assert response != null;
 
-        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        return null;
     }
 
-    public ResponseEntity<Object> findInvestors(String stockCode) throws InterruptedException {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
-        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
+    public String findInvestors(String stockCode) throws InterruptedException {
+        AtomicInteger count = countingRequest.getCountOfRequest();
+
+        HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("tr_id", "FHKST01010900");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-investor";
+        String url = STOCK_DEFAULT_URL + "inquire-investor";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -85,45 +110,55 @@ public class DetailedStockService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = null;
+        ResponseEntity<String> response;
 
         try {
+            count.getAndIncrement();
+
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    Object.class
+                    String.class
             );
+
+            return response.getBody();
+
         } catch (Exception e) {
             String[] errorMessage = e.getMessage().split("\"");
+            String errorCode = errorMessage[8];
 
-            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
-                if (countOfRequest == 2) {
-                    countOfRequest = 0;
-                    return new ResponseEntity<>(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
-                } else if (countOfRequest < 2) {
-                    Thread.sleep(1000);
-                    countOfRequest++;
-                    findInvestors(stockCode);
-                }
+            switch (errorCode) {
+                case "EGW00001":    // 일시적인 오류
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+                case "EGW00002":    // 서버 에러
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+                case "EGW00121":    // 유효하지 않은 토큰
+                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
+                case "EGW00201":    // 초당 거래건수 초과
+                    if (countingRequest.checkCountOfRequest(count)) {
+                        Thread.sleep(1000);
+                        findInvestors(stockCode);
+                    } else {
+                        count.set(0);
+                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
+                    }
+                    break;
             }
         }
-        assert response != null;
 
-        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        return null;
     }
 
-    public ResponseEntity<Object> findQuotationsByPeriod(String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
+    public String findQuotationsByPeriod(String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
+        AtomicInteger count = countingRequest.getCountOfRequest();
 
-        HttpHeaders requestHeaders = new HttpHeaders();
+        HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
-        requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
-        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
         requestHeaders.set("tr_id", "FHKST03010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
+        String url = STOCK_DEFAULT_URL + "inquire-daily-itemchartprice";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -136,45 +171,56 @@ public class DetailedStockService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = null;
+        ResponseEntity<String> response;
 
         try {
+            count.getAndIncrement();
+
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    Object.class
+                    String.class
             );
+
+            return response.getBody();
+
         } catch (Exception e) {
             String[] errorMessage = e.getMessage().split("\"");
+            String errorCode = errorMessage[8];
 
-            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
-                if (countOfRequest == 2) {
-                    countOfRequest = 0;
-                    return new ResponseEntity<>(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
-                } else if (countOfRequest < 2) {
-                    Thread.sleep(1000);
-                    countOfRequest++;
-                    findQuotationsByPeriod(stockCode, detailedStockOptions);
-                }
+            switch (errorCode) {
+                case "EGW00001":    // 일시적인 오류
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+                case "EGW00002":    // 서버 에러
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+                case "EGW00121":    // 유효하지 않은 토큰
+                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
+                case "EGW00201":    // 초당 거래건수 초과
+                    if (countingRequest.checkCountOfRequest(count)) {
+                        Thread.sleep(1000);
+                        findQuotationsByPeriod(stockCode, detailedStockOptions);
+                    } else {
+                        count.set(0);
+                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
+                    }
+                    break;
             }
         }
-        assert response != null;
 
-        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        return null;
     }
 
-    public ResponseEntity<Object> findHolidays(String baseDate) throws InterruptedException {
-        HttpHeaders requestHeaders = new HttpHeaders();
+    public String findHolidays(String baseDate) throws InterruptedException {
+        AtomicInteger count = countingRequest.getCountOfRequest();
+
+        HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
-        requestHeaders.set("authorization", "Bearer " + accessToken);
-        requestHeaders.set("appkey", accessTokenRequestInfo.getAppKey());
-        requestHeaders.set("appsecret", accessTokenRequestInfo.getAppSecret());
         requestHeaders.set("tr_id", "CTCA0903R");
         requestHeaders.set("custtype", "P");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/chk-holiday";
+        String url = STOCK_DEFAULT_URL + "chk-holiday";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("BASS_DT", baseDate)
@@ -184,31 +230,43 @@ public class DetailedStockService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = null;
+        ResponseEntity<String> response;
 
         try {
+            count.getAndIncrement();
+
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    Object.class
+                    String.class
             );
+
+            return response.getBody();
+
         } catch (Exception e) {
             String[] errorMessage = e.getMessage().split("\"");
+            String errorCode = errorMessage[8];
 
-            if (errorMessage[11].equals("초당 거래건수를 초과하였습니다.")) {
-                if (countOfRequest == 2) {
-                    countOfRequest = 0;
-                    return new ResponseEntity<>(ExceptionCode.UNABLE_TO_REQUEST_AGAIN.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
-                } else if (countOfRequest < 2) {
-                    Thread.sleep(1000);
-                    countOfRequest++;
-                    findHolidays(baseDate);
-                }
+            switch (errorCode) {
+                case "EGW00001":    // 일시적인 오류
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+                case "EGW00002":    // 서버 에러
+                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+                case "EGW00121":    // 유효하지 않은 토큰
+                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
+                case "EGW00201":    // 초당 거래건수 초과
+                    if (countingRequest.checkCountOfRequest(count)) {
+                        Thread.sleep(1000);
+                        findHolidays(baseDate);
+                    } else {
+                        count.set(0);
+                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
+                    }
+                    break;
             }
         }
-        assert response != null;
 
-        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.stock.detail.dto;
+package mainproject.stocksite.domain.stock.detail.options;
 
 import lombok.Getter;
 

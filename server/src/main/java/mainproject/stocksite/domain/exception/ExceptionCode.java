@@ -5,6 +5,7 @@ import lombok.Getter;
 public enum ExceptionCode {
     // 401 UNAUTHORIZED 인증되지 않음
     LOGIN_REQUIRED(401, "You need to login"),
+    INVALID_TOKEN(401, "Your access-token is invalid"),
 
     // 404 BAD REQUEST 잘못된 요청
     MEMBER_NOT_FOUND(404, "Member not found"),

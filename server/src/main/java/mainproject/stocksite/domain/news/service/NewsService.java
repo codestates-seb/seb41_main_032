@@ -1,7 +1,7 @@
 package mainproject.stocksite.domain.news.service;
 
-import mainproject.stocksite.domain.news.dto.NewsOptions;
-import mainproject.stocksite.domain.news.dto.NewsSecretInfo;
+import mainproject.stocksite.domain.config.NewsSecretInfo;
+import mainproject.stocksite.domain.news.options.NewsOptions;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

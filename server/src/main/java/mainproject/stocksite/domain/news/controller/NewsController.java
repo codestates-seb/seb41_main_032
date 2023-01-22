@@ -1,7 +1,7 @@
 package mainproject.stocksite.domain.news.controller;
 
+import mainproject.stocksite.domain.news.options.NewsOptions;
 import mainproject.stocksite.domain.news.service.NewsService;
-import mainproject.stocksite.domain.news.dto.NewsOptions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class NewsController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getStockNews(NewsOptions newsOptions) {
+    public ResponseEntity getStockNews(NewsOptions newsOptions) {
 
         return newsService.searchStockNews(newsOptions);
     }

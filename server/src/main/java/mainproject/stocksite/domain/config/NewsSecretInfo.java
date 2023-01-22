@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.news.dto;
+package mainproject.stocksite.domain.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

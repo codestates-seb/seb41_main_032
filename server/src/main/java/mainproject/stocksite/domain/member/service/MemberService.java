@@ -50,7 +50,7 @@ public class MemberService {
 
     public Member findById(Long MemberId) {
         Optional<Member> findMember = repository.findById(MemberId);
-        return findMember.orElseThrow(() -> new NoSuchElementException("No Such Member"));
+        return findMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     public void deleteMember(Long memberId) {
