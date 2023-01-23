@@ -59,9 +59,11 @@ const AddBookMarks = () => {
         switch (select) {
             case 'bookMarks':
                 setData(bookMarks);
+                setCurrentPage(1);
                 break;
             case 'stock':
                 setData(stockList);
+                setCurrentPage(1);
                 break;
             default:
                 break;
@@ -79,6 +81,7 @@ const AddBookMarks = () => {
                 );
                 setKeyword('');
                 setSelect('stock');
+                setCurrentPage(1);
             }
         }
     };
