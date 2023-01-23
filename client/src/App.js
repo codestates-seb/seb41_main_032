@@ -13,6 +13,7 @@ import EditProfile from './Page/User/Edit/index';
 import Login from './Page/User/Login';
 import MyPage from './Page/User/MyPage';
 import SignUp from './Page/User/SignUp/index';
+import AddBookMarks from './Page/Stock/AddBookMarks';
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/stock/:id" element={<StockDetail />} />
                     <Route path="/stock/top" element={<StockTopList />} />
                     <Route path="/stock/List" element={<StockAllList />} />
+                    <Route path="/stock/AddBookMarks" element={<AddBookMarks />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/sign-up" element={<SignUp />} />
                     <Route path="/board" element={<Board />} />
