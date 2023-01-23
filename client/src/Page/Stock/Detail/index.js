@@ -17,31 +17,13 @@ const Container = styled.div`
  * @author 이중원
  */
 const StockDetail = () => {
-    const params = useParams();
     const { state } = useLocation();
 
-    // 오늘부터 100일전까지의 주식정보 데이터를 가져옴 (업데이트가 느림 - 오늘날짜 데이터 누락이 있을 수 있음)
-    let startDate = new Date();
-    startDate.setDate(startDate.getDate() - 100);
-    const Start = `${startDate.getFullYear()}${('0' + (startDate.getMonth() + 1)).slice(-2)}${('0' + startDate.getDate()).slice(-2)}`;
-
-    let endDate = new Date();
-    endDate.setDate(endDate.getDate());
-    const EndDate = `${endDate.getFullYear()}${('0' + (endDate.getMonth() + 1)).slice(-2)}${('0' + endDate.getDate()).slice(-2)}`;
-
-    const InfoByDateQuery = `?FID_COND_MRKT_DIV_CODE=J&FID_INPUT_ISCD=${params.id}&FID_INPUT_DATE_1=${Start}&FID_INPUT_DATE_2=${EndDate}&FID_PERIOD_DIV_CODE=D&FID_ORG_ADJ_PRC=0`;
-    const [infoByDate, setInfoByDate] = useStockDayList(InfoByDateQuery);
     return (
         <Container>
-            {infoByDate ? (
-                <>
-                    <StockBoard infoByDate={infoByDate} />
-                    <DailyInfo infoByDate={infoByDate} />
-                    <News searchWord={state.name}></News>
-                </>
-            ) : (
-                <Loading />
-            )}
+            <StockBoard />
+            <DailyInfo />
+            <News searchWord={state.name}></News>
         </Container>
     );
 };
