@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Info from './Components/Info';
 import CandlestickChar from './Components/CandlestickChar';
 import SummaryInfo from './Components/SummaryInfo';
-import { useStockInfo, useStockInvestor } from '../../../../../Components/API/ReactQueryContainer';
+import { useStockDayList, useStockInfo, useStockInvestor } from '../../../../../Components/API/ReactQueryContainer';
 import { useParams } from 'react-router-dom';
 
 const Board = styled.section`
@@ -39,16 +39,17 @@ const Board = styled.section`
 `;
 
 /** 주식 이름,가격,투자정보,투자 지표,매매 동향,캔들차트를 출력하는 컴포넌트입니다*/
-const StockBoard = ({ infoByDate }) => {
+const StockBoard = () => {
     const params = useParams();
     const stockInfo = useStockInfo(params.id);
     const stockInvestor = useStockInvestor(params.id);
+    const stockDayList = useStockDayList(params.id);
 
     return (
         <Board>
             {stockInfo ? <Info stockInfo={stockInfo} /> : null}
             {stockInfo && stockInvestor ? <SummaryInfo stockInfo={stockInfo} stockInvestor={stockInvestor} /> : null}
-            <CandlestickChar infoByDate={infoByDate} />
+            {stockDayList ? <CandlestickChar stockDayLis={stockDayList} /> : null}
         </Board>
     );
 };

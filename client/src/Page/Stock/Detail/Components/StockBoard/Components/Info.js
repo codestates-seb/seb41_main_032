@@ -8,6 +8,7 @@ import ActivateImg from '../../../../../../Components/Img/Favorites/gold.png';
 import { useState } from 'react';
 import numberToKR from '../../../../../../Components/Function/numberToKR';
 import useInput from '../../../../../../Components/Hook/useInput';
+import { useAddBookMarks, useBookMarks, useRemoveBookMarks } from '../../../../../../Components/API/ReactQueryContainer';
 const Section = styled.section`
     display: flex;
 `;
@@ -128,19 +129,28 @@ const OrderButton = styled.button`
 const Info = ({ stockInfo }) => {
     const params = useParams();
     const { state } = useLocation();
-    const [favorites, setFavorites] = useState(false);
     const [holding, setHolding] = useState(Math.floor(Math.random() * 10));
     const [account, setAccount] = useState(Math.floor(Math.random() * 10000000) + 1000000);
     const [quantity, setQuantity, ChangeQuantity, submit] = useInput();
 
+    //TODO 백엔드에서 memberID 보내주면 해당 id로 교체
+    const bookMarks = useBookMarks('2');
+
+    const { mutate: addBookMarks } = useAddBookMarks();
+    const { mutate: removeBookMarks } = useRemoveBookMarks();
     const handlerBookmark = () => {
-        const bookmark = {
-            stockCode: params.id,
-            stockName: state.name,
-            memberId: '1',
-        };
-        console.log('bookmark 추가', bookmark);
-        setFavorites((current) => !current);
+        const isActivate = bookMarks?.find((e) => e.stockCode === params.id);
+
+        if (isActivate) {
+            removeBookMarks(isActivate.bookmarkId);
+        } else {
+            const bookmark = {
+                stockCode: params.id,
+                stockName: state.name,
+                memberId: '2',
+            };
+            addBookMarks(bookmark);
+        }
     };
 
     const handlerOrder = () => {
@@ -176,7 +186,12 @@ const Info = ({ stockInfo }) => {
             <StockContainer>
                 <p>{`한국증권 거래소 #${stockInfo.bstp_kor_isnm}`}</p>
                 <h2>
-                    <FavoritesImg src={favorites ? ActivateImg : DisableImg} alt="Favorites" onClick={handlerBookmark} /> {state.name} <span>{params.id}</span>
+                    <FavoritesImg
+                        src={bookMarks?.find((e) => e.stockCode === params.id) ? ActivateImg : DisableImg}
+                        alt="Favorites"
+                        onClick={handlerBookmark}
+                    />
+                    {state.name} <span>{params.id}</span>
                 </h2>
                 <PriceContainer>
                     {stockInfo.prdy_vrss > 0 ? (

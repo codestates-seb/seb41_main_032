@@ -10,8 +10,8 @@ const Section = styled.section`
 `;
 
 /** 빨간색과 파란색으로 표시되는 캔들 차트를 출력하는 컴포넌트입니다*/
-const CandlestickChar = ({ infoByDate }) => {
-    const sortedData = ascend(infoByDate, 'stck_bsop_date');
+const CandlestickChar = ({ stockDayLis }) => {
+    const sortedData = ascend(stockDayLis, 'stck_bsop_date');
 
     /**
      * @param x 날짜
