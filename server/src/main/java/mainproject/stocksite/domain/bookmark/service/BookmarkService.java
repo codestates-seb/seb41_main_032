@@ -1,5 +1,6 @@
 package mainproject.stocksite.domain.bookmark.service;
 
+import lombok.RequiredArgsConstructor;
 import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.bookmark.repository.BookmarkRepository;
 import mainproject.stocksite.domain.exception.BusinessLogicException;
@@ -12,16 +13,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
-    private final MemberService memberService;
 
-    public BookmarkService(BookmarkRepository bookmarkRepository, MemberService memberService) {
-        this.bookmarkRepository = bookmarkRepository;
-        this.memberService = memberService;
-    }
+    private final MemberService memberService;
 
     @Transactional
     public Bookmark createBookmark(Bookmark bookmark) {

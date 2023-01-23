@@ -1,15 +1,21 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
+import lombok.RequiredArgsConstructor;
 import mainproject.stocksite.domain.config.AccessTokenRequestInfo;
 import mainproject.stocksite.domain.exception.BusinessLogicException;
 import mainproject.stocksite.domain.exception.ExceptionCode;
 import mainproject.stocksite.domain.stock.detail.count.CountingRequest;
+import mainproject.stocksite.domain.stock.detail.dto.response.HolidaysDto;
+import mainproject.stocksite.domain.stock.detail.dto.response.InvestorsDto;
+import mainproject.stocksite.domain.stock.detail.dto.response.PresentQuotationsDto;
+import mainproject.stocksite.domain.stock.detail.dto.response.QuotationsByPeriodDto;
 import mainproject.stocksite.domain.stock.detail.options.DetailedStockOptions;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,19 +24,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
 
+@RequiredArgsConstructor
 @Service
 public class DetailedStockService {
 
     private final AccessTokenRequestInfo accessTokenRequestInfo;
+
     private final CountingRequest countingRequest;
+
     private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
 
-    public DetailedStockService(AccessTokenRequestInfo accessTokenRequestInfo, CountingRequest countingRequest) {
-        this.accessTokenRequestInfo = accessTokenRequestInfo;
-        this.countingRequest = countingRequest;
-    }
+    private final RestTemplate restTemplate;
 
-    public HttpHeaders baseHeaders() {
+    private HttpHeaders baseHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "Bearer " + accessToken);
         headers.set("appkey", accessTokenRequestInfo.getAppKey());
@@ -38,7 +44,8 @@ public class DetailedStockService {
         return headers;
     }
 
-    public String findPresentQuotations(String stockCode) throws InterruptedException {
+    @Transactional(readOnly = true)
+    public PresentQuotationsDto findPresentQuotations(String stockCode) throws InterruptedException {
         AtomicInteger count = countingRequest.getCountOfRequest();
 
         HttpHeaders requestHeaders = baseHeaders();
@@ -52,9 +59,7 @@ public class DetailedStockService {
                 .queryParam("FID_INPUT_ISCD", stockCode)
                 .build();
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> response;
+        ResponseEntity<PresentQuotationsDto> response;
 
         try {
             count.getAndIncrement();
@@ -63,7 +68,7 @@ public class DetailedStockService {
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    String.class
+                    PresentQuotationsDto.class
             );
 
             return response.getBody();
@@ -94,7 +99,8 @@ public class DetailedStockService {
         return null;
     }
 
-    public String findInvestors(String stockCode) throws InterruptedException {
+    @Transactional(readOnly = true)
+    public InvestorsDto findInvestors(String stockCode) throws InterruptedException {
         AtomicInteger count = countingRequest.getCountOfRequest();
 
         HttpHeaders requestHeaders = baseHeaders();
@@ -108,9 +114,7 @@ public class DetailedStockService {
                 .queryParam("FID_INPUT_ISCD", stockCode)
                 .build();
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> response;
+        ResponseEntity<InvestorsDto> response;
 
         try {
             count.getAndIncrement();
@@ -119,7 +123,7 @@ public class DetailedStockService {
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    String.class
+                    InvestorsDto.class
             );
 
             return response.getBody();
@@ -150,7 +154,8 @@ public class DetailedStockService {
         return null;
     }
 
-    public String findQuotationsByPeriod(String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
+    @Transactional(readOnly = true)
+    public QuotationsByPeriodDto findQuotationsByPeriod(String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
         AtomicInteger count = countingRequest.getCountOfRequest();
 
         HttpHeaders requestHeaders = baseHeaders();
@@ -169,9 +174,7 @@ public class DetailedStockService {
                 .queryParam("FID_ORG_ADJ_PRC", detailedStockOptions.getCode())
                 .build();
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> response;
+        ResponseEntity<QuotationsByPeriodDto> response;
 
         try {
             count.getAndIncrement();
@@ -180,7 +183,7 @@ public class DetailedStockService {
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    String.class
+                    QuotationsByPeriodDto.class
             );
 
             return response.getBody();
@@ -211,7 +214,8 @@ public class DetailedStockService {
         return null;
     }
 
-    public String findHolidays(String baseDate) throws InterruptedException {
+    @Transactional(readOnly = true)
+    public HolidaysDto findHolidays(String baseDate) throws InterruptedException {
         AtomicInteger count = countingRequest.getCountOfRequest();
 
         HttpHeaders requestHeaders = baseHeaders();
@@ -228,9 +232,7 @@ public class DetailedStockService {
                 .queryParam("CTX_AREA_FK", (Object) null)
                 .build();
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> response;
+        ResponseEntity<HolidaysDto> response;
 
         try {
             count.getAndIncrement();
@@ -239,7 +241,7 @@ public class DetailedStockService {
                     uriBuilder.toString(),
                     HttpMethod.GET,
                     requestMessage,
-                    String.class
+                    HolidaysDto.class
             );
 
             return response.getBody();
