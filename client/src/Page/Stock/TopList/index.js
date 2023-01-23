@@ -3,7 +3,9 @@ import IndexItem from './Components/IndexList';
 import StockTable from './Components/StockTable';
 import { ascend, descend } from '../../../Components/Function/sort';
 import News from '../News';
-import { useKOSDAQList, useKOSPIList } from '../../../Components/API/ReactQueryContainer';
+import { useBookMarks, useKOSDAQList, useKOSPIList } from '../../../Components/API/ReactQueryContainer';
+import { useEffect } from 'react';
+import BookMarks from './Components/BookMarks';
 
 const Container = styled.div`
     margin-bottom: 50px;
@@ -20,6 +22,7 @@ const TopList = () => {
     return (
         <Container>
             <IndexItem />
+            <BookMarks />
             <StockTable title={`시가총액 TOP10`} KOSPI={descend(KOSPI, 'mrktTotAmt', 10)} KOSDAQ={descend(KOSDAQ, 'mrktTotAmt', 10)} />
             <StockTable title={`상승 TOP10`} KOSPI={descend(KOSPI, 'fltRt', 10)} KOSDAQ={descend(KOSDAQ, 'fltRt', 10)} />
             <StockTable title={`하락 TOP10`} KOSPI={ascend(KOSPI, 'fltRt', 10)} KOSDAQ={ascend(KOSDAQ, 'fltRt', 10)} />
