@@ -17,7 +17,8 @@ const PageBtn = styled.li`
 /**
  * 1페이지당 10개씩 출력합니다 페이지버튼은 5개씩 출력합니다
  * @author 이중원
- * @param {Array} data2 배열을 넣어주세요
+ * @param {Array} _data 배열을 넣어주세요
+ * @param {number} numItems 페이지당 보여줄 아이템갯수
  * @returns [현재 페이지의 데이터, 현재 페이지의 페이지 번호, 페이지버튼 총 갯수, 페이지버튼, 페이지 뒤로가기, 페이지 앞으로가기, data, setData]
  */
 const usePagination = (_data = [], numItems = 10) => {

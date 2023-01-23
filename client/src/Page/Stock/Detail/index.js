@@ -1,7 +1,5 @@
-import { useLocation, useParams } from 'react-router';
+import { useLocation } from 'react-router';
 import styled from 'styled-components';
-import { useStockDayList } from '../../../Components/API/useGetStockDetails';
-import Loading from '../../../Components/Style/Loading';
 import DailyInfo from './Components/DailyInfo';
 import StockBoard from './Components/StockBoard';
 import News from '../News';

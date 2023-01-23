@@ -3,8 +3,7 @@ import IndexItem from './Components/IndexList';
 import StockTable from './Components/StockTable';
 import { ascend, descend } from '../../../Components/Function/sort';
 import News from '../News';
-import { useBookMarks, useKOSDAQList, useKOSPIList } from '../../../Components/API/ReactQueryContainer';
-import { useEffect } from 'react';
+import { useKOSDAQList, useKOSPIList } from '../../../Components/API/ReactQueryContainer';
 import BookMarks from './Components/BookMarks';
 
 const Container = styled.div`

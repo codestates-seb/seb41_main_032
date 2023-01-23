@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useAddBookMarks, useBookMarks, useKOSDAQList, useKOSPIList, useRemoveBookMarks } from '../../../Components/API/ReactQueryContainer';
+import { useBookMarks, useKOSDAQList, useKOSPIList } from '../../../Components/API/ReactQueryContainer';
 import { Title, SelectBtnContainer } from '../../../Components/Style/Stock';
 import usePagination from '../../../Components/Hook/usePagination';
 import useInput from '../../../Components/Hook/useInput';
@@ -24,6 +24,10 @@ const SearchInput = styled.input`
     margin-bottom: 10px;
 `;
 
+/**
+ * 관심종목(북마크)를 쉽게 추가하거나 삭제하기 위한 페이지입니다
+ * @author 이중원
+ */
 const AddBookMarks = () => {
     const [keyword, setKeyword, ChangeKeyword] = useInput();
     const [select, setSelect] = useState('stock');
