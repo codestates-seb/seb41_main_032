@@ -29,7 +29,7 @@ const AllList = () => {
                         {<SmTitle>{`${dateOutput(KOSPI[0].basDt)} 기준`}</SmTitle>}
                     </header>
 
-                    {<StockTable allKOSPI={KOSPI} allKOSDAQ={KOSDAQ} />}
+                    {<StockTable KOSPI={KOSPI} KOSDAQ={KOSDAQ} />}
                 </>
             ) : (
                 <Loading />
