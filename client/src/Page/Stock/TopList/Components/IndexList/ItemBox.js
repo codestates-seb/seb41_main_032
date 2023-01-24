@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 import commaGenerator from '../../../../../Components/Function/commaGenerator';
+import Loading from '../../../../../Components/Style/Loading';
 import { RedBox, BlueBox } from '../../../../../Components/Style/Stock';
 
 const Item = styled.li`
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    text-decoration-line: none;
-    color: black;
     margin-top: 10px;
     margin-right: 30px;
+    min-width: 100px;
 `;
 
 const Name = styled.div`
@@ -28,9 +27,15 @@ const Bold = styled.b`
 const ItemBox = ({ data }) => {
     return (
         <Item>
-            <Name>{data.idxNm ? data.idxNm : null}</Name>
-            <Bold>{commaGenerator(data.clpr)}</Bold>
-            {data.fltRt > 0 ? <RedBox>{Number(data.fltRt)}%</RedBox> : <BlueBox>{Number(data.fltRt)}%</BlueBox>}
+            {data ? (
+                <>
+                    <Name>{data.idxNm}</Name>
+                    <Bold>{commaGenerator(data.clpr)}</Bold>
+                    {data.fltRt > 0 ? <RedBox>{Number(data.fltRt)}%</RedBox> : <BlueBox>{Number(data.fltRt)}%</BlueBox>}
+                </>
+            ) : (
+                <Loading />
+            )}
         </Item>
     );
 };
