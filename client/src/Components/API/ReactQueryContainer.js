@@ -94,7 +94,6 @@ const getBookMarks = (memberId) => {
 };
 
 const addBookMarks = (data) => {
-    console.log(`${API_URL_LIST[pointer]}/bookmarks`, data);
     return axios.post(`${API_URL_LIST[pointer]}/bookmarks`, data);
 };
 
