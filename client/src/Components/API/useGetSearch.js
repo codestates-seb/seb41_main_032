@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+// 레거시 코드 => reactQuery로 전환
+
 /**
  * 네이버뉴스 검색API 입니다
  * @author 이중원

@@ -8,6 +8,7 @@ import ActivateImg from '../../../../../../Components/Img/Favorites/gold.png';
 import { useState } from 'react';
 import numberToKR from '../../../../../../Components/Function/numberToKR';
 import useInput from '../../../../../../Components/Hook/useInput';
+import { useAddBookMarks, useBookMarks, useRemoveBookMarks } from '../../../../../../Components/API/ReactQueryContainer';
 const Section = styled.section`
     display: flex;
 `;
@@ -125,22 +126,31 @@ const OrderButton = styled.button`
 `;
 
 /** 주식의 이름,가격을 표시하는 컴포넌트입니다 */
-const Info = ({ todayInfo }) => {
+const Info = ({ stockInfo }) => {
     const params = useParams();
     const { state } = useLocation();
-    const [favorites, setFavorites] = useState(false);
     const [holding, setHolding] = useState(Math.floor(Math.random() * 10));
     const [account, setAccount] = useState(Math.floor(Math.random() * 10000000) + 1000000);
     const [quantity, setQuantity, ChangeQuantity, submit] = useInput();
 
+    //TODO 백엔드에서 memberID 보내주면 해당 id로 교체
+    const bookMarks = useBookMarks('2');
+
+    const { mutate: addBookMarks } = useAddBookMarks();
+    const { mutate: removeBookMarks } = useRemoveBookMarks();
     const handlerBookmark = () => {
-        const bookmark = {
-            stockCode: params.id,
-            stockName: state.name,
-            memberId: '1',
-        };
-        console.log('bookmark 추가', bookmark);
-        setFavorites((current) => !current);
+        const isActivate = bookMarks?.find((e) => e.stockCode === params.id);
+
+        if (isActivate) {
+            removeBookMarks(isActivate.bookmarkId);
+        } else {
+            const bookmark = {
+                stockCode: params.id,
+                stockName: state.name,
+                memberId: '2',
+            };
+            addBookMarks(bookmark);
+        }
     };
 
     const handlerOrder = () => {
@@ -148,7 +158,7 @@ const Info = ({ todayInfo }) => {
         if (quantity === '') return;
 
         // 매수시 잔액 부족
-        if (account - quantity * todayInfo.stck_prpr < 0) {
+        if (account - quantity * stockInfo.stck_prpr < 0) {
             console.log('잔액이 부족합니다');
         }
         // 매도시 보유한 주식수량 부족
@@ -162,10 +172,10 @@ const Info = ({ todayInfo }) => {
                 name: state.name,
                 code: params.id,
                 quantity: quantity,
-                price: todayInfo.stck_prpr,
+                price: stockInfo.stck_prpr,
             };
             console.log('거래가 채결되었습니다', order);
-            setAccount(account - quantity * todayInfo.stck_prpr);
+            setAccount(account - quantity * stockInfo.stck_prpr);
             setHolding((current) => current + quantity);
             setQuantity('');
         }
@@ -174,24 +184,29 @@ const Info = ({ todayInfo }) => {
     return (
         <Section>
             <StockContainer>
-                <p>{`한국증권 거래소 #${todayInfo.bstp_kor_isnm}`}</p>
+                <p>{`한국증권 거래소 #${stockInfo.bstp_kor_isnm}`}</p>
                 <h2>
-                    <FavoritesImg src={favorites ? ActivateImg : DisableImg} alt="Favorites" onClick={handlerBookmark} /> {state.name} <span>{params.id}</span>
+                    <FavoritesImg
+                        src={bookMarks?.find((e) => e.stockCode === params.id) ? ActivateImg : DisableImg}
+                        alt="Favorites"
+                        onClick={handlerBookmark}
+                    />
+                    {state.name} <span>{params.id}</span>
                 </h2>
                 <PriceContainer>
-                    {todayInfo.prdy_vrss > 0 ? (
+                    {stockInfo.prdy_vrss > 0 ? (
                         <>
-                            <Price>{commaGenerator(todayInfo.stck_prpr)}</Price>
+                            <Price>{commaGenerator(stockInfo.stck_prpr)}</Price>
                             <RedTriangle />
-                            <RedPrice>{`${todayInfo.prdy_vrss}`}</RedPrice>
-                            <RedBox>{`${todayInfo.prdy_ctrt}%`}</RedBox>
+                            <RedPrice>{`${stockInfo.prdy_vrss}`}</RedPrice>
+                            <RedBox>{`${stockInfo.prdy_ctrt}%`}</RedBox>
                         </>
                     ) : (
                         <>
-                            <Price>{commaGenerator(todayInfo.stck_prpr)}</Price>
+                            <Price>{commaGenerator(stockInfo.stck_prpr)}</Price>
                             <BlueTriangle />
-                            <BluePrice>{`${todayInfo.prdy_vrss}`}</BluePrice>
-                            <BlueBox>{`${todayInfo.prdy_ctrt}%`}</BlueBox>
+                            <BluePrice>{`${stockInfo.prdy_vrss}`}</BluePrice>
+                            <BlueBox>{`${stockInfo.prdy_ctrt}%`}</BlueBox>
                         </>
                     )}
                 </PriceContainer>
@@ -208,11 +223,11 @@ const Info = ({ todayInfo }) => {
                 </ItemContainer>
                 <ItemContainer>
                     <span>주문 금액</span>
-                    <span>{`${numberToKR(quantity * todayInfo.stck_prpr)}원`}</span>
+                    <span>{`${numberToKR(quantity * stockInfo.stck_prpr)}원`}</span>
                 </ItemContainer>
                 <ItemContainer>
                     <span>거래 후 잔고</span>
-                    <span>{`${numberToKR(account - quantity * todayInfo.stck_prpr)}원`}</span>
+                    <span>{`${numberToKR(account - quantity * stockInfo.stck_prpr)}원`}</span>
                 </ItemContainer>
                 <TradingButton>
                     <ButtonContainer>

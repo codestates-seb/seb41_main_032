@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useGetSearchNews from '../../../Components/API/useGetSearch';
+import { useSearchNews } from '../../../Components/API/ReactQueryContainer';
 import useInput from '../../../Components/Hook/useInput';
 import { Title } from '../../../Components/Style/Stock';
 import NewsList from './NewsList';
@@ -27,12 +27,14 @@ const SearchInput = styled.input`
  * @return 검색된 뉴스리스트를 출력하는 컴포넌트를 리턴합니다
  */
 const News = ({ searchWord }) => {
-    const [news, , keyword, setKeyword] = useGetSearchNews(searchWord);
     const [value, setValue, ChangeValue] = useInput();
+    const { news, keyword, setKeyword } = useSearchNews(searchWord);
+
     const Submit = (e) => {
         if (e.key === 'Enter') {
             if (value) {
                 setKeyword(value);
+                setValue('');
             }
         }
     };

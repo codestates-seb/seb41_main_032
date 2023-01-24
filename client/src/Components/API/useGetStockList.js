@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+// 레거시 코드 => reactQuery로 전환
+
 /**
  * 주식 리스트 정보를 가져오는 API 입니다
  *

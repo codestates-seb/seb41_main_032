@@ -4,6 +4,9 @@ import commaGenerator from '../../../../../Components/Function/commaGenerator';
 import dateOutput from '../../../../../Components/Function/dateOutput';
 import { RedTriangle, BlueTriangle } from '../../../../../Components/Style/Stock';
 import usePagination from '../../../../../Components/Hook/usePagination';
+import { useStockDayList } from '../../../../../Components/API/ReactQueryContainer';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 const Title = styled.h2`
     font-size: 1.1em;
     margin-top: 20px;
@@ -92,8 +95,16 @@ const PageList = styled.ul`
 /**  주식 일별 정보를 출력하는 컴포넌트입니다
  * 
     종가 최고가 최저가 거래량 · 거래대금을 출력합니다*/
-const DailyInfo = ({ infoByDate }) => {
-    const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(infoByDate);
+const DailyInfo = () => {
+    const params = useParams();
+    const stockDayList = useStockDayList(params.id);
+    const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(stockDayList);
+
+    useEffect(() => {
+        if (stockDayList) {
+            setData(stockDayList);
+        }
+    }, [stockDayList]);
     return (
         <Container>
             <Title>일별 시세</Title>
@@ -108,7 +119,7 @@ const DailyInfo = ({ infoByDate }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentItems.map((el) => {
+                    {currentItems?.map((el) => {
                         return (
                             <tr key={el.stck_bsop_date}>
                                 <td>{dateOutput(el.stck_bsop_date)}</td>

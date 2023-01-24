@@ -47,33 +47,36 @@ const QuestionMarkImg = styled.img`
 /** 매매동향을 차트로 그려주는 컴포넌트입니다
  *
  * 개인,기관, 외국인의 매매와 매수정보를 이용하여 bar 차트를 그립니다*/
-const SummaryInfo = ({ todayInfo, tradingTrends }) => {
+const SummaryInfo = ({ stockInfo, stockInvestor }) => {
     let index = 0;
-    if (tradingTrends) {
-        index = tradingTrends[0].prsn_ntby_qty === '' ? 1 : 0;
+
+    // 증권사 api 정보 업데이트가 안된 경우 0번째 인덱스값이 '' 으로 되어있음
+    if (stockInvestor) {
+        index = stockInvestor[0].prsn_ntby_qty === '' ? 1 : 0;
     }
-    const state = tradingTrends
+
+    const state = stockInvestor
         ? {
               series: [
                   {
                       name: '개인',
                       data: [
-                          Number(tradingTrends[index].prsn_ntby_qty) > 0 ? tradingTrends[index].prsn_ntby_qty : '0',
-                          Number(tradingTrends[index].prsn_ntby_qty) < 0 ? tradingTrends[index].prsn_ntby_qty.slice(1) : '0',
+                          Number(stockInvestor[index].prsn_ntby_qty) > 0 ? stockInvestor[index].prsn_ntby_qty : '0',
+                          Number(stockInvestor[index].prsn_ntby_qty) < 0 ? stockInvestor[index].prsn_ntby_qty.slice(1) : '0',
                       ],
                   },
                   {
                       name: '외국인',
                       data: [
-                          Number(tradingTrends[index].frgn_ntby_qty) > 0 ? tradingTrends[index].frgn_ntby_qty : '0',
-                          Number(tradingTrends[index].frgn_ntby_qty) < 0 ? tradingTrends[index].frgn_ntby_qty.slice(1) : '0',
+                          Number(stockInvestor[index].frgn_ntby_qty) > 0 ? stockInvestor[index].frgn_ntby_qty : '0',
+                          Number(stockInvestor[index].frgn_ntby_qty) < 0 ? stockInvestor[index].frgn_ntby_qty.slice(1) : '0',
                       ],
                   },
                   {
                       name: '기관계',
                       data: [
-                          Number(tradingTrends[index].orgn_ntby_qty) > 0 ? tradingTrends[index].orgn_ntby_qty : '0',
-                          Number(tradingTrends[index].orgn_ntby_qty) < 0 ? tradingTrends[index].frgn_ntby_qty.slice(1) : '0',
+                          Number(stockInvestor[index].orgn_ntby_qty) > 0 ? stockInvestor[index].orgn_ntby_qty : '0',
+                          Number(stockInvestor[index].orgn_ntby_qty) < 0 ? stockInvestor[index].frgn_ntby_qty.slice(1) : '0',
                       ],
                   },
               ],
@@ -94,7 +97,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                       colors: ['#fff'],
                   },
                   title: {
-                      text: `매매동향 ${dateOutput(tradingTrends[index].stck_bsop_date)}`,
+                      text: `매매동향 ${dateOutput(stockInvestor[index].stck_bsop_date)}`,
                       offsetY: 5,
                       style: {
                           color: '#ccc',
@@ -142,33 +145,33 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                 <InfoBox>
                     <InfoItem>
                         <p>전일</p>
-                        <p>{commaGenerator(todayInfo.stck_prpr - todayInfo.prdy_vrss)}</p>
+                        <p>{commaGenerator(stockInfo.stck_prpr - stockInfo.prdy_vrss)}</p>
                     </InfoItem>
                     <InfoItem>
                         <p>시가</p>
-                        <p className={todayInfo.stck_oprc > todayInfo.stck_prpr - todayInfo.prdy_vrss ? 'red' : 'blue'}>
-                            {commaGenerator(todayInfo.stck_oprc)}
+                        <p className={stockInfo.stck_oprc > stockInfo.stck_prpr - stockInfo.prdy_vrss ? 'red' : 'blue'}>
+                            {commaGenerator(stockInfo.stck_oprc)}
                         </p>
                     </InfoItem>
                     <InfoItem>
                         <p>고가</p>
-                        <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_hgpr ? 'red' : 'blue'}>
-                            {commaGenerator(todayInfo.stck_hgpr)}
+                        <p className={stockInfo.stck_prpr - stockInfo.prdy_vrss < stockInfo.stck_hgpr ? 'red' : 'blue'}>
+                            {commaGenerator(stockInfo.stck_hgpr)}
                         </p>
                     </InfoItem>
                     <InfoItem>
                         <p>저가</p>
-                        <p className={todayInfo.stck_prpr - todayInfo.prdy_vrss < todayInfo.stck_lwpr ? 'red' : 'blue'}>
-                            {commaGenerator(todayInfo.stck_lwpr)}
+                        <p className={stockInfo.stck_prpr - stockInfo.prdy_vrss < stockInfo.stck_lwpr ? 'red' : 'blue'}>
+                            {commaGenerator(stockInfo.stck_lwpr)}
                         </p>
                     </InfoItem>
                     <InfoItem>
                         <p>52주일 최고가</p>
-                        <p>{commaGenerator(todayInfo.w52_hgpr)}</p>
+                        <p>{commaGenerator(stockInfo.w52_hgpr)}</p>
                     </InfoItem>
                     <InfoItem>
                         <p>52주일 최저가</p>
-                        <p>{commaGenerator(todayInfo.w52_lwpr)}</p>
+                        <p>{commaGenerator(stockInfo.w52_lwpr)}</p>
                     </InfoItem>
                 </InfoBox>
             </section>
@@ -180,7 +183,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                             <p>
                                 거래 회전율 <QuestionMarkImg src={QuestionMark} alt="tooltip" />
                             </p>
-                            <p>{todayInfo.vol_tnrt}</p>
+                            <p>{stockInfo.vol_tnrt}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.PER}>
@@ -188,7 +191,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                             <p>
                                 PER <QuestionMarkImg src={QuestionMark} alt="tooltip" />{' '}
                             </p>
-                            <p>{todayInfo.per}</p>
+                            <p>{stockInfo.per}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.PBR}>
@@ -196,7 +199,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                             <p>
                                 PBR <QuestionMarkImg src={QuestionMark} alt="tooltip" />
                             </p>
-                            <p>{todayInfo.pbr}</p>
+                            <p>{stockInfo.pbr}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.EPS}>
@@ -204,7 +207,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                             <p>
                                 EPS <QuestionMarkImg src={QuestionMark} alt="tooltip" />
                             </p>
-                            <p>{commaGenerator(Math.floor(todayInfo.eps))}</p>
+                            <p>{commaGenerator(Math.floor(stockInfo.eps))}</p>
                         </InfoItem>
                     </Tooltip>
                     <Tooltip text={described.BPS}>
@@ -212,7 +215,7 @@ const SummaryInfo = ({ todayInfo, tradingTrends }) => {
                             <p>
                                 BPS <QuestionMarkImg src={QuestionMark} alt="tooltip" />
                             </p>
-                            <p>{commaGenerator(Math.floor(todayInfo.bps))}</p>
+                            <p>{commaGenerator(Math.floor(stockInfo.bps))}</p>
                         </InfoItem>
                     </Tooltip>
                 </InfoBox>

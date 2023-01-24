@@ -67,8 +67,8 @@ const useCreateTable = (data) => {
     /** 클릭시 주식코드기준으로 주식상세페이지로 이동합니다
      * @type {[ 주식코드, 주식이름, 주식시가총액 ]}
      * */
-    const linkHandler = (data) => {
-        navigate(`/stock/${data[0]}`, { state: { name: data[1], MarketCap: data[2] } });
+    const handlerLink = (data) => {
+        navigate(`/stock/${data[0]}`, { state: { name: data[1] } });
     };
 
     return [
@@ -86,7 +86,7 @@ const useCreateTable = (data) => {
                 {Data
                     ? Data.map((el) => {
                           return (
-                              <tr key={el.srtnCd} onClick={(e) => linkHandler([el.srtnCd, el.itmsNm])}>
+                              <tr key={el.srtnCd} onClick={(e) => handlerLink([el.srtnCd, el.itmsNm])}>
                                   <td>
                                       <div>{el.itmsNm}</div>
                                       <SmFont>{el.srtnCd}</SmFont>
