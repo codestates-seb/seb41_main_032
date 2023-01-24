@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 /** <------------------ 공통적으로 사용되는 전역 변수,함수 ------------------>  */
 
-// 4일전 날짜 => 정부 api 정보업데이트가 느림 (최대 4일까지 지연) => 4일전부터 오늘날짜까지의 데이터 요청용
+// 7일전 날짜 => 정부 api 정보업데이트가 느림 => 7일전부터 오늘날짜까지의 데이터 요청용
 let date = new Date();
 date.setDate(date.getDate() - 7);
 const day = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
