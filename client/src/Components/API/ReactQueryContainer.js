@@ -201,11 +201,11 @@ export const useSearchNews = (searchWord) => {
         refetchInterval: 30000, //30초마다 업데이트
         retry: 0,
         notifyOnChangeProps: 'tracked',
+        keepPreviousData: true, //새로운 데이터가 들어올때까지 이전데이터를 보여줌(검색시 깜빡임 방지)
+        enabled: !!keyword,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => data.data.items,
-        keepPreviousData: true, //새로운 데이터가 들어올때까지 이전데이터를 보여줌(검색시 깜빡임 방지)
-        enabled: !!keyword,
     });
     return { news, keyword, setKeyword };
 };
