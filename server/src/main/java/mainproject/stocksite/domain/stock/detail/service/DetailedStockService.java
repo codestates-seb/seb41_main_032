@@ -168,9 +168,9 @@ public class DetailedStockService {
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
                 .queryParam("FID_INPUT_ISCD", stockCode)
-                .queryParam("FID_INPUT_DATE_1", detailedStockOptions.getStartDay())
-                .queryParam("FID_INPUT_DATE_2", detailedStockOptions.getEndDay())
-                .queryParam("FID_PERIOD_DIV_CODE", detailedStockOptions.getPeriodCode())
+                .queryParam("FID_INPUT_DATE_1", detailedStockOptions.getStart())
+                .queryParam("FID_INPUT_DATE_2", detailedStockOptions.getEnd())
+                .queryParam("FID_PERIOD_DIV_CODE", detailedStockOptions.getPeriodcode())
                 .queryParam("FID_ORG_ADJ_PRC", detailedStockOptions.getCode())
                 .build();
 

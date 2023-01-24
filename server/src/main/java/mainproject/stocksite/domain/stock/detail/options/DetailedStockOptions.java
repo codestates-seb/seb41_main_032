@@ -1,11 +1,11 @@
 package mainproject.stocksite.domain.stock.detail.options;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class DetailedStockOptions {
-    private String startDay;
-    private String endDay;
-    private String periodCode;
+    private String start;
+    private String end;
+    private String periodcode;
     private String code;
 }
