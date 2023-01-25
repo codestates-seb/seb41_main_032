@@ -10,6 +10,8 @@ public enum ExceptionCode {
 
     // 404 BAD REQUEST 잘못된 요청
     MEMBER_NOT_FOUND(404, "Member not found"),
+    BOARD_NOT_FOUND(404, "Board not found"),
+    COMMENT_NOT_FOUND(404, "Comment not found"),
     BOOKMARK_NOT_FOUND(404, "Bookmark not found"),
     HAVE_NO_STOCK(404, "You don't have this stock."),
     NOT_ENOUGH_STOCK(404, "Your total stock holdings are not enough"),
