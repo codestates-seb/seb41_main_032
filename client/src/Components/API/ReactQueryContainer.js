@@ -280,7 +280,7 @@ export const useMember = (memberId) => {
         enabled: !!memberId,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
-        select: (data) => data,
+        select: (data) => data.data,
     });
     return data;
 };
