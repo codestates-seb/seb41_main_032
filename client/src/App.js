@@ -14,28 +14,31 @@ import Login from './Page/User/Login';
 import MyPage from './Page/User/MyPage';
 import SignUp from './Page/User/SignUp/index';
 import AddBookMarks from './Page/Stock/AddBookMarks';
+import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient();
 
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/stock/:id" element={<StockDetail />} />
-                    <Route path="/stock/top" element={<StockTopList />} />
-                    <Route path="/stock/List" element={<StockAllList />} />
-                    <Route path="/stock/AddBookMarks" element={<AddBookMarks />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/sign-up" element={<SignUp />} />
-                    <Route path="/board" element={<Board />} />
-                    <Route path="/board/new" element={<NewArticle />} />
-                    <Route path="/board/detail/:num" element={<Article />} />
-                    <Route path="/users/:id" element={<MyPage />} />
-                    <Route path="/users/:id/edit" element={<EditProfile />} />
-                </Routes>
-            </Layout>
+            <RecoilRoot>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/stock/:id" element={<StockDetail />} />
+                        <Route path="/stock/top" element={<StockTopList />} />
+                        <Route path="/stock/List" element={<StockAllList />} />
+                        <Route path="/stock/AddBookMarks" element={<AddBookMarks />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/sign-up" element={<SignUp />} />
+                        <Route path="/board" element={<Board />} />
+                        <Route path="/board/new" element={<NewArticle />} />
+                        <Route path="/board/detail/:num" element={<Article />} />
+                        <Route path="/users/:id" element={<MyPage />} />
+                        <Route path="/users/:id/edit" element={<EditProfile />} />
+                    </Routes>
+                </Layout>
+            </RecoilRoot>
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         </QueryClientProvider>
     );
