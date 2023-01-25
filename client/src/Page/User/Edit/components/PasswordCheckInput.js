@@ -16,12 +16,13 @@ const PasswordLabel = styled(Label)`
 `;
 
 // 본인 확인용 비밀번호 인풋 영역
-const PasswordCheckInput = ({ user, isValidPassword, setUser, setIsValidPassword }) => {
+const PasswordCheckInput = ({ user, isValidPassword, setUser, setIsValidPassword, setPasswordCheck }) => {
   const [isPasswordEntered, setIsPasswordEntered] = useState(false);
 
   useEffect(() => {
     if (!isPasswordEntered) return;
     setIsValidPassword(validateInput("password", user.password));
+    if (isValidPassword) setPasswordCheck(null);
   }, [user.password]);
 
   const handleChange = ({ target }) => {

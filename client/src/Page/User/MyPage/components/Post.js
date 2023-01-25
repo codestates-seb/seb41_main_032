@@ -6,6 +6,7 @@ const Container = styled.div`
   padding: 10px;
   border: 1px solid #cccccc;
   border-radius: 5px;
+  color: #262626;
   transition: 0.2s;
   cursor: pointer;
 
@@ -16,10 +17,10 @@ const Container = styled.div`
 `;
 
 // 작성글 컴포넌트
-const Post = ({ id, title }) => {
+const Post = ({ borderId, title }) => {
   const navigate = useNavigate();
 
-  return <Container onClick={() => navigate(`/board/detail/${id}`)}>{title}</Container>;
+  return <Container onClick={() => navigate(`/board/detail/${borderId}`)}>{title}</Container>;
 };
 
 export default Post;
