@@ -8,7 +8,7 @@ import ActivateImg from '../../../../../../Components/Img/Favorites/gold.png';
 import { useState } from 'react';
 import numberToKR from '../../../../../../Components/Function/numberToKR';
 import useInput from '../../../../../../Components/Hook/useInput';
-import { useAddBookMarks, useBookMarks, useRemoveBookMarks } from '../../../../../../Components/API/ReactQueryContainer';
+import { useAddBookMarks, useBookMarks, useMember, useRemoveBookMarks } from '../../../../../../Components/API/ReactQueryContainer';
 const Section = styled.section`
     display: flex;
 `;
@@ -135,7 +135,8 @@ const Info = ({ stockInfo }) => {
 
     //TODO 백엔드에서 memberID 보내주면 해당 id로 교체
     const bookMarks = useBookMarks('2');
-
+    const userInfo = useMember();
+    console.log('🚀  userInfo', userInfo);
     const { mutate: addBookMarks } = useAddBookMarks();
     const { mutate: removeBookMarks } = useRemoveBookMarks();
     const handlerBookmark = () => {
