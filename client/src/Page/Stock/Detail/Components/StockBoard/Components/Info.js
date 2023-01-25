@@ -9,12 +9,12 @@ import { useState } from 'react';
 import numberToKR from '../../../../../../Components/Function/numberToKR';
 import useInput from '../../../../../../Components/Hook/useInput';
 import { useAddBookMarks, useBookMarks, useMember, useRemoveBookMarks } from '../../../../../../Components/API/ReactQueryContainer';
+import useStockTime from '../../../../../../Components/Hook/useStockTime';
 const Section = styled.section`
     display: flex;
 `;
 
 const PriceContainer = styled.div`
-    margin-bottom: 30px;
     color: #eee;
     display: flex;
     align-items: center;
@@ -123,6 +123,35 @@ const OrderButton = styled.button`
     :hover {
         transform: scale(1.1);
     }
+    :disabled {
+        background-color: gray;
+    }
+`;
+
+const IsOpen = styled.div`
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    &.isOpen {
+        color: #44f028;
+        div {
+            background-color: #44f028;
+        }
+    }
+    &.notOpen {
+        color: #878787;
+        div {
+            background-color: #878787;
+        }
+    }
+`;
+
+const Circle = styled.div`
+    width: 7px;
+    height: 7px;
+    border-radius: 5px;
+    margin-right: 5px;
 `;
 
 /** 주식의 이름,가격을 표시하는 컴포넌트입니다 */
@@ -136,7 +165,7 @@ const Info = ({ stockInfo }) => {
     //TODO 백엔드에서 memberID 보내주면 해당 id로 교체
     const bookMarks = useBookMarks('2');
     const userInfo = useMember();
-    console.log('🚀  userInfo', userInfo);
+    const marketTime = useStockTime();
     const { mutate: addBookMarks } = useAddBookMarks();
     const { mutate: removeBookMarks } = useRemoveBookMarks();
     const handlerBookmark = () => {
@@ -194,6 +223,10 @@ const Info = ({ stockInfo }) => {
                     />
                     {state.name} <span>{params.id}</span>
                 </h2>
+                <IsOpen className={marketTime !== '장마감' ? 'isOpen' : 'notOpen'}>
+                    <Circle className={marketTime !== '장마감' ? 'isOpen' : 'notOpen'} />
+                    {marketTime}
+                </IsOpen>
                 <PriceContainer>
                     {stockInfo.prdy_vrss > 0 ? (
                         <>
@@ -247,7 +280,9 @@ const Info = ({ stockInfo }) => {
                             -
                         </button>
                     </ButtonContainer>
-                    <OrderButton onClick={handlerOrder}>주문</OrderButton>
+                    <OrderButton disabled={marketTime === '장마감' ? 'disabled' : null} value="비활성화" onClick={handlerOrder}>
+                        주문
+                    </OrderButton>
                 </TradingButton>
             </TradingContainer>
         </Section>
