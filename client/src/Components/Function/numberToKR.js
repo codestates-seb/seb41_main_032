@@ -9,7 +9,7 @@ const numberToKR = (data) => {
     const unitWords = ['', '만', '억', '조', '경'];
     let result = String(data);
     if (result.length < 5) return result;
-    if (result.length < 9) return `${result.slice(0, result.length - 4)}만${result.slice(result.length - 4, result.length)}`;
+    if (result.length < 9) return `${result.slice(0, result.length - 4)}만 ${result.slice(result.length - 4, result.length)}`;
 
     let count = Math.floor(result.length / 4) * 4;
 
@@ -22,9 +22,21 @@ const numberToKR = (data) => {
         result.length - count + 4,
     )}${unitWords[Math.floor(result.length / 4) - 1]}`;
 
-    // 뒤에서 5번째 숫자에 0일경우 제거 1조 0234억 => 1조 234억
+    // 뒤에서 5번째 숫자부터 0갯수를 카운트 후 0 제거 1조 0234억 => 1조 234억
     if (result.charAt(result.length - 5) === '0') {
-        result = `${result.slice(0, result.length - 5)}${result.slice(result.length - 4)}`;
+        let count = 0;
+        for (let i = result.length - 4; i < result.length; i++) {
+            if (result[i] === '0') count++;
+            else break;
+        }
+        result = `${result.slice(0, result.length - 5)}${result.slice(result.length - (4 - count))}`;
+    }
+
+    // '만', '억', '조', '경' 뒤에 띄워쓰기 삽입
+    for (let i = 1; i < result.length; i++) {
+        if (unitWords.includes(result[i])) {
+            return `${result.slice(0, i + 1)} ${result.slice(i + 1)}`;
+        }
     }
 
     return result;

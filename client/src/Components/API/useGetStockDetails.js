@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+// 레거시 코드 => reactQuery로 전환
+
 /**
  * 주식현재가 시세 정보를 가져오는 API 입니다
  * @author 이중원
@@ -16,7 +18,7 @@ export const useStockDetails = (Parameters) => {
         axios.get(`${BaseUrl}${Parameters}`).then((res) => {
             setData(res.data.output ? res.data.output : null);
         });
-    }, [BaseUrl, Parameters]);
+    }, []);
     return [data, setData];
 };
 
@@ -35,7 +37,7 @@ export const useStockDayList = (Parameters) => {
         axios.get(`${BaseUrl}${Parameters}`).then((res) => {
             setData(res.data.output2 ? res.data.output2 : null);
         });
-    }, [BaseUrl, Parameters]);
+    }, []);
     return [data, setData];
 };
 
@@ -57,6 +59,6 @@ export const useStockInvestor = (Parameters) => {
                 setData(res.data.output ? res.data.output : null);
             })
             .catch((e) => console.error(e));
-    }, [BaseUrl, Parameters]);
+    }, []);
     return [data, setData];
 };

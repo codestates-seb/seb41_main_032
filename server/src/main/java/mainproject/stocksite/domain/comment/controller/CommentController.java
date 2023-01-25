@@ -12,6 +12,7 @@ import mainproject.stocksite.domain.comment.entity.Comment;
 import mainproject.stocksite.domain.comment.service.CommentService;
 import mainproject.stocksite.domain.comment.mapper.CommentMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +29,9 @@ public class CommentController {
 
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{member-id}")
-    public CommentResponseDto post(@PathVariable("member-id") Long memberId, @Valid @RequestBody CommentPostDto commentPostDto) {
-        Comment comment = commentMapper.commentPostDtoToComment(commentPostDto, memberId);
+    @PostMapping("/{board-id}/{member-id}")
+    public CommentResponseDto post(@PathVariable("member-id") Long memberId, @PathVariable("board-id") Long boardId, @Valid @RequestBody CommentPostDto commentPostDto) {
+        Comment comment = commentMapper.commentPostDtoToComment(commentPostDto, memberId, boardId);
         Comment addComment = commentService.CreateComment(comment);
         CommentResponseDto commentResponseDto = commentMapper.commentToResponseDto(addComment);
 

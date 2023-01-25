@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import useGetSearchNews from '../API/useGetSearch';
-import useInput from '../Hook/useInput';
-import { Title } from '../Style/Stock';
+import { useSearchNews } from '../../../Components/API/ReactQueryContainer';
+import useInput from '../../../Components/Hook/useInput';
+import { Title } from '../../../Components/Style/Stock';
 import NewsList from './NewsList';
 
 const Section = styled.section`
@@ -27,12 +27,14 @@ const SearchInput = styled.input`
  * @return 검색된 뉴스리스트를 출력하는 컴포넌트를 리턴합니다
  */
 const News = ({ searchWord }) => {
-    const [news, , keyword, setKeyword] = useGetSearchNews(searchWord);
     const [value, setValue, ChangeValue] = useInput();
+    const { news, keyword, setKeyword } = useSearchNews(searchWord);
+
     const Submit = (e) => {
         if (e.key === 'Enter') {
             if (value) {
                 setKeyword(value);
+                setValue('');
             }
         }
     };
@@ -41,7 +43,7 @@ const News = ({ searchWord }) => {
             <header>
                 <Title>{keyword} 뉴스</Title>
             </header>
-            <SearchInput type="text" placeholder="검색" onChange={ChangeValue} Value={value} setValue={setValue} onKeyPress={Submit} />
+            <SearchInput type="text" placeholder="검색" onChange={ChangeValue} value={value} onKeyPress={Submit} />
             {news ? <NewsList news={news}></NewsList> : null}
         </Section>
     );

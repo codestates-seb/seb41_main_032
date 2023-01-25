@@ -9,11 +9,13 @@ import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.board.mapper.BoardMapper;
 import mainproject.stocksite.domain.board.service.BoardService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,6 +54,13 @@ public class BoardController {
     public BoardResponseDto getOne(@PathVariable("board-id") @Positive Long boardId) {
         return mapper.boardToResponseDto(service.getBoard(boardId));
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<BoardResponseDto> getAll() {
+        return mapper.boardListToResponseDto(service.getBoardList());
+    }
+
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{board-id}")

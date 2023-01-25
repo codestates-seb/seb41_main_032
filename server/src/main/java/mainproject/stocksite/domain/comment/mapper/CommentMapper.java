@@ -13,12 +13,20 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
 
-    default Comment commentPostDtoToComment(CommentPostDto commentPostDto, Long memberId) {
+
+
+
+
+    @Mapping(source = "username", target = "member.username")
+    default Comment commentPostDtoToComment(CommentPostDto commentPostDto, Long memberId, Long boardId) {
         Comment comment = new Comment();
         comment.setContent(commentPostDto.getContent());
         Member member = new Member();
         member.setMemberId(memberId);
+        Board board = new Board();
+        board.setBoardId(boardId);
         comment.setMember(member);
+        comment.setBoard(board);
 
         return comment;
     }
