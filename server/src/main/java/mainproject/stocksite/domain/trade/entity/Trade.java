@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mainproject.stocksite.domain.member.entity.Member;
-import mainproject.stocksite.domain.time.time;
+import mainproject.stocksite.domain.time.Time;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Trade extends time {
+public class Trade extends Time {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tradeId;
@@ -41,7 +41,7 @@ public class Trade extends time {
     @Column(nullable = false)
     private Long totalStockHoldings;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

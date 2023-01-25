@@ -7,7 +7,7 @@ import lombok.Setter;
 import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.comment.entity.Comment;
-import mainproject.stocksite.domain.time.time;
+import mainproject.stocksite.domain.time.Time;
 import mainproject.stocksite.domain.trade.entity.Trade;
 
 import javax.persistence.*;
@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "MEMBERS")
-public class Member extends time {
+public class Member extends Time {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface BoardMapper {
@@ -32,14 +33,30 @@ public interface BoardMapper {
         return board;
     }
 
-    default List<BoardResponseDto> boardListToResponseDto(List<Board> boardList) {
-        return boardList.stream().map(this::boardToResponseDto).toList();
-    }
-
-
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.nickname", target = "nickname")
     @Mapping(source = "member.username", target = "username")
     BoardResponseDto boardToResponseDto(Board board);
 
+    default BoardPostDto.ResponseDto boardToBoardPostResponseDto(Board board) {
+        if (board == null) {
+            return null;
+        }
+
+        BoardPostDto.ResponseDto responseDto = new BoardPostDto.ResponseDto();
+
+        responseDto.setMemberId(board.getMember().getMemberId());
+        responseDto.setBoardId(board.getBoardId());
+        responseDto.setTitle(board.getTitle());
+        responseDto.setContent(board.getContent());
+        responseDto.setCreatedAt(board.getCreatedAt());
+        responseDto.setModifiedAt(board.getModifiedAt());
+
+        return responseDto;
+    }
+
+    default List<BoardResponseDto> boardListToResponseDto(List<Board> boardList) {
+        return boardList.stream().map(this::boardToResponseDto).collect(Collectors.toList());
+    }
 }
+
