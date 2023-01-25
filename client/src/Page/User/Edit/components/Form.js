@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import getStorage from "../../../../Components/Function/getStorage";
+import LoadingPage from "../../../../Components/Style/LoadingPage";
 import BlueButton from "../../../../Components/Style/User/BlueButton";
 import InputField from "./InputField";
 import PasswordInputField from "./PasswordInputField";
@@ -15,12 +18,9 @@ const Container = styled.form`
 
 // 회원정보 수정 서식
 const Form = () => {
-  const [user, setUser] = useState({
-    userId: "",
-    password: "",
-    nickname: "",
-    email: "",
-  });
+  const navigate = useNavigate();
+  const memberId = getStorage("memberId");
+  const [user, setUser] = useState(null);
   const [isValidInput, setIsValidInput] = useState({
     password: null,
     nickname: true,
@@ -30,17 +30,25 @@ const Form = () => {
   const [isValidPasswordCheck, setIsValidPasswordCheck] = useState(null);
 
   useEffect(() => {
-    fetchUserInfo();
+    fetchUserData();
   }, []);
 
-  const fetchUserInfo = () => {
-    // TODO: 유저 정보 가져오는 로직 수정
-    const data = {
-      userId: "aaaaa",
-      nickname: "aaaaa",
-      email: "a@a.a",
+  const fetchUserData = () => {
+    const url = `${process.env.REACT_APP_API_URL}/members/${memberId}`;
+    const options = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     };
-    setUser({ ...user, ...data });
+    fetch(url, options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      })
+      .then((data) => setUser(data))
+      .catch((error) => console.log(error));
   };
 
   const handleSubmit = (event) => {
@@ -49,17 +57,24 @@ const Form = () => {
   };
 
   const requestEditProfile = () => {
-    // TODO: 서버 배포되면 로직 수정
-    // const url = `url`;
-    // const options = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(user),
-    // };
-    // fetch(url, options)
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data))
-    //   .catch((error) => console.log(error));
+    const { username, password, nickname, email } = user;
+    const newData = { username, password, nickname, email };
+    const url = `${process.env.REACT_APP_API_URL}/members/${memberId}`;
+    const options = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newData),
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response;
+        }
+      })
+      .then((data) => navigate(`/users/${memberId}`))
+      .catch((error) => console.log(error));
   };
 
   const inputFieldProps = {
@@ -87,13 +102,19 @@ const Form = () => {
 
   return (
     <Container onSubmit={handleSubmit}>
-      <InputField id="userId" {...inputFieldProps} disabled />
-      <PasswordInputField {...passwordInputFieldProps} />
-      <InputField id="nickname" {...inputFieldProps} />
-      <InputField id="email" {...inputFieldProps} />
-      <BlueButton type="submit" disabled={shouldDisableButton}>
-        수정하기
-      </BlueButton>
+      {user ? (
+        <>
+          <InputField id="username" {...inputFieldProps} disabled />
+          <PasswordInputField {...passwordInputFieldProps} />
+          <InputField id="nickname" {...inputFieldProps} />
+          <InputField id="email" {...inputFieldProps} />
+          <BlueButton type="submit" disabled={shouldDisableButton}>
+            수정하기
+          </BlueButton>
+        </>
+      ) : (
+        <LoadingPage />
+      )}
     </Container>
   );
 };

@@ -1,24 +1,17 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
   width: 100%;
   margin: 12px 0 0 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const KeepLogin = styled.div`
-  display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 `;
 
 const Checkbox = styled.input`
   width: 14px;
   height: 14px;
-  margin: 0 8px 2px 0;
+  margin-left: 5px;
   cursor: pointer;
 `;
 
@@ -29,17 +22,13 @@ const Label = styled.label`
 `;
 
 // 로그인 옵션 영역
-const OptionField = ({ user, setUser }) => {
-  // TODO: 비밀번호 찾기 라우팅 수정
-  const handleClick = () => setUser({ ...user, keepLogin: !user.keepLogin });
+const OptionField = ({ keepLogin, setKeepLogin }) => {
+  const handleClick = () => setKeepLogin(!keepLogin);
 
   return (
     <Container>
-      <KeepLogin>
-        <Checkbox type="checkbox" id="keepLogin" value={user.keepLogin} onClick={handleClick} />
-        <Label htmlFor="keepLogin">로그인 유지</Label>
-      </KeepLogin>
-      <Link to="/">비밀번호 찾기</Link>
+      <Label htmlFor="keepLogin">로그인 유지</Label>
+      <Checkbox type="checkbox" id="keepLogin" value={keepLogin} onClick={handleClick} />
     </Container>
   );
 };

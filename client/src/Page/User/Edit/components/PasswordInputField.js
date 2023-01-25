@@ -26,6 +26,7 @@ const PasswordInputField = ({
   setPasswordCheck,
   setIsValidPasswordCheck,
 }) => {
+  const [password, setPassword] = useState("");
   const [isPasswordEntered, setIsPasswordEntered] = useState(false);
   const [isPasswordCheckEntered, setIsPasswordCheckEntered] = useState(false);
 
@@ -37,7 +38,10 @@ const PasswordInputField = ({
 
   const handleChange = ({ target }) => {
     if (!isPasswordEntered) setIsPasswordEntered(true);
-    if (target.id === "password") setUser({ ...user, password: target.value });
+    if (target.id === "password") {
+      setPassword(target.value);
+      setUser({ ...user, password: target.value });
+    }
     if (target.id === "passwordCheck" && !isPasswordCheckEntered) setIsPasswordCheckEntered(true);
     if (target.id === "passwordCheck") setPasswordCheck(target.value);
   };
@@ -50,7 +54,7 @@ const PasswordInputField = ({
         id="password"
         autoComplete="on"
         placeholder="비밀번호를 입력해주세요."
-        value={user.password}
+        value={password}
         isValid={isValidInput.password}
         onChange={handleChange}
       />

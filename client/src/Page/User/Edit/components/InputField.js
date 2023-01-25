@@ -15,7 +15,6 @@ const Container = styled.div`
 // 아이디, 닉네임, 이메일 인풋 영역
 const InputField = ({ id, user, isValidInput, setUser, setIsValidInput, disabled }) => {
   const value = user[id];
-
   const [isEntered, setIsEntered] = useState(false);
 
   useEffect(() => {
@@ -29,13 +28,13 @@ const InputField = ({ id, user, isValidInput, setUser, setIsValidInput, disabled
   };
 
   const getLabel = () => {
-    if (id === "userId") return "아이디";
+    if (id === "username") return "아이디";
     if (id === "nickname") return "닉네임";
     if (id === "email") return "이메일";
   };
 
   const getPlaceholderText = () => {
-    if (id === "userId") return "아이디를 입력해주세요.";
+    if (id === "username") return "아이디를 입력해주세요.";
     return `${getLabel()}을 입력해주세요.`;
   };
 
