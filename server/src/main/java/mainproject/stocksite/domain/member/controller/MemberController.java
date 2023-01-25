@@ -39,17 +39,6 @@ public class MemberController {
         return memberResponseDto;
     }
 
-    /**
-     * GETALL 추후 불필요하다면 수정하면 될거같습니다
-     */
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public List<MemberResponseDto> getAll() {
-        List<Member> members = service.getMembers();
-        return members.stream().map(member -> mapper.memberToResponseDto(member))
-                .collect(Collectors.toList());
-    }
-
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{member-id}")
     public MemberResponseDto getOne(@PathVariable("member-id") @Positive Long memberId) {
