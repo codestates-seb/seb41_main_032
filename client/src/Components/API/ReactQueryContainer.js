@@ -111,6 +111,13 @@ const getMember = (memberId) => {
     return axios.get(`${API_URL_LIST[pointer]}/members/${memberId}`);
 };
 
+const getIsOpen = () => {
+    let date = new Date();
+    date.setDate(date.getDate());
+    const toDay = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
+    return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/holidays/${toDay}`);
+};
+
 /** <------------------- useQuery ------------------->  */
 
 export const useIndexKOSPI = () => {
@@ -281,6 +288,18 @@ export const useMember = (memberId) => {
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => data.data,
+    });
+    return data;
+};
+
+export const useIsOpen = () => {
+    const { data, refetch } = useQuery(['isOpen'], () => getIsOpen(), {
+        retry: 0,
+        staleTime: Infinity,
+        notifyOnChangeProps: 'tracked',
+        onError: () => balancer(refetch),
+        onSuccess: () => (count = 0),
+        select: (data) => (data.data.output[0].bzdy_yn === 'Y' ? true : false),
     });
     return data;
 };
