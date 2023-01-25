@@ -33,7 +33,7 @@ public interface BoardMapper {
     }
 
     default List<BoardResponseDto> boardListToResponseDto(List<Board> boardList) {
-        return boardList.stream().map(this::boardToResponseDto).toList();
+        return boardList.stream().map(this::boardToResponseDto).collect(Collectors.toList());
     }
 
 
