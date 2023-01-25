@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import mainproject.stocksite.domain.config.AccessTokenRequestInfo;
 import mainproject.stocksite.domain.exception.BusinessLogicException;
 import mainproject.stocksite.domain.exception.ExceptionCode;
-import mainproject.stocksite.domain.stock.detail.count.CountingRequest;
 import mainproject.stocksite.domain.stock.detail.dto.response.HolidaysDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.InvestorsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.PresentQuotationsDto;
@@ -20,8 +19,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
 
 @RequiredArgsConstructor
@@ -29,8 +26,6 @@ import static mainproject.stocksite.domain.stock.accesstoken.service.AccessToken
 public class DetailedStockService {
 
     private final AccessTokenRequestInfo accessTokenRequestInfo;
-
-    private final CountingRequest countingRequest;
 
     private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
 
@@ -45,8 +40,7 @@ public class DetailedStockService {
     }
 
     @Transactional(readOnly = true)
-    public PresentQuotationsDto findPresentQuotations(String stockCode) throws InterruptedException {
-        AtomicInteger count = countingRequest.getCountOfRequest();
+    public PresentQuotationsDto findPresentQuotations(String stockCode) {
 
         HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("tr_id", "FHKST01010100");
@@ -62,8 +56,6 @@ public class DetailedStockService {
         ResponseEntity<PresentQuotationsDto> response;
 
         try {
-            count.getAndIncrement();
-
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
@@ -74,34 +66,14 @@ public class DetailedStockService {
             return response.getBody();
 
         } catch (Exception e) {
-            String[] errorMessage = e.getMessage().split("\"");
-            String errorCode = errorMessage[8];
-
-            switch (errorCode) {
-                case "EGW00001":    // 일시적인 오류
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-                case "EGW00002":    // 서버 에러
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-                case "EGW00121":    // 유효하지 않은 토큰
-                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
-                case "EGW00201":    // 초당 거래건수 초과
-                    if (countingRequest.checkCountOfRequest(count)) {
-                        Thread.sleep(1000);
-                        findPresentQuotations(stockCode);
-                    } else {
-                        count.set(0);
-                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
-                    }
-                    break;
-            }
+            handleErrors(e);
         }
 
         return null;
     }
 
     @Transactional(readOnly = true)
-    public InvestorsDto findInvestors(String stockCode) throws InterruptedException {
-        AtomicInteger count = countingRequest.getCountOfRequest();
+    public InvestorsDto findInvestors(String stockCode) {
 
         HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("tr_id", "FHKST01010900");
@@ -117,8 +89,6 @@ public class DetailedStockService {
         ResponseEntity<InvestorsDto> response;
 
         try {
-            count.getAndIncrement();
-
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
@@ -129,34 +99,15 @@ public class DetailedStockService {
             return response.getBody();
 
         } catch (Exception e) {
-            String[] errorMessage = e.getMessage().split("\"");
-            String errorCode = errorMessage[8];
-
-            switch (errorCode) {
-                case "EGW00001":    // 일시적인 오류
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-                case "EGW00002":    // 서버 에러
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-                case "EGW00121":    // 유효하지 않은 토큰
-                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
-                case "EGW00201":    // 초당 거래건수 초과
-                    if (countingRequest.checkCountOfRequest(count)) {
-                        Thread.sleep(1000);
-                        findInvestors(stockCode);
-                    } else {
-                        count.set(0);
-                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
-                    }
-                    break;
-            }
+            handleErrors(e);
         }
 
         return null;
     }
 
     @Transactional(readOnly = true)
-    public QuotationsByPeriodDto findQuotationsByPeriod(String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
-        AtomicInteger count = countingRequest.getCountOfRequest();
+    public QuotationsByPeriodDto findQuotationsByPeriod(String stockCode,
+                                                        DetailedStockOptions detailedStockOptions) {
 
         HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
@@ -177,8 +128,6 @@ public class DetailedStockService {
         ResponseEntity<QuotationsByPeriodDto> response;
 
         try {
-            count.getAndIncrement();
-
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
@@ -189,34 +138,14 @@ public class DetailedStockService {
             return response.getBody();
 
         } catch (Exception e) {
-            String[] errorMessage = e.getMessage().split("\"");
-            String errorCode = errorMessage[8];
-
-            switch (errorCode) {
-                case "EGW00001":    // 일시적인 오류
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-                case "EGW00002":    // 서버 에러
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-                case "EGW00121":    // 유효하지 않은 토큰
-                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
-                case "EGW00201":    // 초당 거래건수 초과
-                    if (countingRequest.checkCountOfRequest(count)) {
-                        Thread.sleep(1000);
-                        findQuotationsByPeriod(stockCode, detailedStockOptions);
-                    } else {
-                        count.set(0);
-                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
-                    }
-                    break;
-            }
+            handleErrors(e);
         }
 
         return null;
     }
 
     @Transactional(readOnly = true)
-    public HolidaysDto findHolidays(String baseDate) throws InterruptedException {
-        AtomicInteger count = countingRequest.getCountOfRequest();
+    public HolidaysDto findHolidays(String baseDate) {
 
         HttpHeaders requestHeaders = baseHeaders();
         requestHeaders.set("content-type", "application/json; charset=utf-8");
@@ -235,8 +164,6 @@ public class DetailedStockService {
         ResponseEntity<HolidaysDto> response;
 
         try {
-            count.getAndIncrement();
-
             response = restTemplate.exchange(
                     uriBuilder.toString(),
                     HttpMethod.GET,
@@ -247,28 +174,25 @@ public class DetailedStockService {
             return response.getBody();
 
         } catch (Exception e) {
-            String[] errorMessage = e.getMessage().split("\"");
-            String errorCode = errorMessage[8];
-
-            switch (errorCode) {
-                case "EGW00001":    // 일시적인 오류
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
-                case "EGW00002":    // 서버 에러
-                    throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-                case "EGW00121":    // 유효하지 않은 토큰
-                    throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
-                case "EGW00201":    // 초당 거래건수 초과
-                    if (countingRequest.checkCountOfRequest(count)) {
-                        Thread.sleep(1000);
-                        findHolidays(baseDate);
-                    } else {
-                        count.set(0);
-                        throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
-                    }
-                    break;
-            }
+            handleErrors(e);
         }
 
         return null;
+    }
+
+    private void handleErrors(Exception e) {
+        String[] errorMessage = e.getMessage().split("\"");
+        String errorCode = errorMessage[8];
+
+        switch (errorCode) {
+            case "EGW00001":    // 일시적인 오류
+                throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+            case "EGW00002":    // 서버 에러
+                throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+            case "EGW00121":    // 유효하지 않은 토큰
+                throw new BusinessLogicException(ExceptionCode.INVALID_TOKEN);
+            case "EGW00201":    // 초당 거래건수 초과
+                throw new BusinessLogicException(ExceptionCode.UNABLE_TO_REQUEST_AGAIN);
+        }
     }
 }

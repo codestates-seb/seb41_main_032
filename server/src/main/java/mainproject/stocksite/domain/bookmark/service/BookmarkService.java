@@ -23,8 +23,6 @@ public class BookmarkService {
 
     @Transactional
     public Bookmark createBookmark(Bookmark bookmark) {
-        checkBookmarkListFull(bookmark);
-
         memberService.verifyExistsMember(bookmark.getMember().getMemberId());
 
         verifyExistsBookmark(bookmark);
@@ -76,11 +74,5 @@ public class BookmarkService {
 
     private Bookmark saveBookmark(Bookmark bookmark) {
         return bookmarkRepository.save(bookmark);
-    }
-
-    public void checkBookmarkListFull(Bookmark bookmark) {
-        List<Bookmark> bookmarkList = findBookmarks(bookmark.getMember().getMemberId());
-        if (bookmarkList.size() == 5)
-            throw new BusinessLogicException(ExceptionCode.BOOKMARK_LIST_ARE_FULL);
     }
 }

@@ -23,7 +23,7 @@ public class DetailedStockController {
 
     // 국내 주식 현재가 시세 조회
     @GetMapping("/quotations/{stock-code}")
-    public ResponseEntity<PresentQuotationsDto> getPresentQuotations(@PathVariable("stock-code") String stockCode) throws InterruptedException {
+    public ResponseEntity<PresentQuotationsDto> getPresentQuotations(@PathVariable("stock-code") String stockCode) {
         PresentQuotationsDto response = detailedStockService.findPresentQuotations(stockCode);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -31,7 +31,7 @@ public class DetailedStockController {
 
     // 국내 주식 현재가 투자자
     @GetMapping("/investors/{stock-code}")
-    public ResponseEntity<InvestorsDto> getInvestors(@PathVariable("stock-code") String stockCode) throws InterruptedException {
+    public ResponseEntity<InvestorsDto> getInvestors(@PathVariable("stock-code") String stockCode) {
         InvestorsDto response = detailedStockService.findInvestors(stockCode);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -39,7 +39,9 @@ public class DetailedStockController {
 
     // 국내 주식 기간별 시세 조회 (일/주/월/년)
     @GetMapping("/quotations/{stock-code}/day")
-    public ResponseEntity<QuotationsByPeriodDto> getQuotationsByPeriod(@PathVariable("stock-code") String stockCode, DetailedStockOptions detailedStockOptions) throws InterruptedException {
+    public ResponseEntity<QuotationsByPeriodDto> getQuotationsByPeriod(@PathVariable("stock-code") String stockCode,
+                                                                       DetailedStockOptions detailedStockOptions) {
+
         QuotationsByPeriodDto response = detailedStockService.findQuotationsByPeriod(stockCode, detailedStockOptions);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -47,7 +49,7 @@ public class DetailedStockController {
 
     // 국내 휴장일 조회
     @GetMapping("holidays/{base-date}")
-    public ResponseEntity<HolidaysDto> getHolidays(@PathVariable("base-date") String baseDate) throws InterruptedException {
+    public ResponseEntity<HolidaysDto> getHolidays(@PathVariable("base-date") String baseDate) {
         HolidaysDto response = detailedStockService.findHolidays(baseDate);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
