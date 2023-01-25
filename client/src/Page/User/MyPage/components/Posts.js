@@ -20,19 +20,22 @@ const Contents = styled.div`
   gap: 10px;
 `;
 
+const EmptyMessage = styled.p`
+  color: #aaaaaa;
+  font-size: 16px;
+`;
+
 // 작성글 영역
-const Posts = () => {
-  const posts = [
-    { id: 1, title: "제목1" },
-    { id: 2, title: "제목2" },
-  ];
+const Posts = ({ posts = [] }) => {
   return (
     <Container>
       <Subtitle>작성글</Subtitle>
       <Contents>
-        {posts.map((post) => (
-          <Post key={post.id} {...post} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => <Post key={post.borderId} {...post} />)
+        ) : (
+          <EmptyMessage>없음</EmptyMessage>
+        )}
       </Contents>
     </Container>
   );

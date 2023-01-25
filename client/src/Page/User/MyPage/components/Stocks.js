@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import commaGenerator from "../../../../Components/Function/commaGenerator";
 import Subtitle from "../../../../Components/Style/User/Subtitle";
@@ -23,6 +24,7 @@ const Price = styled.div`
 `;
 
 const Balance = styled.p`
+  color: #262626;
   font-size: 28px;
   font-weight: 700;
 `;
@@ -42,48 +44,29 @@ const StockContent = styled.div`
 `;
 
 // 보유 주식 영역
-const Stocks = () => {
-  const stocks = [
-    {
-      name: "삼성전자",
-      number: "005930",
-      count: 12,
-      price: "2000000",
-    },
-    {
-      name: "카카오",
-      number: "035720",
-      count: 12,
-      price: "2000000",
-    },
-    {
-      name: "NAVER",
-      number: "035420",
-      count: 12,
-      price: "2000000",
-    },
-    {
-      name: "SK하이닉스",
-      number: "000660",
-      count: 12,
-      price: "2000000",
-    },
-  ];
+const Stocks = ({ stocks = [] }) => {
+  const [balance, setBalance] = useState(0);
 
-  const sum = commaGenerator(stocks.reduce((acc, cur) => acc + Number(cur.price), 0));
+  useEffect(() => {
+    if (stocks.length === 0 || !stocks) return;
+    const sum = stocks.reduce((acc, cur) => acc + Number(cur.price), 0);
+    setBalance(commaGenerator(sum));
+  }, []);
 
   return (
     <Container>
       <Subtitle>보유 주식</Subtitle>
       <Price>
-        <Balance>{sum}원</Balance>
-        <Profit>-2,000,000원 (20.0%)</Profit>
+        <Balance>{balance}원</Balance>
+        {/* <Profit>-2,000,000원 (20.0%)</Profit> */}
       </Price>
-      <StockContent>
-        {stocks.map((stock) => (
-          <Stock key={stock.number} {...stock} />
-        ))}
-      </StockContent>
+      {stocks.length > 0 && (
+        <StockContent>
+          {stocks.map((stock) => (
+            <Stock key={stock.number} {...stock} />
+          ))}
+        </StockContent>
+      )}
     </Container>
   );
 };
