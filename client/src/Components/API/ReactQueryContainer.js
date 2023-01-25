@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../Function/userInfo';
 
 /**
  * React-Query에 사용될 api, 함수, useQuery 입니다
@@ -99,6 +101,14 @@ const addBookMarks = (data) => {
 
 const removeBookMarks = (bookmarkId) => {
     return axios.delete(`${API_URL_LIST[pointer]}/bookmarks/${bookmarkId}`);
+};
+
+const postLogin = (user) => {
+    return axios.post(`${API_URL_LIST[pointer]}/user/login`, user);
+};
+
+const getMember = (memberId) => {
+    return axios.get(`${API_URL_LIST[pointer]}/members/${memberId}`);
 };
 
 /** <------------------- useQuery ------------------->  */
@@ -233,4 +243,44 @@ export const useRemoveBookMarks = () => {
     return useMutation(removeBookMarks, {
         onSuccess: () => queryClient.invalidateQueries('BookMarks'),
     });
+};
+
+export const useLogin = (user, keepLogin, success, error) => {
+    const queryClient = useQueryClient();
+    // Recoil 설정 useState와 사용법이 동일
+    const [memberId, setMemberId] = useRecoilState(userInfo);
+    return useMutation(() => postLogin(user), {
+        onSuccess: (data) => {
+            setMemberId(2);
+            if (keepLogin) {
+                localStorage.setItem('memberId', '2'); // FIXME: 임시 저장
+                localStorage.setItem('username', user.username);
+                localStorage.setItem('authorization', data.headers.authorization);
+                localStorage.setItem('refresh', data.headers.refresh);
+            } else {
+                sessionStorage.setItem('memberId', '2'); // FIXME: 임시 저장
+                sessionStorage.setItem('username', user.username);
+                sessionStorage.setItem('authorization', data.headers.authorization);
+                sessionStorage.setItem('refresh', data.headers.refresh);
+            }
+            queryClient.invalidateQueries('member');
+            success(data);
+        },
+        onError: (data) => {
+            error(data);
+        },
+    });
+};
+
+export const useMember = (memberId) => {
+    const { data, refetch } = useQuery(['member'], () => getMember(memberId), {
+        retry: 0,
+        staleTime: Infinity,
+        notifyOnChangeProps: 'tracked',
+        enabled: !!memberId,
+        onError: () => balancer(refetch),
+        onSuccess: () => (count = 0),
+        select: (data) => data,
+    });
+    return data;
 };
