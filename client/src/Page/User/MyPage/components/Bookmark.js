@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useRemoveBookMarks } from "../../../../Components/API/ReactQueryContainer";
 import StarIcon from "../../../../Components/Style/StarIcon";
 
 const Container = styled.div`
@@ -26,19 +27,26 @@ const Name = styled.span`
 `;
 
 // 즐겨찾기 컴포넌트
-const Favorite = ({ name, number }) => {
+const Bookmark = ({ bookmarkId, stockName, stockCode, isOwner }) => {
   const navigate = useNavigate();
+  const { mutate: removeBookMarks } = useRemoveBookMarks();
 
-  const handleClick = () => {
-    navigate(`/stock/${number}`, { state: { name: `${name}`, MarketCap: null } });
+  const handleBookmarkClick = () => {
+    navigate(`/stock/${stockCode}`, { state: { stockName: `${stockName}` } });
+  };
+
+  const handleIconClick = (event) => {
+    if (!isOwner) return;
+    event.stopPropagation();
+    removeBookMarks(bookmarkId);
   };
 
   return (
-    <Container onClick={handleClick}>
-      <Icon>{StarIcon}</Icon>
-      <Name>{name}</Name>
+    <Container onClick={handleBookmarkClick}>
+      <Icon onClick={handleIconClick}>{StarIcon}</Icon>
+      <Name>{stockName}</Name>
     </Container>
   );
 };
 
-export default Favorite;
+export default Bookmark;

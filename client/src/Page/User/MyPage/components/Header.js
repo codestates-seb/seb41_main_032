@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Title from "../../../../Components/Style/User/Title";
 import WhiteButton from "../../../../Components/Style/User/WhiteButton";
@@ -19,14 +19,13 @@ const EditButton = styled(WhiteButton)`
 `;
 
 // 마이페이지 헤더
-const Header = () => {
-  const { id } = useParams();
+const Header = ({ username, isOwner }) => {
   const navigate = useNavigate();
 
   return (
     <Container>
-      <Title>마이페이지</Title>
-      <EditButton onClick={() => navigate(`/users/${id}/edit`)}>회원정보 수정</EditButton>
+      <Title>{username}</Title>
+      {isOwner && <EditButton onClick={() => navigate(`./edit`)}>회원정보 수정</EditButton>}
     </Container>
   );
 };

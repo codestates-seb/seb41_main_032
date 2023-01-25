@@ -1,17 +1,17 @@
 package mainproject.stocksite.domain.comment.entity;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.member.entity.Member;
-import mainproject.stocksite.domain.time.time;
-import lombok.Data;
+import mainproject.stocksite.domain.time.Time;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Comment extends time{
+public class Comment extends Time {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,11 @@ public class Comment extends time{
     @Column
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
 }

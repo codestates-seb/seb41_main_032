@@ -1,14 +1,16 @@
 package mainproject.stocksite.domain.board.dto;
-import mainproject.stocksite.domain.time.time;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import mainproject.stocksite.domain.time.Time;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardResponseDto extends time {
-
+public class BoardResponseDto extends Time {
     private Long boardId;
     private Long memberId;
     private String title;
