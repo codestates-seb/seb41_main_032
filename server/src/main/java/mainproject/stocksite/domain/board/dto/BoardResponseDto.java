@@ -1,7 +1,11 @@
 package mainproject.stocksite.domain.board.dto;
+import mainproject.stocksite.domain.comment.dto.CommentResponseDto;
 import mainproject.stocksite.domain.time.time;
 
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +19,5 @@ public class BoardResponseDto extends time {
     private String content;
     private String username;
     private String nickname;
+    private List<BCResponseDto> commentList = new ArrayList<>();
 }
