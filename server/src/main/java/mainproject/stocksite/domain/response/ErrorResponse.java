@@ -1,13 +1,14 @@
 package mainproject.stocksite.domain.response;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
 import lombok.Getter;
 import mainproject.stocksite.domain.exception.ExceptionCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+
+import javax.validation.ConstraintViolation;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 public class ErrorResponse {
@@ -16,13 +17,13 @@ public class ErrorResponse {
     private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
 
-    public ErrorResponse(int status, String message) {
+    private ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    private ErrorResponse(final List<FieldError> fieldErrors,
-                          final List<ConstraintViolationError> violationErrors) {
+    private ErrorResponse(List<FieldError> fieldErrors,
+                          List<ConstraintViolationError> violationErrors) {
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
     }
@@ -43,10 +44,6 @@ public class ErrorResponse {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
-    public static ErrorResponse of(HttpStatus httpStatus, String message) {
-        return new ErrorResponse(httpStatus.value(), message);
-    }
-
     @Getter
     public static class FieldError {
         private String field;
@@ -59,7 +56,7 @@ public class ErrorResponse {
             this.reason = reason;
         }
 
-        public static List<FieldError> of(BindingResult bindingResult) {
+        private static List<FieldError> of(BindingResult bindingResult) {
             final List<org.springframework.validation.FieldError> fieldErrors =
                     bindingResult.getFieldErrors();
             return fieldErrors.stream()
@@ -85,7 +82,7 @@ public class ErrorResponse {
             this.reason = reason;
         }
 
-        public static List<ConstraintViolationError> of(
+        private static List<ConstraintViolationError> of(
                 Set<ConstraintViolation<?>> constraintViolations) {
             return constraintViolations.stream()
                     .map(constraintViolation -> new ConstraintViolationError(
