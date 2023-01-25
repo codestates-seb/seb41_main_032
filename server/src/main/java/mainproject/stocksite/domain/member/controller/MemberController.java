@@ -14,8 +14,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -37,17 +35,6 @@ public class MemberController {
         MemberResponseDto memberResponseDto = mapper.memberToResponseDto(addMember);
 
         return memberResponseDto;
-    }
-
-    /**
-     * GETALL 추후 불필요하다면 수정하면 될거같습니다
-     */
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public List<MemberResponseDto> getAll() {
-        List<Member> members = service.getMembers();
-        return members.stream().map(member -> mapper.memberToResponseDto(member))
-                .collect(Collectors.toList());
     }
 
     @ResponseStatus(HttpStatus.OK)

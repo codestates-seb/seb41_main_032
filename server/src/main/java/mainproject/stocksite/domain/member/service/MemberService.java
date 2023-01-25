@@ -39,13 +39,13 @@ public class MemberService {
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
+        // email, username 중복 확인
+        verifyExistsEmail(member.getEmail());
+        verifyExistsUsername(member.getUsername());
+
         Member savedMember = repository.save(member);
 
         return savedMember;
-    }
-
-    public List<Member> getMembers() {
-        return repository.findAll();
     }
 
     public Member findById(Long MemberId) {
@@ -74,5 +74,19 @@ public class MemberService {
     public void verifyExistsMember(long memberId) {
         Optional<Member> optionalMember = repository.findById(memberId);
         optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    // 이미 등록된 email 확인
+    public void verifyExistsEmail(String email) {
+        Optional<Member> member = repository.findByEmail(email);
+
+        if (member.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
+
+    // 이미 등록된 username 확인
+    public void verifyExistsUsername(String username) {
+        Optional<Member> member = repository.findByUsername(username);
+
+        if (member.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 }
