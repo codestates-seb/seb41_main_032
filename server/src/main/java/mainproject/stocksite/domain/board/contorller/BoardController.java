@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping("/boards")
 @Validated
 public class BoardController {
 
@@ -53,6 +53,12 @@ public class BoardController {
     @GetMapping("/{board-id}")
     public BoardResponseDto getOne(@PathVariable("board-id") @Positive Long boardId) {
         return mapper.boardToResponseDto(service.getBoard(boardId));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/member/{Member-id}")
+    public List<BoardResponseDto> getMemberBoard(@PathVariable("Member-id") @Positive Long memberId) {
+        return mapper.boardListToResponseDto(service.getMemberBoard(memberId));
     }
 
     @ResponseStatus(HttpStatus.OK)

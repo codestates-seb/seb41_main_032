@@ -59,5 +59,9 @@ public interface BoardMapper {
     default List<BoardResponseDto> boardListToResponseDto(List<Board> boardList) {
         return boardList.stream().map(this::boardToResponseDto).collect(Collectors.toList());
     }
+
+    default List<BoardPostDto.ResponseDto> boardListToBoardPostResponseDto(List<Board> boardList) {
+        return boardList.stream().map(this::boardToBoardPostResponseDto).collect(Collectors.toList());
+    }
 }
 
