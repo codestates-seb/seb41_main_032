@@ -83,20 +83,15 @@ public class TradeService {
 
     @Transactional(readOnly = true)
     public List<Trade> getTradesList(long memberId) {
-        List<Trade> findTradeListByMemberId = tradeRepository.findAllByMember_MemberId(memberId);
+        memberService.verifyExistsMember(memberId);
 
-        if (findTradeListByMemberId.isEmpty()) throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-        else return findTradeListByMemberId;
+        return tradeRepository.findAllByMember_MemberId(memberId);
     }
 
     @Transactional(readOnly = true)
     public List<Trade> getTradeList(long memberId, String stockCode) {
-        List<Trade> findTradeListByMemberId = tradeRepository.findAllByMember_MemberId(memberId);
-        if (findTradeListByMemberId.isEmpty()) throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        memberService.verifyExistsMember(memberId);
 
-        List<Trade> findTradeListByStockCode = tradeRepository.findAllByMember_MemberIdAndStockCode(memberId, stockCode);
-        if (findTradeListByStockCode.isEmpty()) throw new BusinessLogicException(ExceptionCode.HAVE_NO_STOCK);
-
-        else return findTradeListByStockCode;
+        return tradeRepository.findAllByMember_MemberIdAndStockCode(memberId, stockCode);
     }
 }
