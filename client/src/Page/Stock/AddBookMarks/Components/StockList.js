@@ -73,12 +73,8 @@ const StockList = ({ data, bookMarks, select }) => {
                                     <span>{el.mrktCtg}</span>
                                 </p>
                             </div>
-                            <button>
-                                <img
-                                    src={bookMarks?.find((e) => e.stockCode === el.srtnCd) ? ActivateImg : DisableImg}
-                                    alt="bookmark"
-                                    onClick={() => handlerBookmark(el.srtnCd, el.itmsNm)}
-                                />
+                            <button onClick={() => handlerBookmark(el.srtnCd, el.itmsNm)}>
+                                <img src={bookMarks?.find((e) => e.stockCode === el.srtnCd) ? ActivateImg : DisableImg} alt="bookmark" />
                             </button>
                         </ItemBox>
                     ))}

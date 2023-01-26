@@ -33,6 +33,7 @@ public interface BoardMapper {
         return board;
     }
 
+
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.nickname", target = "nickname")
     @Mapping(source = "member.username", target = "username")
