@@ -80,9 +80,5 @@ public class BoardService {
         Optional<Board> optionalBoard = boardRepository.findById(boardId);
         optionalBoard.orElseThrow(() -> new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
     }
-
-    public void verifyExistsMember(long memberId) {
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-    }
+    
 }
