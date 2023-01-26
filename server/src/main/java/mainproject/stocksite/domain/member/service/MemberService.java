@@ -2,8 +2,8 @@ package mainproject.stocksite.domain.member.service;
 
 
 import mainproject.stocksite.domain.auth.utils.CustomAuthorityUtils;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import mainproject.stocksite.domain.member.entity.Member;
 import mainproject.stocksite.domain.member.repository.MemberRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Transactional

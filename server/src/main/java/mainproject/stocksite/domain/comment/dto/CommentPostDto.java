@@ -6,15 +6,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.member.entity.Member;
-import mainproject.stocksite.domain.time.Time;
+import mainproject.stocksite.global.time.Time;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentPostDto {
-
+    @Positive
     private Long memberId;
+
+    @Positive
     private Long boardId;
+
+    @NotBlank
     private String content;
 
     public Member getMember() {

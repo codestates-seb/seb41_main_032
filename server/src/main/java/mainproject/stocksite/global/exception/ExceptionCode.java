@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.exception;
+package mainproject.stocksite.global.exception;
 
 import lombok.Getter;
 

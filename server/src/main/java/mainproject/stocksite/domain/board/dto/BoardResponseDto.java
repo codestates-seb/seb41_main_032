@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import mainproject.stocksite.domain.time.Time;
+import mainproject.stocksite.global.time.Time;
 
 @Getter
 @Setter

@@ -2,7 +2,7 @@ package mainproject.stocksite.domain.auth.utils;
 
 
 import com.google.gson.Gson;
-import mainproject.stocksite.domain.response.ErrorResponse;
+import mainproject.stocksite.global.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 

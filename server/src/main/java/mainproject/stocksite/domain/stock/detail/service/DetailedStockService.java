@@ -1,9 +1,9 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.config.AccessTokenRequestInfo;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.global.config.AccessTokenRequestInfo;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import mainproject.stocksite.domain.stock.detail.dto.response.HolidaysDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.InvestorsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.PresentQuotationsDto;

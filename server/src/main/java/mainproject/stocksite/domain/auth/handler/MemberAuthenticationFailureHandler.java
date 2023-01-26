@@ -2,7 +2,7 @@ package mainproject.stocksite.domain.auth.handler;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import mainproject.stocksite.domain.response.ErrorResponse;
+import mainproject.stocksite.global.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;

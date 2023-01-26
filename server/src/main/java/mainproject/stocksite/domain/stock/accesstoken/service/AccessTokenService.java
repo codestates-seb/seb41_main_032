@@ -1,7 +1,7 @@
 package mainproject.stocksite.domain.stock.accesstoken.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.config.AccessTokenRequestInfo;
+import mainproject.stocksite.global.config.AccessTokenRequestInfo;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mainproject.stocksite.domain.member.entity.Member;
-import mainproject.stocksite.domain.time.Time;
+import mainproject.stocksite.global.time.Time;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

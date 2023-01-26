@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.config;
+package mainproject.stocksite.global.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

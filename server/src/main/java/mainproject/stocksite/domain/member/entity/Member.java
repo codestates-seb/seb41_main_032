@@ -7,7 +7,7 @@ import lombok.Setter;
 import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.comment.entity.Comment;
-import mainproject.stocksite.domain.time.Time;
+import mainproject.stocksite.global.time.Time;
 import mainproject.stocksite.domain.trade.entity.Trade;
 
 import javax.persistence.*;
