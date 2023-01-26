@@ -1,7 +1,7 @@
 package mainproject.stocksite.domain.news.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.config.NewsSecretInfo;
+import mainproject.stocksite.global.config.NewsSecretInfo;
 import mainproject.stocksite.domain.news.dto.NewsResponseDto;
 import mainproject.stocksite.domain.news.options.NewsOptions;
 import org.springframework.http.HttpEntity;

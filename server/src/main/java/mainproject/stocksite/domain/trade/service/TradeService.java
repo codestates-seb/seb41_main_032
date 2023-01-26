@@ -1,8 +1,8 @@
 package mainproject.stocksite.domain.trade.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import mainproject.stocksite.domain.member.entity.Member;
 import mainproject.stocksite.domain.member.service.MemberService;
 import mainproject.stocksite.domain.trade.entity.Trade;

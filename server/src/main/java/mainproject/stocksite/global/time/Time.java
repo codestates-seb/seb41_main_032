@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.time;
+package mainproject.stocksite.global.time;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;

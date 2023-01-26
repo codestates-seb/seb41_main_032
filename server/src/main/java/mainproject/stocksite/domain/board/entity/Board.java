@@ -4,7 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mainproject.stocksite.domain.comment.entity.Comment;
 import mainproject.stocksite.domain.member.entity.Member;
-import mainproject.stocksite.domain.time.Time;
+import mainproject.stocksite.global.time.Time;
 import lombok.Getter;
 
 import javax.persistence.*;

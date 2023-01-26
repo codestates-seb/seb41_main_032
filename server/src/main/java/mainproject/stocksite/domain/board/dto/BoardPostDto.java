@@ -2,15 +2,16 @@ package mainproject.stocksite.domain.board.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import mainproject.stocksite.domain.time.Time;
+import mainproject.stocksite.global.time.Time;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 @AllArgsConstructor
 public class BoardPostDto {
 
-    @NotNull
+    @Positive
     private Long memberId;
     @NotNull
     private String title;
