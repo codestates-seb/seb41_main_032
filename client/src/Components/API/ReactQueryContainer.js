@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../Function/userInfo';
 
 /**
  * React-Query에 사용될 api, 함수, useQuery 입니다
@@ -10,7 +12,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 /** <------------------ 공통적으로 사용되는 전역 변수,함수 ------------------>  */
 
-// 4일전 날짜 => 정부 api 정보업데이트가 느림 (최대 4일까지 지연) => 4일전부터 오늘날짜까지의 데이터 요청용
+// 7일전 날짜 => 정부 api 정보업데이트가 느림 => 7일전부터 오늘날짜까지의 데이터 요청용
 let date = new Date();
 date.setDate(date.getDate() - 7);
 const day = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
@@ -94,12 +96,26 @@ const getBookMarks = (memberId) => {
 };
 
 const addBookMarks = (data) => {
-    console.log(`${API_URL_LIST[pointer]}/bookmarks`, data);
     return axios.post(`${API_URL_LIST[pointer]}/bookmarks`, data);
 };
 
 const removeBookMarks = (bookmarkId) => {
     return axios.delete(`${API_URL_LIST[pointer]}/bookmarks/${bookmarkId}`);
+};
+
+const postLogin = (user) => {
+    return axios.post(`${API_URL_LIST[pointer]}/user/login`, user);
+};
+
+const getMember = (memberId) => {
+    return axios.get(`${API_URL_LIST[pointer]}/members/${memberId}`);
+};
+
+const getIsOpen = () => {
+    let date = new Date();
+    date.setDate(date.getDate());
+    const toDay = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
+    return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/holidays/${toDay}`);
 };
 
 /** <------------------- useQuery ------------------->  */
@@ -202,11 +218,11 @@ export const useSearchNews = (searchWord) => {
         refetchInterval: 30000, //30초마다 업데이트
         retry: 0,
         notifyOnChangeProps: 'tracked',
+        keepPreviousData: true, //새로운 데이터가 들어올때까지 이전데이터를 보여줌(검색시 깜빡임 방지)
+        enabled: !!keyword,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => data.data.items,
-        keepPreviousData: true, //새로운 데이터가 들어올때까지 이전데이터를 보여줌(검색시 깜빡임 방지)
-        enabled: !!keyword,
     });
     return { news, keyword, setKeyword };
 };
@@ -234,4 +250,56 @@ export const useRemoveBookMarks = () => {
     return useMutation(removeBookMarks, {
         onSuccess: () => queryClient.invalidateQueries('BookMarks'),
     });
+};
+
+export const useLogin = (user, keepLogin, success, error) => {
+    const queryClient = useQueryClient();
+    // Recoil 설정 useState와 사용법이 동일
+    const [memberId, setMemberId] = useRecoilState(userInfo);
+    return useMutation(() => postLogin(user), {
+        onSuccess: (data) => {
+            setMemberId(2);
+            if (keepLogin) {
+                localStorage.setItem('memberId', '2'); // FIXME: 임시 저장
+                localStorage.setItem('username', user.username);
+                localStorage.setItem('authorization', data.headers.authorization);
+                localStorage.setItem('refresh', data.headers.refresh);
+            } else {
+                sessionStorage.setItem('memberId', '2'); // FIXME: 임시 저장
+                sessionStorage.setItem('username', user.username);
+                sessionStorage.setItem('authorization', data.headers.authorization);
+                sessionStorage.setItem('refresh', data.headers.refresh);
+            }
+            queryClient.invalidateQueries('member');
+            success(data);
+        },
+        onError: (data) => {
+            error(data);
+        },
+    });
+};
+
+export const useMember = (memberId) => {
+    const { data, refetch } = useQuery(['member'], () => getMember(memberId), {
+        retry: 0,
+        staleTime: Infinity,
+        notifyOnChangeProps: 'tracked',
+        enabled: !!memberId,
+        onError: () => balancer(refetch),
+        onSuccess: () => (count = 0),
+        select: (data) => data.data,
+    });
+    return data;
+};
+
+export const useIsOpen = () => {
+    const { data, refetch } = useQuery(['isOpen'], () => getIsOpen(), {
+        retry: 0,
+        staleTime: Infinity,
+        notifyOnChangeProps: 'tracked',
+        onError: () => balancer(refetch),
+        onSuccess: () => (count = 0),
+        select: (data) => (data.data.output[0].bzdy_yn === 'Y' ? true : false),
+    });
+    return data;
 };
