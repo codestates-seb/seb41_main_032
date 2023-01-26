@@ -1,9 +1,10 @@
 package mainproject.stocksite.domain.bookmark.service;
 
+import lombok.RequiredArgsConstructor;
 import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.bookmark.repository.BookmarkRepository;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import mainproject.stocksite.domain.member.service.MemberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,21 +13,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
-    private final MemberService memberService;
 
-    public BookmarkService(BookmarkRepository bookmarkRepository, MemberService memberService) {
-        this.bookmarkRepository = bookmarkRepository;
-        this.memberService = memberService;
-    }
+    private final MemberService memberService;
 
     @Transactional
     public Bookmark createBookmark(Bookmark bookmark) {
-        checkBookmarkListFull(bookmark);
-
         memberService.verifyExistsMember(bookmark.getMember().getMemberId());
 
         verifyExistsBookmark(bookmark);
@@ -78,11 +74,5 @@ public class BookmarkService {
 
     private Bookmark saveBookmark(Bookmark bookmark) {
         return bookmarkRepository.save(bookmark);
-    }
-
-    public void checkBookmarkListFull(Bookmark bookmark) {
-        List<Bookmark> bookmarkList = findBookmarks(bookmark.getMember().getMemberId());
-        if (bookmarkList.size() == 5)
-            throw new BusinessLogicException(ExceptionCode.BOOKMARK_LIST_ARE_FULL);
     }
 }

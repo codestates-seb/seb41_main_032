@@ -24,7 +24,7 @@ public class Bookmark {
     @Column(nullable = false)
     private String stockName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

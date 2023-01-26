@@ -1,6 +1,7 @@
 package mainproject.stocksite.domain.stock.accesstoken.service;
 
-import mainproject.stocksite.domain.stock.accesstoken.dto.AccessTokenRequestInfo;
+import lombok.RequiredArgsConstructor;
+import mainproject.stocksite.global.config.AccessTokenRequestInfo;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +12,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class AccessTokenService {
 
     public static String accessToken;
 
     private final AccessTokenRequestInfo accessTokenRequestInfo;
-
-    public AccessTokenService(AccessTokenRequestInfo accessTokenRequestInfo) {
-        this.accessTokenRequestInfo = accessTokenRequestInfo;
-    }
 
     // 매일 자정에 증권사 API 접근 토큰 자동 발급
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")

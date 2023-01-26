@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.config;
+package mainproject.stocksite.global.config;
 
 import mainproject.stocksite.domain.auth.filter.JwtAuthenticationFilter;
 import mainproject.stocksite.domain.auth.filter.JwtVerificationFilter;

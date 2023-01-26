@@ -20,7 +20,7 @@ import java.util.*;
 
 // 클라이언트의 로그인 인증 정보를 수신하는 엔트리포인트
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {  // (1)
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     // 로그인 인증 정보를 전달 받아 UserDetailsService 와 인터렉션 후 인증 여부 판단
     private final AuthenticationManager authenticationManager;
@@ -54,10 +54,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(member);   // Access Token 생성
         String refreshToken = delegateRefreshToken(member); // Refresh Token 생성
+        long memberId = member.getMemberId(); // 헤더값에 포함할 memberId 생성
 
-        // response header 에 토큰 값 담아주기
+        // response header 에 토큰 값 담아주기 + memberId 값
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+        response.setHeader("MemberId", String.valueOf(memberId));
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }

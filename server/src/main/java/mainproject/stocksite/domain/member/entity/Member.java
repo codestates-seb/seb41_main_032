@@ -7,9 +7,11 @@ import lombok.Setter;
 import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.bookmark.entity.Bookmark;
 import mainproject.stocksite.domain.comment.entity.Comment;
-import mainproject.stocksite.domain.time.time;
+import mainproject.stocksite.global.time.Time;
+import mainproject.stocksite.domain.trade.entity.Trade;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "MEMBERS")
-public class Member extends time {
+public class Member extends Time {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +39,8 @@ public class Member extends time {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private BigDecimal money = new BigDecimal("10000000.0");
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
@@ -70,4 +74,7 @@ public class Member extends time {
             bookmark.setMember(this);
         }
     }
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Trade> trades = new ArrayList<>();
 }

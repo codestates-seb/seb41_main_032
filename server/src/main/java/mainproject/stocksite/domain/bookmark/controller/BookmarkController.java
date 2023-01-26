@@ -1,5 +1,6 @@
 package mainproject.stocksite.domain.bookmark.controller;
 
+import lombok.RequiredArgsConstructor;
 import mainproject.stocksite.domain.bookmark.dto.BookmarkRequestDto;
 import mainproject.stocksite.domain.bookmark.dto.BookmarkResponseDto;
 import mainproject.stocksite.domain.bookmark.entity.Bookmark;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Validated
 @RestController
 @RequestMapping("/bookmarks")
@@ -21,11 +23,6 @@ public class BookmarkController {
 
     private final BookmarkMapper bookmarkMapper;
     private final BookmarkService bookmarkService;
-
-    public BookmarkController(BookmarkMapper bookmarkMapper, BookmarkService bookmarkService) {
-        this.bookmarkMapper = bookmarkMapper;
-        this.bookmarkService = bookmarkService;
-    }
 
     @PostMapping
     public ResponseEntity<BookmarkResponseDto> postBookmark(@Valid @RequestBody BookmarkRequestDto.Post requestBody) {

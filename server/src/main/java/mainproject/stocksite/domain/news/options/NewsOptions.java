@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.news.dto;
+package mainproject.stocksite.domain.news.options;
 
 import lombok.Getter;
 import lombok.Setter;
