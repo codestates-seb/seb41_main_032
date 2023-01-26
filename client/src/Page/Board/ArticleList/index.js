@@ -18,21 +18,6 @@ const Div = styled.div`
   }
 `;
 
-const PageBtn = styled.li`
-  display: inline;
-  list-style: none;
-  padding: 5px 10px;
-  border: 1px solid rgb(193, 195, 197);
-  background-color: ${(props) => props.color};
-  border-radius: 5px;
-  margin-right: 5px;
-  cursor: pointer;
-  pointer-events: ${(props) => (props.disabled ? "none" : null)};
-  :hover {
-    background-color: rgb(159, 207, 243);
-  }
-`;
-
 const NewArticle = styled(Link)`
   width: 90px;
   height: 35px;
@@ -48,6 +33,7 @@ const NewArticle = styled(Link)`
 `;
 
 const Board = () => {
+  //  const url = `${process.env.REACT_APP_API_URL}/board`;
   const url = "https://jsonplaceholder.typicode.com/posts";
   // 현재 보고 있는 페이지의 데이터
   const [data, setData] = useState([]);

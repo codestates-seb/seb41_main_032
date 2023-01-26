@@ -13,7 +13,9 @@ const Div = styled.div`
   border: solid 3px #eff5f5;
   margin: 30px auto 30px 0;
   padding: 20px 30px;
-
+  li {
+    list-style: none;
+  }
   .writer {
     font-size: 0.9em;
     color: #7c7c7c;
@@ -43,25 +45,26 @@ const Article = ({ article }) => {
     data,
     setData,
   ] = usePagination(article);
+
   useEffect(() => {
     setData(article);
-    setCurrentPage(1);
-  }, [article]);
+  }, [currentItems]);
 
   return (
     <>
-      <Div>
-        {currentItems.map((el, index) => (
+      {currentItems.map((el, index) => (
+        <Div>
           <li key={index}>
-            <StyledLink to={`/board/detail/${data.id}`}>{el.title}</StyledLink>
+            <StyledLink to={`/board/detail/${el.id}`}>{el.title}</StyledLink>
             <div className="writer">
               Writer &nbsp;
-              {data.userId}
+              {el.userId}
             </div>
-            <p>{el.content.slice(0, 20)}...</p>
+            <p>{el.body.slice(0, 20)}...</p>
           </li>
-        ))}
-      </Div>
+        </Div>
+      ))}
+
       <PageList>
         <PageBtn
           onClick={handlePrevBtn}
