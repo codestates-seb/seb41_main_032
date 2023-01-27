@@ -1,7 +1,7 @@
-package mainproject.stocksite.domain.response;
+package mainproject.stocksite.global.response;
 
 import lombok.Getter;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 

@@ -14,6 +14,7 @@ const Div = styled.div`
   .title {
     font-size: 1.3em;
     font-weight: bold;
+    margin-bottom: 15px;
   }
   .writer {
     color: #7c7c7c;
@@ -46,9 +47,7 @@ const Article = () => {
   }, []);
   return (
     <Div>
-      <Box className="title" height="30px">
-        {data.title}
-      </Box>
+      <Box className="title">{data.title}</Box>
       <Box className="writer">Writer {data.userId}</Box>
       <Box className="body">{data.body}</Box>
     </Div>

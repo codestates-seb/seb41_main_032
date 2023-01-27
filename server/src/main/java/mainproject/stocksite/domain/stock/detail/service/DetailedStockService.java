@@ -1,14 +1,15 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.config.AccessTokenRequestInfo;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService;
 import mainproject.stocksite.domain.stock.detail.dto.response.HolidaysDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.InvestorsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.PresentQuotationsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.QuotationsByPeriodDto;
 import mainproject.stocksite.domain.stock.detail.options.DetailedStockOptions;
+import mainproject.stocksite.global.config.OpenApiSecretInfo;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,17 +26,20 @@ import static mainproject.stocksite.domain.stock.accesstoken.service.AccessToken
 @Service
 public class DetailedStockService {
 
-    private final AccessTokenRequestInfo accessTokenRequestInfo;
+    private final AccessTokenService accessTokenService;
+    private final OpenApiSecretInfo openApiSecretInfo;
 
     private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
 
     private final RestTemplate restTemplate;
 
     private HttpHeaders baseHeaders() {
+        if (accessToken == null) accessTokenService.getAccessToken();
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "Bearer " + accessToken);
-        headers.set("appkey", accessTokenRequestInfo.getAppKey());
-        headers.set("appsecret", accessTokenRequestInfo.getAppSecret());
+        headers.set("appkey", openApiSecretInfo.getAppKey());
+        headers.set("appsecret", openApiSecretInfo.getAppSecret());
         return headers;
     }
 

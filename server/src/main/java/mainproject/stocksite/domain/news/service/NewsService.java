@@ -1,9 +1,9 @@
 package mainproject.stocksite.domain.news.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.config.NewsSecretInfo;
 import mainproject.stocksite.domain.news.dto.NewsResponseDto;
 import mainproject.stocksite.domain.news.options.NewsOptions;
+import mainproject.stocksite.global.config.OpenApiSecretInfo;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class NewsService {
 
-    private final NewsSecretInfo newsSecretInfo;
+    private final OpenApiSecretInfo openApiSecretInfo;
 
     private final String NAVER_DEFAULT_URL = "https://openapi.naver.com/v1/search/";
 
@@ -25,8 +25,8 @@ public class NewsService {
 
     private HttpHeaders baseHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Naver-Client-Id", newsSecretInfo.getNewsClientId());
-        headers.set("X-Naver-Client-Secret", newsSecretInfo.getNewsClientSecret());
+        headers.set("X-Naver-Client-Id", openApiSecretInfo.getNaverClientId());
+        headers.set("X-Naver-Client-Secret", openApiSecretInfo.getNaverClientSecret());
         return headers;
     }
 

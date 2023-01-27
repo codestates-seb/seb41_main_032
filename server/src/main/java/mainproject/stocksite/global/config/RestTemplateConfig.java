@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.config;
+package mainproject.stocksite.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useBookMarks } from "../../../../Components/API/ReactQueryContainer";
 import Subtitle from "../../../../Components/Style/User/Subtitle";
 import WhiteButton from "../../../../Components/Style/User/WhiteButton";
 import Bookmark from "./Bookmark";
@@ -43,14 +43,33 @@ const EmptyMessage = styled.p`
 // 즐겨찾기 영역
 const Bookmarks = ({ memberId, isOwner }) => {
   const navigate = useNavigate();
-  const bookmarks = useBookMarks(memberId);
+  const [bookmarks, setBookmarks] = useState([]);
+
+  useEffect(() => {
+    fetchBookmarks();
+  }, []);
+
+  const fetchBookmarks = () => {
+    const url = `${process.env.REACT_APP_API_URL}/bookmarks/member/${memberId}`;
+    const options = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw response;
+      })
+      .then((bookmarks) => setBookmarks(bookmarks))
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Container>
       <Subtitle>즐겨찾기</Subtitle>
       <Contents>
-        {bookmarks?.length > 0
-          ? bookmarks.map((bookMarks) => <Bookmark key={bookMarks.bookmarkId} {...bookMarks} isOwner={isOwner} />)
+        {bookmarks.length > 0
+          ? bookmarks.map((bookmark) => <Bookmark key={bookmark.bookmarkId} {...bookmark} isOwner={isOwner} />)
           : !isOwner && <EmptyMessage>없음</EmptyMessage>}
         {isOwner && <AddButton onClick={() => navigate("/stock/AddBookMarks")}>+</AddButton>}
       </Contents>

@@ -1,8 +1,8 @@
-package mainproject.stocksite.domain.advice;
+package mainproject.stocksite.global.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.response.ErrorResponse;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

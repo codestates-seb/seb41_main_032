@@ -8,7 +8,10 @@ const OAuthButton = styled(BlueButton)`
   color: #262626;
   background-color: #ffffff;
   font-weight: 500;
-  // TODO: OAuth 정해지면 스타일 추가
+
+  :hover {
+    color: #fefefe;
+  }
 `;
 
 export default OAuthButton;

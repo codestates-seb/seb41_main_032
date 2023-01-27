@@ -2,8 +2,8 @@ package mainproject.stocksite.domain.auth.userdetails;
 
 
 import mainproject.stocksite.domain.auth.utils.CustomAuthorityUtils;
-import mainproject.stocksite.domain.exception.BusinessLogicException;
-import mainproject.stocksite.domain.exception.ExceptionCode;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import mainproject.stocksite.domain.member.entity.Member;
 import mainproject.stocksite.domain.member.repository.MemberRepository;
 import org.springframework.security.core.GrantedAuthority;

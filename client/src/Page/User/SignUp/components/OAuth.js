@@ -9,6 +9,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+
+  a {
+    width: 100%;
+    color: #262626;
+    text-decoration: none;
+  }
 `;
 
 const MarginedHorizon = styled(Horizon)`
@@ -17,21 +23,12 @@ const MarginedHorizon = styled(Horizon)`
 
 // OAuth로 회원가입하는 버튼
 const OAuth = () => {
-  // TODO: OAuth 확정되면 수정
-  const handleKakaoClick = () => {};
   const handleGoogleClick = () => {};
-  const handleFacebookClick = () => {};
 
   return (
     <Container>
-      <OAuthButton kakao onClick={handleKakaoClick}>
-        카카오로 회원가입
-      </OAuthButton>
       <OAuthButton google onClick={handleGoogleClick}>
         구글로 회원가입
-      </OAuthButton>
-      <OAuthButton facebook onClick={handleFacebookClick}>
-        페이스북으로 회원가입
       </OAuthButton>
       <MarginedHorizon />
     </Container>

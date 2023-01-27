@@ -19,16 +19,16 @@ public class TradePostDto {
     @NotBlank
     private String stockCode;
 
-    @NotNull
+    @NotBlank
     private String stockName;
 
     @NotNull
     private BigDecimal price;
 
-    @NotNull
+    @Positive
     private Long quantity;
 
-    @NotNull
+    @NotBlank
     @Pattern(regexp = "^BUY$|^SELL$", message = "매도는 BUY, 매수는 SELL을 입력해야 합니다.")
     private String tradeType;
 
