@@ -12,21 +12,12 @@ const Container = styled.div`
 
 // OAuth로 로그인하는 버튼
 const OAuth = () => {
-  // TODO: OAuth 확정되면 수정
-  const handleKakaoClick = () => {};
   const handleGoogleClick = () => {};
-  const handleFacebookClick = () => {};
 
   return (
     <Container>
-      <OAuthButton kakao onClick={handleKakaoClick}>
-        카카오로 로그인
-      </OAuthButton>
       <OAuthButton google onClick={handleGoogleClick}>
         구글로 로그인
-      </OAuthButton>
-      <OAuthButton facebook onClick={handleFacebookClick}>
-        페이스북으로 로그인
       </OAuthButton>
     </Container>
   );
