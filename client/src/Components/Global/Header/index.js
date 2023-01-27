@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useMember } from "../../API/ReactQueryContainer";
 import Search from "./Search/index";
 import Clock from "./Clock";
-import { useRecoilState } from "recoil";
-import { userInfo } from "../../Function/userInfo";
+import clearStorage from "../../Function/clearStorage";
 import { ReactComponent as HomeLogo } from "../../Img/homelogo.svg";
 import { ReactComponent as Glass } from "../../Img/glass.svg";
 import { ReactComponent as LogoutLogo } from "../../Img/logouticon.svg";
@@ -61,9 +60,6 @@ const LogDiv = styled.div`
 
 const Header = () => {
   const memberInfo = useMember();
-  // console.log('🚀  memberInfo', memberInfo); => 로그인한 유저정보
-  //TODO: memberInfo에 데이터가 있을때는 로그인을 한 상태입니다
-  //TODO: logout 핸들러
   return (
     <Main>
       <div className="logo">
@@ -81,7 +77,7 @@ const Header = () => {
       </div>
       <LogDiv>
         {memberInfo ? (
-          <LogoutLogo onClick={() => console.log("logout")} />
+          <LogoutLogo onClick={() => clearStorage} />
         ) : (
           <Link to="/login">
             <LoginLogo className="user" height="30" />
