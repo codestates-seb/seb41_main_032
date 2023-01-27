@@ -1,7 +1,7 @@
 package mainproject.stocksite.domain.stock.accesstoken.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.global.config.AccessTokenRequestInfo;
+import mainproject.stocksite.global.config.OpenApiSecretInfo;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class AccessTokenService {
 
     public static String accessToken;
 
-    private final AccessTokenRequestInfo accessTokenRequestInfo;
+    private final OpenApiSecretInfo openApiSecretInfo;
 
     // 매일 자정에 증권사 API 접근 토큰 자동 발급
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
@@ -26,8 +26,8 @@ public class AccessTokenService {
 
         Map<String, String> requestBody = new LinkedHashMap<>();
         requestBody.put("grant_type", "client_credentials");
-        requestBody.put("appkey", accessTokenRequestInfo.getAppKey());
-        requestBody.put("appsecret", accessTokenRequestInfo.getAppSecret());
+        requestBody.put("appkey", openApiSecretInfo.getAppKey());
+        requestBody.put("appsecret", openApiSecretInfo.getAppSecret());
 
         HttpEntity<Object> requestMessage = new HttpEntity<>(requestBody);
 
