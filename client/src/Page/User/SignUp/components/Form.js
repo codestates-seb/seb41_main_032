@@ -51,7 +51,7 @@ const Form = () => {
         throw response;
       })
       .then(() => navigate("/login"))
-      .catch((error) => console.log(error));
+      .catch((error) => alert(`회원가입 실패 (error code: ${error.status})`));
   };
 
   const inputFieldProps = {
