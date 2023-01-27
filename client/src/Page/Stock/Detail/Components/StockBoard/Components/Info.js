@@ -5,11 +5,12 @@ import commaGenerator from '../../../../../../Components/Function/commaGenerator
 import { useLocation } from 'react-router';
 import DisableImg from '../../../../../../Components/Img/Favorites/white.png';
 import ActivateImg from '../../../../../../Components/Img/Favorites/gold.png';
-import { useState } from 'react';
 import numberToKR from '../../../../../../Components/Function/numberToKR';
 import useInput from '../../../../../../Components/Hook/useInput';
-import { useAddBookMarks, useBookMarks, useMember, useRemoveBookMarks } from '../../../../../../Components/API/ReactQueryContainer';
+import { useAddBookMarks, useBookMarks, useMember, useRemoveBookMarks, useTradeInfo, useTrade } from '../../../../../../Components/API/ReactQueryContainer';
 import useStockTime from '../../../../../../Components/Hook/useStockTime';
+import tradeCalculation from '../../../../../../Components/Function/tradeCalculation';
+
 const Section = styled.section`
     display: flex;
 `;
@@ -158,16 +159,18 @@ const Circle = styled.div`
 const Info = ({ stockInfo }) => {
     const params = useParams();
     const { state } = useLocation();
-    const [holding, setHolding] = useState(Math.floor(Math.random() * 10));
-    const [account, setAccount] = useState(Math.floor(Math.random() * 10000000) + 1000000);
+
     const [quantity, setQuantity, ChangeQuantity, submit] = useInput();
 
     //TODO 백엔드에서 memberID 보내주면 해당 id로 교체
-    const bookMarks = useBookMarks('2');
+    const bookMarks = useBookMarks();
     const userInfo = useMember();
+    const tradeInfo = useTradeInfo();
+    const calculation = tradeCalculation(tradeInfo);
     const marketTime = useStockTime();
     const { mutate: addBookMarks } = useAddBookMarks();
     const { mutate: removeBookMarks } = useRemoveBookMarks();
+    const { mutate: trade } = useTrade();
     const handlerBookmark = () => {
         const isActivate = bookMarks?.find((e) => e.stockCode === params.id);
 
@@ -185,28 +188,36 @@ const Info = ({ stockInfo }) => {
 
     const handlerOrder = () => {
         // 매매 수량이 없을때 early return
-        if (quantity === '') return;
+        if (quantity === '' || quantity === 0) return;
 
         // 매수시 잔액 부족
-        if (account - quantity * stockInfo.stck_prpr < 0) {
+        if (userInfo.money - quantity * stockInfo.stck_prpr < 0) {
             console.log('잔액이 부족합니다');
         }
         // 매도시 보유한 주식수량 부족
-        else if (quantity < 0 && Math.abs(quantity) > holding) {
+        else if (quantity < 0 && Math.abs(quantity) > calculation.getQuantity(params.id)) {
             console.log('주식보유량이 부족합니다');
             setQuantity('');
         }
         // 거래 체결
         else {
             const order = {
-                name: state.name,
-                code: params.id,
+                memberId: userInfo.memberId,
+                stockName: state.name,
+                stockCode: params.id,
                 quantity: quantity,
                 price: stockInfo.stck_prpr,
             };
+
+            if (quantity > 0) {
+                order.tradeType = 'BUY';
+                order.quantity = Math.abs(quantity);
+            } else {
+                order.tradeType = 'SELL';
+                order.quantity = Math.abs(quantity);
+            }
+            trade(order);
             console.log('거래가 채결되었습니다', order);
-            setAccount(account - quantity * stockInfo.stck_prpr);
-            setHolding((current) => current + quantity);
             setQuantity('');
         }
     };
@@ -249,19 +260,19 @@ const Info = ({ stockInfo }) => {
                 <h2>매매</h2>
                 <ItemContainer>
                     <span>보유 수량</span>
-                    <span>{holding}</span>
-                </ItemContainer>
-                <ItemContainer>
-                    <span>나의 잔고</span>
-                    <span>{`${numberToKR(account)}원`}</span>
+                    <span>{`${calculation.getQuantity(params.id)} 주`}</span>
                 </ItemContainer>
                 <ItemContainer>
                     <span>주문 금액</span>
-                    <span>{`${numberToKR(quantity * stockInfo.stck_prpr)}원`}</span>
+                    <span>{`${numberToKR(quantity * stockInfo.stck_prpr)} 원`}</span>
+                </ItemContainer>
+                <ItemContainer>
+                    <span>나의 잔고</span>
+                    <span>{`${numberToKR(userInfo?.money)} 원`}</span>
                 </ItemContainer>
                 <ItemContainer>
                     <span>거래 후 잔고</span>
-                    <span>{`${numberToKR(account - quantity * stockInfo.stck_prpr)}원`}</span>
+                    <span>{`${numberToKR(userInfo?.money - quantity * stockInfo.stck_prpr)} 원`}</span>
                 </ItemContainer>
                 <TradingButton>
                     <ButtonContainer>
@@ -270,8 +281,8 @@ const Info = ({ stockInfo }) => {
                         <button
                             onClick={() =>
                                 setQuantity((current) => {
-                                    if (current < 0 && Math.abs(current) + 1 > holding) {
-                                        return -holding;
+                                    if (current <= 0 && Math.abs(current) >= calculation.getQuantity(params.id)) {
+                                        return -calculation.getQuantity(params.id);
                                     }
                                     return Number(current) - 1;
                                 })
@@ -284,6 +295,29 @@ const Info = ({ stockInfo }) => {
                         주문
                     </OrderButton>
                 </TradingButton>
+            </TradingContainer>
+            <TradingContainer>
+                <h2>기록</h2>
+                <ItemContainer>
+                    <span>평단가</span>
+                    <span>{`${commaGenerator(calculation.getAverageBuyPrice(params.id))} 원`}</span>
+                </ItemContainer>
+                <ItemContainer>
+                    <span>매도 평균가</span>
+                    <span>{`${commaGenerator(calculation.getAverageSellPrice(params.id))} 원`}</span>
+                </ItemContainer>
+                <ItemContainer>
+                    <span>매수 수량</span>
+                    <span>{`${commaGenerator(calculation.getNumberOfBuy(params.id))} 주`}</span>
+                </ItemContainer>
+                <ItemContainer>
+                    <span>매도 수량</span>
+                    <span>{`${commaGenerator(calculation.getNumberOfSell(params.id))} 주`}</span>
+                </ItemContainer>
+                <ItemContainer>
+                    <span>손익</span>
+                    <span>{`${calculation.IncomeStatement(params.id, stockInfo.stck_prpr)} 원`}</span>
+                </ItemContainer>
             </TradingContainer>
         </Section>
     );
