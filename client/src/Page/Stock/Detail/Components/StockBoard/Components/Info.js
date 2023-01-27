@@ -291,7 +291,7 @@ const Info = ({ stockInfo }) => {
                             -
                         </button>
                     </ButtonContainer>
-                    <OrderButton disabled={marketTime === '장마감' ? 'disabled' : null} value="비활성화" onClick={handlerOrder}>
+                    <OrderButton disabled={marketTime !== '장마감' ? 'disabled' : null} value="비활성화" onClick={handlerOrder}>
                         주문
                     </OrderButton>
                 </TradingButton>

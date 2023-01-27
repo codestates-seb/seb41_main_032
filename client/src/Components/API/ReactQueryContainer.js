@@ -69,14 +69,17 @@ const useAPI = () => {
     };
 
     const getStockDetails = (stockCode) => {
+        if (!stockCode) return;
         return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/quotations/${stockCode}`);
     };
 
     const getStockInvestor = (stockCode) => {
+        if (!stockCode) return;
         return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/investors/${stockCode}`);
     };
 
     const getStockDayList = (stockCode) => {
+        if (!stockCode) return;
         // 오늘부터 100일전까지의 주식정보 데이터를 가져옴
         let startDate = new Date();
         startDate.setDate(startDate.getDate() - 100);
@@ -90,27 +93,33 @@ const useAPI = () => {
     };
 
     const getSearchNews = (searchWord) => {
+        if (!searchWord) return;
         return axios.get(`${API_URL_LIST[pointer]}/stock-news?search=${searchWord}&count=100&start=1&sort=date`);
     };
 
     const getBookMarks = () => {
+        if (!memberId) return;
         return axios.get(`${API_URL_LIST[pointer]}/bookmarks/member/${memberId}`);
     };
 
     const addBookMarks = (data) => {
+        if (!data) return;
         data.memberId = memberId;
         return axios.post(`${API_URL_LIST[pointer]}/bookmarks`, data);
     };
 
     const removeBookMarks = (bookmarkId) => {
+        if (!bookmarkId) return;
         return axios.delete(`${API_URL_LIST[pointer]}/bookmarks/${bookmarkId}`);
     };
 
     const postLogin = (user) => {
+        if (!user) return;
         return axios.post(`${API_URL_LIST[pointer]}/user/login`, user);
     };
 
     const getMember = () => {
+        if (!memberId) return;
         return axios.get(`${API_URL_LIST[pointer]}/members/${memberId}`);
     };
 
@@ -122,10 +131,12 @@ const useAPI = () => {
     };
 
     const getTradeInfo = () => {
+        if (!memberId) return;
         return axios.get(`${API_URL_LIST[pointer]}/trade/info/${memberId}`);
     };
 
     const postTrade = (order) => {
+        if (!order) return;
         return axios.post(`${API_URL_LIST[pointer]}/trade`, order);
     };
 
@@ -272,7 +283,7 @@ export const useSearchNews = (searchWord) => {
 export const useBookMarks = () => {
     const API = useAPI();
     const [memberId, setMemberId] = useRecoilState(userInfo);
-    const { data, refetch } = useQuery('BookMarks', () => API.getBookMarks(), {
+    const { data, refetch } = useQuery(['BookMarks', memberId], () => API.getBookMarks(), {
         staleTime: Infinity,
         retry: 0,
         notifyOnChangeProps: 'tracked',
@@ -285,17 +296,19 @@ export const useBookMarks = () => {
 };
 export const useAddBookMarks = () => {
     const API = useAPI();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
     const queryClient = useQueryClient();
     return useMutation(API.addBookMarks, {
-        onSuccess: () => queryClient.invalidateQueries('BookMarks'),
+        onSuccess: () => queryClient.invalidateQueries(['BookMarks', memberId]),
     });
 };
 
 export const useRemoveBookMarks = () => {
     const API = useAPI();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
     const queryClient = useQueryClient();
     return useMutation(API.removeBookMarks, {
-        onSuccess: () => queryClient.invalidateQueries('BookMarks'),
+        onSuccess: () => queryClient.invalidateQueries(['BookMarks', memberId]),
     });
 };
 
@@ -318,7 +331,7 @@ export const useLogin = (user, keepLogin, success, error) => {
                 sessionStorage.setItem('authorization', data.headers.authorization);
                 sessionStorage.setItem('refresh', data.headers.refresh);
             }
-            queryClient.invalidateQueries('Member');
+            queryClient.invalidateQueries(['Member', memberId]);
             success(data);
         },
         onError: (data) => {
@@ -330,7 +343,7 @@ export const useLogin = (user, keepLogin, success, error) => {
 export const useMember = () => {
     const API = useAPI();
     const [memberId, setMemberId] = useRecoilState(userInfo);
-    const { data, refetch } = useQuery(['Member'], () => API.getMember(), {
+    const { data, refetch } = useQuery(['Member', memberId], () => API.getMember(), {
         retry: 0,
         staleTime: Infinity,
         notifyOnChangeProps: 'tracked',
@@ -358,14 +371,13 @@ export const useIsOpen = () => {
 export const useTradeInfo = () => {
     const API = useAPI();
     const [memberId, setMemberId] = useRecoilState(userInfo);
-    const { data, refetch } = useQuery(['TradeInfo'], () => API.getTradeInfo(), {
+    const { data, refetch } = useQuery(['TradeInfo', memberId], () => API.getTradeInfo(), {
         retry: 0,
         staleTime: Infinity,
         notifyOnChangeProps: 'tracked',
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => data.data,
-        enabled: !!memberId,
     });
     return data;
 };
@@ -373,10 +385,11 @@ export const useTradeInfo = () => {
 export const useTrade = () => {
     const API = useAPI();
     const queryClient = useQueryClient();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
     return useMutation(API.postTrade, {
         onSuccess: () => {
-            queryClient.invalidateQueries('TradeInfo');
-            queryClient.invalidateQueries('Member');
+            queryClient.invalidateQueries(['TradeInfo', memberId]);
+            queryClient.invalidateQueries(['Member', memberId]);
         },
     });
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useMember, useTradeInfo } from '../../Components/API/ReactQueryContainer';
 import commaGenerator from '../../Components/Function/commaGenerator';
 import tradeCalculation from '../../Components/Function/tradeCalculation';
+import numberToKR from '../../Components/Function/numberToKR';
 
 const Section = styled.section`
     background-color: #212223;
@@ -36,7 +37,9 @@ const ItemContainer = styled.div`
 const AssetManagement = () => {
     const user = useMember();
     const tradeInfo = useTradeInfo();
+    console.log('🚀  tradeInfo', tradeInfo);
     const trade = tradeCalculation(tradeInfo);
+    console.log('🚀  user', trade.totalIncomeStatement());
     return (
         <>
             <Section>
@@ -44,19 +47,19 @@ const AssetManagement = () => {
                     <h2>자산 현황</h2>
                     <ItemContainer>
                         <div className="category">총자산</div>
-                        <div className="value">{`${commaGenerator(user?.money)} 원`}</div>
+                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
                     </ItemContainer>
                     <ItemContainer>
                         <div className="category">예수금</div>
-                        <div className="value">{`${commaGenerator(user?.money)} 원`}</div>
+                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
                     </ItemContainer>
                     <ItemContainer>
                         <div className="category">주식 총 평가금액</div>
-                        <div className="value">{`${commaGenerator(user?.money)} 원`}</div>
+                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
                     </ItemContainer>
                     <ItemContainer>
                         <div className="category">실현 손익</div>
-                        <div className="value">{`${commaGenerator(user?.money)} 원`}</div>
+                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
                     </ItemContainer>
                 </Asset>
                 <Asset>

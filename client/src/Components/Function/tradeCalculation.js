@@ -102,6 +102,26 @@ const tradeCalculation = (data = []) => {
         return total + currentPrice * currentHoldings;
     };
 
+    const totalIncomeStatement = () => {
+        const stock = map.get();
+        console.log('🚀  stock', stock);
+        if (stock === undefined || stock.length === 0) {
+            return 0;
+        }
+        return 0;
+        // const total = stock.reduce((accumulator, currentValue) => {
+        //     if (currentValue.tradeType === 'SELL') {
+        //         return accumulator + currentValue.price * currentValue.quantity;
+        //     }
+        //     if (currentValue.tradeType === 'BUY') {
+        //         return accumulator - currentValue.price * currentValue.quantity;
+        //     }
+        //     return null;
+        // }, 0);
+        // let currentHoldings = stock[stock.length - 1].totalStockHoldings;
+        // return total + currentPrice * currentHoldings;
+    };
+
     return {
         getQuantity,
         getAverageBuyPrice,
@@ -109,6 +129,7 @@ const tradeCalculation = (data = []) => {
         getNumberOfBuy,
         getNumberOfSell,
         IncomeStatement,
+        totalIncomeStatement,
     };
 };
 

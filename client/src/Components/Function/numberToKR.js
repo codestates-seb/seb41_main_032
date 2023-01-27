@@ -6,6 +6,7 @@
  * @return 347441344410000 => 347조4413억
  */
 const numberToKR = (data) => {
+    if (!data) return 0;
     const unitWords = ['', '만', '억', '조', '경'];
     let result = String(data);
     if (result.length < 5) return result;
