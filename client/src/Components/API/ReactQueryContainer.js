@@ -42,86 +42,120 @@ const balancer = (refetch) => {
 
 /** <------------------- API ------------------->  */
 
-const getIndexKOSPI = () => {
-    return axios.get(
-        `${process.env.REACT_APP_INDEX_API_URL}?serviceKey=${process.env.REACT_APP_INDEX_API_KEY}&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스피`,
-    );
-};
+const useAPI = () => {
+    const [memberId, setMemberId] = useRecoilState(userInfo);
+    const getIndexKOSPI = () => {
+        return axios.get(
+            `${process.env.REACT_APP_INDEX_API_URL}?serviceKey=${process.env.REACT_APP_INDEX_API_KEY}&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스피`,
+        );
+    };
 
-const getIndexKOSDAQ = () => {
-    return axios.get(
-        `${process.env.REACT_APP_INDEX_API_URL}?serviceKey=${process.env.REACT_APP_INDEX_API_KEY}&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스닥`,
-    );
-};
+    const getIndexKOSDAQ = () => {
+        return axios.get(
+            `${process.env.REACT_APP_INDEX_API_URL}?serviceKey=${process.env.REACT_APP_INDEX_API_KEY}&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스닥`,
+        );
+    };
 
-const getKOSPIList = () => {
-    return axios.get(
-        `${process.env.REACT_APP_STOCK_LIST_API_URL}?serviceKey=${process.env.REACT_APP_STOCK_LIST_API_KEY}&numOfRows=1000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSPI`,
-    );
-};
+    const getKOSPIList = () => {
+        return axios.get(
+            `${process.env.REACT_APP_STOCK_LIST_API_URL}?serviceKey=${process.env.REACT_APP_STOCK_LIST_API_KEY}&numOfRows=1000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSPI`,
+        );
+    };
 
-const getKOSDAQList = () => {
-    return axios.get(
-        `${process.env.REACT_APP_STOCK_LIST_API_URL}?serviceKey=${process.env.REACT_APP_STOCK_LIST_API_KEY}&numOfRows=2000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSDAQ`,
-    );
-};
+    const getKOSDAQList = () => {
+        return axios.get(
+            `${process.env.REACT_APP_STOCK_LIST_API_URL}?serviceKey=${process.env.REACT_APP_STOCK_LIST_API_KEY}&numOfRows=2000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSDAQ`,
+        );
+    };
 
-const getStockDetails = (stockCode) => {
-    return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/quotations/${stockCode}`);
-};
+    const getStockDetails = (stockCode) => {
+        return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/quotations/${stockCode}`);
+    };
 
-const getStockInvestor = (stockCode) => {
-    return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/investors/${stockCode}`);
-};
+    const getStockInvestor = (stockCode) => {
+        return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/investors/${stockCode}`);
+    };
 
-const getStockDayList = (stockCode) => {
-    // 오늘부터 100일전까지의 주식정보 데이터를 가져옴
-    let startDate = new Date();
-    startDate.setDate(startDate.getDate() - 100);
-    const Start = `${startDate.getFullYear()}${('0' + (startDate.getMonth() + 1)).slice(-2)}${('0' + startDate.getDate()).slice(-2)}`;
+    const getStockDayList = (stockCode) => {
+        // 오늘부터 100일전까지의 주식정보 데이터를 가져옴
+        let startDate = new Date();
+        startDate.setDate(startDate.getDate() - 100);
+        const Start = `${startDate.getFullYear()}${('0' + (startDate.getMonth() + 1)).slice(-2)}${('0' + startDate.getDate()).slice(-2)}`;
 
-    let endDate = new Date();
-    endDate.setDate(endDate.getDate());
-    const EndDate = `${endDate.getFullYear()}${('0' + (endDate.getMonth() + 1)).slice(-2)}${('0' + endDate.getDate()).slice(-2)}`;
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate());
+        const EndDate = `${endDate.getFullYear()}${('0' + (endDate.getMonth() + 1)).slice(-2)}${('0' + endDate.getDate()).slice(-2)}`;
 
-    return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/quotations/${stockCode}/day?start=${Start}&end=${EndDate}&period-code=D&code=0`);
-};
+        return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/quotations/${stockCode}/day?start=${Start}&end=${EndDate}&period-code=D&code=0`);
+    };
 
-const getSearchNews = (searchWord) => {
-    return axios.get(`${API_URL_LIST[pointer]}/stock-news?search=${searchWord}&count=100&start=1&sort=date`);
-};
+    const getSearchNews = (searchWord) => {
+        return axios.get(`${API_URL_LIST[pointer]}/stock-news?search=${searchWord}&count=100&start=1&sort=date`);
+    };
 
-const getBookMarks = (memberId) => {
-    return axios.get(`${API_URL_LIST[pointer]}/bookmarks/member/${memberId}`);
-};
+    const getBookMarks = () => {
+        return axios.get(`${API_URL_LIST[pointer]}/bookmarks/member/${memberId}`);
+    };
 
-const addBookMarks = (data) => {
-    return axios.post(`${API_URL_LIST[pointer]}/bookmarks`, data);
-};
+    const addBookMarks = (data) => {
+        data.memberId = memberId;
+        return axios.post(`${API_URL_LIST[pointer]}/bookmarks`, data);
+    };
 
-const removeBookMarks = (bookmarkId) => {
-    return axios.delete(`${API_URL_LIST[pointer]}/bookmarks/${bookmarkId}`);
-};
+    const removeBookMarks = (bookmarkId) => {
+        return axios.delete(`${API_URL_LIST[pointer]}/bookmarks/${bookmarkId}`);
+    };
 
-const postLogin = (user) => {
-    return axios.post(`${API_URL_LIST[pointer]}/user/login`, user);
-};
+    const postLogin = (user) => {
+        return axios.post(`${API_URL_LIST[pointer]}/user/login`, user);
+    };
 
-const getMember = (memberId) => {
-    return axios.get(`${API_URL_LIST[pointer]}/members/${memberId}`);
-};
+    const getMember = () => {
+        return axios.get(`${API_URL_LIST[pointer]}/members/${memberId}`);
+    };
 
-const getIsOpen = () => {
-    let date = new Date();
-    date.setDate(date.getDate());
-    const toDay = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
-    return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/holidays/${toDay}`);
+    const getIsOpen = () => {
+        let date = new Date();
+        date.setDate(date.getDate());
+        const toDay = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
+        return axios.get(`${API_URL_LIST[pointer]}/domestic-stock/holidays/${toDay}`);
+    };
+
+    const getTradeInfo = () => {
+        return axios.get(`${API_URL_LIST[pointer]}/trade/info/${memberId}`);
+    };
+
+    const postTrade = (order) => {
+        return axios.post(`${API_URL_LIST[pointer]}/trade`, order);
+    };
+
+    const list = {
+        getIndexKOSPI,
+        getIndexKOSDAQ,
+        getKOSPIList,
+        getKOSDAQList,
+        getStockDetails,
+        getStockInvestor,
+        getStockDayList,
+        getSearchNews,
+        getBookMarks,
+        addBookMarks,
+        removeBookMarks,
+        postLogin,
+        getMember,
+        getIsOpen,
+        getTradeInfo,
+        postTrade,
+    };
+
+    return list;
 };
 
 /** <------------------- useQuery ------------------->  */
 
 export const useIndexKOSPI = () => {
-    const { data, refetch } = useQuery(['KOSPI'], () => getIndexKOSPI(), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['KOSPI'], () => API.getIndexKOSPI(), {
         retry: 0, // 재요청 횟수 지정 => 0으로 지정한 이유는 에러발생시 바로 balancer(refetch)로 다른 서버에 요청하기 위함 => 에러가 발생한 서버는 문제&트레픽 과부하가 있다고 가정
         staleTime: Infinity, // fresh 상태 무한대로 유지 => 캐시에 항상 남아있음
         onError: () => balancer(refetch),
@@ -132,7 +166,8 @@ export const useIndexKOSPI = () => {
 };
 
 export const useIndexKOSDAQ = () => {
-    const { data, refetch } = useQuery(['KOSDAQ'], () => getIndexKOSDAQ(), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['KOSDAQ'], () => API.getIndexKOSDAQ(), {
         retry: 0,
         staleTime: Infinity,
         onError: () => balancer(refetch),
@@ -143,7 +178,9 @@ export const useIndexKOSDAQ = () => {
 };
 
 export const useKOSPIList = () => {
-    const { data, refetch } = useQuery(['KOSPI-List'], () => getKOSPIList(), {
+    const API = useAPI();
+
+    const { data, refetch } = useQuery(['KOSPI-List'], () => API.getKOSPIList(), {
         retry: 0,
         staleTime: Infinity,
         onError: () => balancer(refetch),
@@ -158,7 +195,8 @@ export const useKOSPIList = () => {
 };
 
 export const useKOSDAQList = () => {
-    const { data, refetch } = useQuery(['KOSDAQ-List'], () => getKOSDAQList(), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['KOSDAQ-List'], () => API.getKOSDAQList(), {
         retry: 0,
         staleTime: Infinity,
         onError: () => balancer(refetch),
@@ -174,7 +212,8 @@ export const useKOSDAQList = () => {
 };
 
 export const useStockInfo = (stockCode) => {
-    const { data, refetch } = useQuery(['stockInfo', stockCode], () => getStockDetails(stockCode), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['stockInfo', stockCode], () => API.getStockDetails(stockCode), {
         refetchInterval: 10000, //10초마다 업데이트
         retry: 0,
         notifyOnChangeProps: 'tracked', //랜더링 최적화 (data값이 변경안되면 랜더링 X)
@@ -187,7 +226,8 @@ export const useStockInfo = (stockCode) => {
 };
 
 export const useStockInvestor = (stockCode) => {
-    const { data, refetch } = useQuery(['stockInvestor', stockCode], () => getStockInvestor(stockCode), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['stockInvestor', stockCode], () => API.getStockInvestor(stockCode), {
         staleTime: 600000, // fresh 상태 10분동안 유지
         retry: 0,
         notifyOnChangeProps: 'tracked',
@@ -199,7 +239,8 @@ export const useStockInvestor = (stockCode) => {
 };
 
 export const useStockDayList = (stockCode) => {
-    const { data, refetch } = useQuery(['StockDayList', stockCode], () => getStockDayList(stockCode), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['StockDayList', stockCode], () => API.getStockDayList(stockCode), {
         staleTime: 600000, // fresh 상태 10분동안 유지
         retry: 0,
         notifyOnChangeProps: 'tracked',
@@ -213,8 +254,9 @@ export const useStockDayList = (stockCode) => {
 };
 
 export const useSearchNews = (searchWord) => {
+    const API = useAPI();
     const [keyword, setKeyword] = useState(searchWord);
-    const { data: news, refetch } = useQuery(['News', keyword], () => getSearchNews(keyword), {
+    const { data: news, refetch } = useQuery(['News', keyword], () => API.getSearchNews(keyword), {
         refetchInterval: 30000, //30초마다 업데이트
         retry: 0,
         notifyOnChangeProps: 'tracked',
@@ -227,11 +269,14 @@ export const useSearchNews = (searchWord) => {
     return { news, keyword, setKeyword };
 };
 
-export const useBookMarks = (memberId) => {
-    const { data, refetch } = useQuery('BookMarks', () => getBookMarks(memberId), {
+export const useBookMarks = () => {
+    const API = useAPI();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
+    const { data, refetch } = useQuery('BookMarks', () => API.getBookMarks(), {
         staleTime: Infinity,
         retry: 0,
         notifyOnChangeProps: 'tracked',
+        enabled: !!memberId,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => data.data,
@@ -239,38 +284,41 @@ export const useBookMarks = (memberId) => {
     return data;
 };
 export const useAddBookMarks = () => {
+    const API = useAPI();
     const queryClient = useQueryClient();
-    return useMutation(addBookMarks, {
+    return useMutation(API.addBookMarks, {
         onSuccess: () => queryClient.invalidateQueries('BookMarks'),
     });
 };
 
 export const useRemoveBookMarks = () => {
+    const API = useAPI();
     const queryClient = useQueryClient();
-    return useMutation(removeBookMarks, {
+    return useMutation(API.removeBookMarks, {
         onSuccess: () => queryClient.invalidateQueries('BookMarks'),
     });
 };
 
 export const useLogin = (user, keepLogin, success, error) => {
+    const API = useAPI();
     const queryClient = useQueryClient();
     // Recoil 설정 useState와 사용법이 동일
     const [memberId, setMemberId] = useRecoilState(userInfo);
-    return useMutation(() => postLogin(user), {
+    return useMutation(() => API.postLogin(user), {
         onSuccess: (data) => {
-            setMemberId(2);
+            setMemberId(data.headers.memberid);
             if (keepLogin) {
-                localStorage.setItem('memberId', '2'); // FIXME: 임시 저장
+                localStorage.setItem('memberId', data.headers.memberid);
                 localStorage.setItem('username', user.username);
                 localStorage.setItem('authorization', data.headers.authorization);
                 localStorage.setItem('refresh', data.headers.refresh);
             } else {
-                sessionStorage.setItem('memberId', '2'); // FIXME: 임시 저장
+                sessionStorage.setItem('memberId', data.headers.memberid);
                 sessionStorage.setItem('username', user.username);
                 sessionStorage.setItem('authorization', data.headers.authorization);
                 sessionStorage.setItem('refresh', data.headers.refresh);
             }
-            queryClient.invalidateQueries('member');
+            queryClient.invalidateQueries('Member');
             success(data);
         },
         onError: (data) => {
@@ -279,8 +327,10 @@ export const useLogin = (user, keepLogin, success, error) => {
     });
 };
 
-export const useMember = (memberId) => {
-    const { data, refetch } = useQuery(['member'], () => getMember(memberId), {
+export const useMember = () => {
+    const API = useAPI();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
+    const { data, refetch } = useQuery(['Member'], () => API.getMember(), {
         retry: 0,
         staleTime: Infinity,
         notifyOnChangeProps: 'tracked',
@@ -293,7 +343,8 @@ export const useMember = (memberId) => {
 };
 
 export const useIsOpen = () => {
-    const { data, refetch } = useQuery(['isOpen'], () => getIsOpen(), {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['isOpen'], () => API.getIsOpen(), {
         retry: 0,
         staleTime: Infinity,
         notifyOnChangeProps: 'tracked',
@@ -302,4 +353,30 @@ export const useIsOpen = () => {
         select: (data) => (data.data.output[0].bzdy_yn === 'Y' ? true : false),
     });
     return data;
+};
+
+export const useTradeInfo = () => {
+    const API = useAPI();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
+    const { data, refetch } = useQuery(['TradeInfo'], () => API.getTradeInfo(), {
+        retry: 0,
+        staleTime: Infinity,
+        notifyOnChangeProps: 'tracked',
+        onError: () => balancer(refetch),
+        onSuccess: () => (count = 0),
+        select: (data) => data.data,
+        enabled: !!memberId,
+    });
+    return data;
+};
+
+export const useTrade = () => {
+    const API = useAPI();
+    const queryClient = useQueryClient();
+    return useMutation(API.postTrade, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('TradeInfo');
+            queryClient.invalidateQueries('Member');
+        },
+    });
 };

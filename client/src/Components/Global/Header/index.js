@@ -57,8 +57,7 @@ const LogDiv = styled.div`
 `;
 
 const Header = () => {
-    const [memberId, setMemberId] = useRecoilState(userInfo);
-    const memberInfo = useMember(memberId);
+    const memberInfo = useMember();
     // console.log('🚀  memberInfo', memberInfo); => 로그인한 유저정보
     //TODO: memberInfo에 데이터가 있을때는 로그인을 한 상태입니다 memberInfo에 데이터가 있다면 로그인버튼을 로그아웃버튼과 로그아웃링크로 수정해주세요
 

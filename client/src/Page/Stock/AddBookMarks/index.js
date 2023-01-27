@@ -37,7 +37,7 @@ const AddBookMarks = () => {
     const KOSPI = useKOSPIList();
     const KOSDAQ = useKOSDAQList();
 
-    const bookMarks = useBookMarks('2');
+    const bookMarks = useBookMarks();
 
     // 코스피,코스닥이 변경되었을때 실행
     useEffect(() => {

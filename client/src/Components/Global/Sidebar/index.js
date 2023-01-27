@@ -76,6 +76,11 @@ const Sidebar = () => {
                     </StyledLink>
                 </li>
                 <li>
+                    <StyledLink className={now === '/AssetManagement' ? 'select' : null} to="/AssetManagement">
+                        자산 관리
+                    </StyledLink>
+                </li>
+                <li>
                     <StyledLink className={now === '/board' ? 'select' : null} to="/board">
                         게시판
                     </StyledLink>
