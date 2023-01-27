@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useIsOpen } from '../API/ReactQueryContainer';
 
 const useStockTime = () => {
