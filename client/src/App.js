@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { RecoilRoot } from 'recoil';
 import Layout from './Components/Style/Layout';
 import Board from './Page/Board/ArticleList';
 import Article from './Page/Board/Detail';
@@ -14,7 +15,7 @@ import Login from './Page/User/Login';
 import MyPage from './Page/User/MyPage';
 import SignUp from './Page/User/SignUp/index';
 import AddBookMarks from './Page/Stock/AddBookMarks';
-import { RecoilRoot } from 'recoil';
+import AssetManagement from './Page/AssetManagement';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
                         <Route path="/board/detail/:num" element={<Article />} />
                         <Route path="/users/:id" element={<MyPage />} />
                         <Route path="/users/:id/edit" element={<EditProfile />} />
+                        <Route path="/AssetManagement" element={<AssetManagement />} />
                     </Routes>
                 </Layout>
             </RecoilRoot>
