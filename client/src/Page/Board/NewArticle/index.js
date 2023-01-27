@@ -2,7 +2,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../../Components/Hook/useInput";
-
+import { userInfo } from "../../../Components/Function/userInfo";
+import { useRecoilState } from "recoil";
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,6 +47,7 @@ const Button = styled.button`
 
 const NewArticle = () => {
   // const navigate = useNavigate();
+  const [memberId, setMemberId] = useRecoilState(userInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO : 서버 배포되면 기능 마저 구현
@@ -55,6 +57,7 @@ const NewArticle = () => {
     //   data: data,
     // };
     console.log(data);
+    console.log(memberId);
     // axios(url, options).then((res) => {
     //   console.log(res);
     //   navigate("/board");
@@ -62,11 +65,11 @@ const NewArticle = () => {
   };
   // 글 데이터
   const [data, handleChange] = useInput({
-    memberId: "",
+    memberId: memberId,
     title: "",
     content: "",
   });
-  const handleDisable = !(data.title && data.content);
+  const handleDisable = !(memberId && data.title && data.content);
 
   return (
     <form onSubmit={handleSubmit}>
