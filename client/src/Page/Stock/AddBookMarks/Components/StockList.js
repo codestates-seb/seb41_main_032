@@ -55,7 +55,6 @@ const StockList = ({ data, bookMarks, select }) => {
             const bookmark = {
                 stockCode,
                 stockName,
-                memberId: '2',
             };
             addBookMarks(bookmark);
         }
