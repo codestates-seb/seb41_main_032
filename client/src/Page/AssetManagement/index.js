@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useMember, useTradeInfo } from '../../Components/API/ReactQueryContainer';
-import commaGenerator from '../../Components/Function/commaGenerator';
-import tradeCalculation from '../../Components/Function/tradeCalculation';
+import tradeCalculation from '../../Components/Function/tradeCalculator';
 import numberToKR from '../../Components/Function/numberToKR';
-
+import Pie from './Components/Pie';
+import AssetHistory from './Components/AssetHistory';
 const Section = styled.section`
     background-color: #212223;
     padding: 20px;
@@ -14,23 +14,31 @@ const Section = styled.section`
     h2 {
         color: #eee;
         font-size: 1.3em;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
     }
 `;
 const Asset = styled.div`
     border-right: 1px solid #999;
-    width: 300px;
+    width: 500px;
     height: 100%;
     padding: 10px;
+    margin-right: 30px;
 `;
 
 const ItemContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     .value {
-        color: #ffffff;
+        color: #999999;
         margin-right: 20px;
+    }
+`;
+
+const Chart = styled.div`
+    width: 100%;
+    .apexcharts-legend-text {
+        color: #999999 !important;
     }
 `;
 
@@ -39,7 +47,6 @@ const AssetManagement = () => {
     const tradeInfo = useTradeInfo();
     console.log('🚀  tradeInfo', tradeInfo);
     const trade = tradeCalculation(tradeInfo);
-    console.log('🚀  user', trade.totalIncomeStatement());
     return (
         <>
             <Section>
@@ -47,29 +54,30 @@ const AssetManagement = () => {
                     <h2>자산 현황</h2>
                     <ItemContainer>
                         <div className="category">총자산</div>
-                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
+                        <div className="value">{`${numberToKR(trade.totalStockPrice() + user?.money)}원`}</div>
                     </ItemContainer>
                     <ItemContainer>
                         <div className="category">예수금</div>
                         <div className="value">{`${numberToKR(user?.money)}원`}</div>
                     </ItemContainer>
                     <ItemContainer>
-                        <div className="category">주식 총 평가금액</div>
-                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
+                        <div className="category">보유 주식</div>
+                        <div className="value">{`${numberToKR(trade.totalStockPrice())}원`}</div>
                     </ItemContainer>
                     <ItemContainer>
-                        <div className="category">실현 손익</div>
-                        <div className="value">{`${numberToKR(user?.money)}원`}</div>
+                        <div className="category">손익</div>
+                        <div className="value">{`${numberToKR(trade.totalEstimatedAssets())}원`}</div>
+                    </ItemContainer>
+                    <ItemContainer>
+                        <div className="category">손익률</div>
+                        <div className="value">{`${((trade.totalEstimatedAssets() / 10000000) * 100)?.toFixed(2)}%`}</div>
                     </ItemContainer>
                 </Asset>
-                <Asset>
-                    <h2>자산 유형</h2>
-                </Asset>
-                <Asset>
-                    <h2>일자별 자산 흐름</h2>
-                </Asset>
+                <Pie trade={trade} />
+                <Chart>
+                    <AssetHistory trade={trade} />
+                </Chart>
             </Section>
-            <section></section>
         </>
     );
 };
