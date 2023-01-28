@@ -32,7 +32,7 @@ const Bookmark = ({ bookmarkId, stockName, stockCode, isOwner }) => {
   const { mutate: removeBookMarks } = useRemoveBookMarks();
 
   const handleBookmarkClick = () => {
-    navigate(`/stock/${stockCode}`, { state: { stockName: `${stockName}` } });
+    navigate(`/stock/${stockCode}`, { state: { name: `${stockName}` } });
   };
 
   const handleIconClick = (event) => {

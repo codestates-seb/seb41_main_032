@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -39,6 +40,7 @@ function App() {
             <Route path="/board/edit/:num" element={<EditArticle />} />
             <Route path="/users/:id" element={<MyPage />} />
             <Route path="/users/:id/edit" element={<EditProfile />} />
+
             <Route path="/AssetManagement" element={<AssetManagement />} />
           </Routes>
         </Layout>
