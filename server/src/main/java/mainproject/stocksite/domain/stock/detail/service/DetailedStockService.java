@@ -1,15 +1,14 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService;
-import mainproject.stocksite.global.config.AccessTokenRequestInfo;
-import mainproject.stocksite.global.exception.BusinessLogicException;
-import mainproject.stocksite.global.exception.ExceptionCode;
 import mainproject.stocksite.domain.stock.detail.dto.response.HolidaysDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.InvestorsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.PresentQuotationsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.QuotationsByPeriodDto;
 import mainproject.stocksite.domain.stock.detail.options.DetailedStockOptions;
+import mainproject.stocksite.global.config.OpenApiSecretInfo;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,26 +19,23 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
+import static mainproject.stocksite.domain.stock.detail.accesstoken.service.AccessTokenService.accessToken;
 
 @RequiredArgsConstructor
 @Service
 public class DetailedStockService {
 
-    private final AccessTokenService accessTokenService;
-    private final AccessTokenRequestInfo accessTokenRequestInfo;
+    private final OpenApiSecretInfo openApiSecretInfo;
 
-    private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
+    private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations";
 
     private final RestTemplate restTemplate;
 
     private HttpHeaders baseHeaders() {
-        if (accessToken == null) accessTokenService.getAccessToken();
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "Bearer " + accessToken);
-        headers.set("appkey", accessTokenRequestInfo.getAppKey());
-        headers.set("appsecret", accessTokenRequestInfo.getAppSecret());
+        headers.set("appkey", openApiSecretInfo.getAppKey());
+        headers.set("appsecret", openApiSecretInfo.getAppSecret());
         return headers;
     }
 
@@ -50,7 +46,7 @@ public class DetailedStockService {
         requestHeaders.set("tr_id", "FHKST01010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "inquire-price";
+        String url = STOCK_DEFAULT_URL + "/inquire-price";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -83,7 +79,7 @@ public class DetailedStockService {
         requestHeaders.set("tr_id", "FHKST01010900");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "inquire-investor";
+        String url = STOCK_DEFAULT_URL + "/inquire-investor";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -118,7 +114,7 @@ public class DetailedStockService {
         requestHeaders.set("tr_id", "FHKST03010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "inquire-daily-itemchartprice";
+        String url = STOCK_DEFAULT_URL + "/inquire-daily-itemchartprice";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -157,7 +153,7 @@ public class DetailedStockService {
         requestHeaders.set("custtype", "P");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "chk-holiday";
+        String url = STOCK_DEFAULT_URL + "/chk-holiday";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("BASS_DT", baseDate)

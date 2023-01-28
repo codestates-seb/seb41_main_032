@@ -4,18 +4,20 @@ import lombok.Getter;
 
 public enum ExceptionCode {
 
+    // 400 BAD REQUEST 잘못된 요청
+    NOT_ENOUGH_STOCK(400, "Your total stock holdings are not enough"),
+    NOT_ENOUGH_MONEY(400, "Your money is not enough"),
+
     // 401 UNAUTHORIZED 인증되지 않음
     LOGIN_REQUIRED(401, "You need to login"),
     INVALID_TOKEN(401, "Your access-token is invalid"),
 
-    // 404 BAD REQUEST 잘못된 요청
+    // 404 NOT FOUND 찾을 수 없음
     MEMBER_NOT_FOUND(404, "Member not found"),
     BOARD_NOT_FOUND(404, "Board not found"),
     COMMENT_NOT_FOUND(404, "Comment not found"),
     BOOKMARK_NOT_FOUND(404, "Bookmark not found"),
     HAVE_NO_STOCK(404, "You don't have this stock."),
-    NOT_ENOUGH_STOCK(404, "Your total stock holdings are not enough"),
-    NOT_ENOUGH_MONEY(404, "Your money is not enough"),
 
     // 409 CONFLICT 중복된 리소스
     MEMBER_EXISTS(409, "Member exists"),

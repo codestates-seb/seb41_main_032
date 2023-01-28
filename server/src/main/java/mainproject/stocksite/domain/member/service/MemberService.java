@@ -66,7 +66,11 @@ public class MemberService {
     private void updateMemberInfo(Member member, Member findMember) {
         findMember.setUsername(member.getUsername());
         findMember.setNickname(member.getNickname());
-        findMember.setPassword(member.getPassword());
+
+        // 패스워드 인코더
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        findMember.setPassword(encryptedPassword);
+
         findMember.setEmail(member.getEmail());
     }
 

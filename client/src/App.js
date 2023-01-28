@@ -1,4 +1,4 @@
-import { QueryClientProvider, QueryClient } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
@@ -7,7 +7,6 @@ import AssetManagement from "./Page/AssetManagement";
 import Board from "./Page/Board/ArticleList";
 import Article from "./Page/Board/Detail";
 import NewArticle from "./Page/Board/NewArticle";
-import EditArticle from "./Page/Board/Edit/index";
 import Home from "./Page/Home";
 import AddBookMarks from "./Page/Stock/AddBookMarks";
 import StockAllList from "./Page/Stock/AllList";
@@ -35,7 +34,6 @@ function App() {
             <Route path="/board" element={<Board />} />
             <Route path="/board/new" element={<NewArticle />} />
             <Route path="/board/detail/:num" element={<Article />} />
-            <Route path="/board/edit/:num" element={<EditArticle />} />
             <Route path="/users/:id" element={<MyPage />} />
             <Route path="/AssetManagement" element={<AssetManagement />} />
           </Routes>
