@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
 	// OAuth2 적용
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

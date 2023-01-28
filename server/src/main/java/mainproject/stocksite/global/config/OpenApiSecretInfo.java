@@ -16,7 +16,7 @@ public class OpenApiSecretInfo {
     private String appSecret;
 
     // 누리집 API 요청 관련 키
-    private String secretKey;
+    private String serviceKey;
 
     // 네이버 검색 API 요청 관련 키
     private String naverClientId;

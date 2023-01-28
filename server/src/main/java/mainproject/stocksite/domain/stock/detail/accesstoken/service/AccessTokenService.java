@@ -1,4 +1,4 @@
-package mainproject.stocksite.domain.stock.accesstoken.service;
+package mainproject.stocksite.domain.stock.detail.accesstoken.service;
 
 import lombok.RequiredArgsConstructor;
 import mainproject.stocksite.global.config.OpenApiSecretInfo;
@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,8 +21,8 @@ public class AccessTokenService {
 
     private final OpenApiSecretInfo openApiSecretInfo;
 
-    // 매일 자정에 증권사 API 접근 토큰 자동 발급
-    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
+    @PostConstruct
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")   // 매일 자정에 증권사 API 접근 토큰 자동 발급
     public void getAccessToken() {
 
         Map<String, String> requestBody = new LinkedHashMap<>();
