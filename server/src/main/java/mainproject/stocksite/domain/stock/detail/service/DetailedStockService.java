@@ -27,7 +27,7 @@ public class DetailedStockService {
 
     private final OpenApiSecretInfo openApiSecretInfo;
 
-    private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
+    private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations";
 
     private final RestTemplate restTemplate;
 
@@ -46,7 +46,7 @@ public class DetailedStockService {
         requestHeaders.set("tr_id", "FHKST01010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "inquire-price";
+        String url = STOCK_DEFAULT_URL + "/inquire-price";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -79,7 +79,7 @@ public class DetailedStockService {
         requestHeaders.set("tr_id", "FHKST01010900");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "inquire-investor";
+        String url = STOCK_DEFAULT_URL + "/inquire-investor";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -114,7 +114,7 @@ public class DetailedStockService {
         requestHeaders.set("tr_id", "FHKST03010100");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "inquire-daily-itemchartprice";
+        String url = STOCK_DEFAULT_URL + "/inquire-daily-itemchartprice";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("FID_COND_MRKT_DIV_CODE", "J")
@@ -153,7 +153,7 @@ public class DetailedStockService {
         requestHeaders.set("custtype", "P");
         HttpEntity<String> requestMessage = new HttpEntity<>(requestHeaders);
 
-        String url = STOCK_DEFAULT_URL + "chk-holiday";
+        String url = STOCK_DEFAULT_URL + "/chk-holiday";
 
         UriComponents uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("BASS_DT", baseDate)
