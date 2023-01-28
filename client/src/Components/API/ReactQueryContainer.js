@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
+import notify from '../Function/notify';
 import { userInfo } from '../Function/userInfo';
 
 /**
@@ -41,31 +42,22 @@ const balancer = (refetch) => {
 };
 
 /** <------------------- API ------------------->  */
-
 const useAPI = () => {
     const [memberId, setMemberId] = useRecoilState(userInfo);
     const getIndexKOSPI = () => {
-        return axios.get(
-            `${process.env.REACT_APP_INDEX_API_URL}?serviceKey=${process.env.REACT_APP_INDEX_API_KEY}&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스피`,
-        );
+        return axios.get(`${API_URL_LIST[pointer]}/stock/index/KOSPI`);
     };
 
     const getIndexKOSDAQ = () => {
-        return axios.get(
-            `${process.env.REACT_APP_INDEX_API_URL}?serviceKey=${process.env.REACT_APP_INDEX_API_KEY}&numOfRows=5&pageNo=1&resultType=json&beginBasDt=${day}&idxNm=코스닥`,
-        );
+        return axios.get(`${API_URL_LIST[pointer]}/stock/index/KOSDAQ`);
     };
 
     const getKOSPIList = () => {
-        return axios.get(
-            `${process.env.REACT_APP_STOCK_LIST_API_URL}?serviceKey=${process.env.REACT_APP_STOCK_LIST_API_KEY}&numOfRows=1000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSPI`,
-        );
+        return axios.get(`${API_URL_LIST[pointer]}/stock/list/KOSPI`);
     };
 
     const getKOSDAQList = () => {
-        return axios.get(
-            `${process.env.REACT_APP_STOCK_LIST_API_URL}?serviceKey=${process.env.REACT_APP_STOCK_LIST_API_KEY}&numOfRows=2000&pageNo=1&resultType=json&beginBasDt=${day}&mrktCls=KOSDAQ`,
-        );
+        return axios.get(`${API_URL_LIST[pointer]}/stock/list/KOSDAQ`);
     };
 
     const getStockDetails = (stockCode) => {
@@ -171,7 +163,7 @@ export const useIndexKOSPI = () => {
         staleTime: Infinity, // fresh 상태 무한대로 유지 => 캐시에 항상 남아있음
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
-        select: (data) => data.data.response.body.items.item[0],
+        select: (data) => data.data[0],
     });
     return data;
 };
@@ -183,7 +175,7 @@ export const useIndexKOSDAQ = () => {
         staleTime: Infinity,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
-        select: (data) => data.data.response.body.items.item[0],
+        select: (data) => data.data[0],
     });
     return data;
 };
@@ -197,8 +189,8 @@ export const useKOSPIList = () => {
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => {
-            const pivot = data.data.response.body.items.item[0].basDt; //가장 최신 데이터의 날짜
-            const latestDateData = data.data.response.body.items.item.filter((el) => el.basDt === pivot);
+            const pivot = data.data[0].basDt; //가장 최신 데이터의 날짜
+            const latestDateData = data.data.filter((el) => el.basDt === pivot);
             return latestDateData;
         },
     });
@@ -213,8 +205,8 @@ export const useKOSDAQList = () => {
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => {
-            const pivot = data.data.response.body.items.item[0].basDt;
-            const latestDateData = data.data.response.body.items.item.filter((el) => el.basDt === pivot);
+            const pivot = data.data[0].basDt; //가장 최신 데이터의 날짜
+            const latestDateData = data.data.filter((el) => el.basDt === pivot);
             return latestDateData;
         },
     });
@@ -332,6 +324,7 @@ export const useLogin = (user, keepLogin, success, error) => {
                 sessionStorage.setItem('refresh', data.headers.refresh);
             }
             queryClient.invalidateQueries(['Member', memberId]);
+            notify(`${user.username}님 환영합니다`, 'success');
             success(data);
         },
         onError: (data) => {
@@ -382,7 +375,7 @@ export const useTradeInfo = () => {
     return data;
 };
 
-export const useTrade = () => {
+export const useTrade = (success) => {
     const API = useAPI();
     const queryClient = useQueryClient();
     const [memberId, setMemberId] = useRecoilState(userInfo);
@@ -390,6 +383,10 @@ export const useTrade = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(['TradeInfo', memberId]);
             queryClient.invalidateQueries(['Member', memberId]);
+            success();
+        },
+        onError: () => {
+            notify('주문에 실패했습니다.', 'error');
         },
     });
 };
