@@ -1,7 +1,6 @@
 package mainproject.stocksite.domain.stock.detail.service;
 
 import lombok.RequiredArgsConstructor;
-import mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService;
 import mainproject.stocksite.domain.stock.detail.dto.response.HolidaysDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.InvestorsDto;
 import mainproject.stocksite.domain.stock.detail.dto.response.PresentQuotationsDto;
@@ -20,13 +19,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static mainproject.stocksite.domain.stock.accesstoken.service.AccessTokenService.accessToken;
+import static mainproject.stocksite.domain.stock.detail.accesstoken.service.AccessTokenService.accessToken;
 
 @RequiredArgsConstructor
 @Service
 public class DetailedStockService {
 
-    private final AccessTokenService accessTokenService;
     private final OpenApiSecretInfo openApiSecretInfo;
 
     private final String STOCK_DEFAULT_URL = "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/";
@@ -34,8 +32,6 @@ public class DetailedStockService {
     private final RestTemplate restTemplate;
 
     private HttpHeaders baseHeaders() {
-        if (accessToken == null) accessTokenService.getAccessToken();
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("authorization", "Bearer " + accessToken);
         headers.set("appkey", openApiSecretInfo.getAppKey());
