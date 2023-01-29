@@ -6,6 +6,8 @@ const Container = styled.div`
         color: #999999 !important;
     }
 `;
+
+// 보유주식 비율,현황을 확인 할 수 있는 차트
 const Pie = ({ trade }) => {
     return (
         <Container>
