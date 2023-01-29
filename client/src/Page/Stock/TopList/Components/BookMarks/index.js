@@ -13,8 +13,10 @@ const Section = styled.section`
 `;
 
 const ItemList = styled.ul`
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     list-style: none;
+    margin-top: 20px;
 `;
 
 const AddBookMarks = styled.div`
@@ -73,7 +75,7 @@ const BookMarks = () => {
         } else {
             return (
                 <ItemList>
-                    {bookmarks?.map((el) => (
+                    {bookmarks?.map((el, index) => (
                         <ItemBox key={el.stockCode} data={el} />
                     ))}
                 </ItemList>
