@@ -9,12 +9,16 @@ import mainproject.stocksite.domain.stock.overall.repository.KOSDAQStockIndexRep
 import mainproject.stocksite.domain.stock.overall.repository.KOSDAQStockListRepository;
 import mainproject.stocksite.domain.stock.overall.repository.KOSPIStockIndexRepository;
 import mainproject.stocksite.domain.stock.overall.repository.KOSPIStockListRepository;
+import mainproject.stocksite.global.exception.BusinessLogicException;
+import mainproject.stocksite.global.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OverallStockService {
 
     private final KOSPIStockIndexRepository kospiStockIndexRepository;
@@ -24,18 +28,34 @@ public class OverallStockService {
     private final KOSDAQStockListRepository kosdaqStockListRepository;
 
     public List<KOSPIStockIndex> getKOSPIStockIndex() {
-        return kospiStockIndexRepository.findAll();
+        List<KOSPIStockIndex> foundIndices = kospiStockIndexRepository.findAll();
+        verifyExistsData(foundIndices);
+
+        return foundIndices;
     }
 
     public List<KOSDAQStockIndex> getKOSDAQStockIndex() {
-        return kosdaqStockIndexRepository.findAll();
+        List<KOSDAQStockIndex> foundIndices = kosdaqStockIndexRepository.findAll();
+        verifyExistsData(foundIndices);
+
+        return foundIndices;
     }
 
     public List<KOSPIStockList> getKOSPIStockList() {
-        return kospiStockListRepository.findAll();
+        List<KOSPIStockList> foundLists = kospiStockListRepository.findAll();
+        verifyExistsData(foundLists);
+
+        return foundLists;
     }
 
     public List<KOSDAQStockList> getKOSDAQStockList() {
-        return kosdaqStockListRepository.findAll();
+        List<KOSDAQStockList> foundLists = kosdaqStockListRepository.findAll();
+        verifyExistsData(foundLists);
+
+        return foundLists;
+    }
+
+    private void verifyExistsData(List<?> data) {
+        if (data.isEmpty()) throw new BusinessLogicException(ExceptionCode.CANNOT_FOUND_STOCK_DATA);
     }
 }
