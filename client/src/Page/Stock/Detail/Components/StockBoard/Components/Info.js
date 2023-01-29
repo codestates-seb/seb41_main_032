@@ -182,9 +182,9 @@ const Info = ({ stockInfo }) => {
 
     const success = () =>
         notify(
-            `${state.name}\n현재가: ${numberToKR(stockInfo.stck_prpr)}원 수량: ${Math.abs(quantity)}주\n총 가격: ${numberToKR(
+            `${state.name}\n현재가: ${numberToKR(stockInfo.stck_prpr)}원\n수량: ${Math.abs(quantity)}주\n총 가격: ${numberToKR(
                 stockInfo.stck_prpr * Math.abs(quantity),
-            )}\n${quantity > 0 ? '매수' : '매도'}가 완료되었습니다.`,
+            )}원\n${quantity > 0 ? '매수' : '매도'}가 완료되었습니다.`,
             'success',
         );
     const { mutate: trade } = useTrade(success);
