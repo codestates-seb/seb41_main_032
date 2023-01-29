@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useInput from "../../../Components/Hook/useInput";
 import { userInfo } from "../../../Components/Function/userInfo";
 import { useRecoilState } from "recoil";
+import notify from "../../../Components/Function/notify";
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,22 +47,20 @@ const Button = styled.button`
 `;
 
 const NewArticle = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [memberId, setMemberId] = useRecoilState(userInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO : 서버 배포되면 기능 마저 구현
-    // const url = `url`;
-    // const options = {
-    //   method: "POST",
-    //   data: data,
-    // };
+    const url = `${process.env.REACT_APP_API_URL}/boards`;
     console.log(data);
     console.log(memberId);
-    // axios(url, options).then((res) => {
-    //   console.log(res);
-    //   navigate("/board");
-    //  });
+    axios
+      .post(url, data)
+      .then(() => {
+        notify("작성 완료!", "success");
+        navigate("/board");
+      })
+      .catch((err) => console.log(err));
   };
   // 글 데이터
   const [data, handleChange] = useInput({

@@ -5,6 +5,7 @@ import useInput from "../../../Components/Hook/useInput";
 import { userInfo } from "../../../Components/Function/userInfo";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
+import notify from "../../../Components/Function/notify";
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -47,19 +48,22 @@ const Button = styled.button`
 `;
 
 const EditArticle = () => {
-  // const navigate = useNavigate();
-  // const url = `${process.env.REACT_APP_API_URL}/board`;
-  const url = `https://jsonplaceholder.typicode.com/posts`;
+  const navigate = useNavigate();
+  const url = `${process.env.REACT_APP_API_URL}/boards`;
   const params = useParams();
   const [memberId, setMemberId] = useRecoilState(userInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO : 서버 배포되면 기능 마저 구현
-    console.log(inputValue);
-    // axios.patch(`${url}/${params.num}`, inputValue).then((res) => {
-    //   console.log(res);
-    //   navigate(`/board/detail/${params.num}`);
-    //  });
+    axios
+      .patch(`${url}/${params.num}`, inputValue)
+      .then(() => {
+        notify("수정되었습니다", "success");
+        navigate(`/board/detail/${params.num}`);
+      })
+      .catch((err) => {
+        console.log(err);
+        notify("수정 실패", "error");
+      });
   };
   // 글 데이터
   const [inputValue, setInputValue] = useInput({});
@@ -68,7 +72,7 @@ const EditArticle = () => {
       setInputValue({
         memberId: memberId,
         title: res.data.title,
-        content: res.data.body,
+        content: res.data.content,
       });
     });
   }, []);
