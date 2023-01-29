@@ -5,6 +5,8 @@ import { useBookMarks } from '../../../../../Components/API/ReactQueryContainer'
 import { Title } from '../../../../../Components/Style/Stock';
 import ItemBox from './ItemBox';
 import addImg from '../../../../../Components/Img/add.png';
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../../../../../Components/Function/userInfo';
 
 const Section = styled.section`
     padding: 20px;
@@ -44,13 +46,22 @@ const StyleLink = styled(Link)`
 `;
 
 const BookMarks = () => {
-    const bookmarks = useBookMarks('2');
-    return (
-        <Section>
-            <header>
-                <Title>즐겨찾기</Title>
-            </header>
-            {bookmarks?.length === 0 ? (
+    const bookmarks = useBookMarks();
+    const [memberId, setMemberId] = useRecoilState(userInfo); // ../Function/userInfo
+
+    const Switch = () => {
+        if (memberId === null) {
+            return (
+                <AddBookMarks>
+                    <p>로그인 후 이용해주세요!</p>
+                    <StyleLink to="/login">
+                        <img src={addImg} alt={'Go to the Login'} />
+                        로그인
+                    </StyleLink>
+                </AddBookMarks>
+            );
+        } else if (bookmarks === undefined || bookmarks?.length === 0) {
+            return (
                 <AddBookMarks>
                     <p>관심있는 종목을 추가하세요!</p>
                     <StyleLink to="/stock/AddBookMarks">
@@ -58,13 +69,24 @@ const BookMarks = () => {
                         종목 추가
                     </StyleLink>
                 </AddBookMarks>
-            ) : (
+            );
+        } else {
+            return (
                 <ItemList>
                     {bookmarks?.map((el) => (
                         <ItemBox key={el.stockCode} data={el} />
                     ))}
                 </ItemList>
-            )}
+            );
+        }
+    };
+
+    return (
+        <Section>
+            <header>
+                <Title>즐겨찾기</Title>
+            </header>
+            {Switch()}
         </Section>
     );
 };

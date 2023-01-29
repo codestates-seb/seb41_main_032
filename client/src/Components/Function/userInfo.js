@@ -11,3 +11,9 @@ export const userInfo = atom({
     default: getStorage('memberId'), // default value
     effects_UNSTABLE: [persistAtom],
 });
+
+export const stockList = atom({
+    key: 'stockList', //  ID
+    default: getStorage('stockList'), // default value
+    effects_UNSTABLE: [persistAtom],
+});

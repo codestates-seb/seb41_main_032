@@ -1,6 +1,9 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { useAddBookMarks, useRemoveBookMarks } from '../../../../Components/API/ReactQueryContainer';
+import notify from '../../../../Components/Function/notify';
+import { userInfo } from '../../../../Components/Function/userInfo';
 import DisableImg from '../../../../Components/Img/Favorites/black.png';
 import ActivateImg from '../../../../Components/Img/Favorites/gold.png';
 const ItemList = styled.ul`
@@ -46,8 +49,13 @@ const ItemBox = styled.li`
 const StockList = ({ data, bookMarks, select }) => {
     const { mutate: addBookMarks } = useAddBookMarks();
     const { mutate: removeBookMarks } = useRemoveBookMarks();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
 
     const handlerBookmark = (stockCode, stockName) => {
+        if (!memberId) {
+            notify('로그인 후 이용해주세요', 'warning');
+            return;
+        }
         const isActivate = bookMarks?.find((e) => e.stockCode === stockCode);
         if (isActivate) {
             removeBookMarks(isActivate.bookmarkId);

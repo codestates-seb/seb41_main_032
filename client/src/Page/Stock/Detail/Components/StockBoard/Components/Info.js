@@ -9,7 +9,11 @@ import numberToKR from '../../../../../../Components/Function/numberToKR';
 import useInput from '../../../../../../Components/Hook/useInput';
 import { useAddBookMarks, useBookMarks, useMember, useRemoveBookMarks, useTradeInfo, useTrade } from '../../../../../../Components/API/ReactQueryContainer';
 import useStockTime from '../../../../../../Components/Hook/useStockTime';
-import tradeCalculation from '../../../../../../Components/Function/tradeCalculation';
+import tradeCalculation from '../../../../../../Components/Function/tradeCalculator';
+import notify from '../../../../../../Components/Function/notify';
+import Tooltip from '../../../../../../Components/Global/Tooltip';
+import described from './tooltipText';
+import QuestionMark from '../../../../../../Components/Style/QuestionMark';
 
 const Section = styled.section`
     display: flex;
@@ -102,6 +106,7 @@ const ItemContainer = styled.div`
     min-width: 200px;
 
     span {
+        display: flex;
         margin: 1px 0px;
         color: #999;
         font-size: 0.8em;
@@ -155,6 +160,10 @@ const Circle = styled.div`
     margin-right: 5px;
 `;
 
+const TradeNum = styled.span`
+    letter-spacing: 1px;
+`;
+
 /** 주식의 이름,가격을 표시하는 컴포넌트입니다 */
 const Info = ({ stockInfo }) => {
     const params = useParams();
@@ -162,16 +171,30 @@ const Info = ({ stockInfo }) => {
 
     const [quantity, setQuantity, ChangeQuantity, submit] = useInput();
 
-    //TODO 백엔드에서 memberID 보내주면 해당 id로 교체
     const bookMarks = useBookMarks();
     const userInfo = useMember();
     const tradeInfo = useTradeInfo();
     const calculation = tradeCalculation(tradeInfo);
     const marketTime = useStockTime();
+
     const { mutate: addBookMarks } = useAddBookMarks();
     const { mutate: removeBookMarks } = useRemoveBookMarks();
-    const { mutate: trade } = useTrade();
+
+    const success = () =>
+        notify(
+            `${state.name}\n현재가: ${numberToKR(stockInfo.stck_prpr)}원\n수량: ${Math.abs(quantity)}주\n총 가격: ${numberToKR(
+                stockInfo.stck_prpr * Math.abs(quantity),
+            )}원\n${quantity > 0 ? '매수' : '매도'}가 완료되었습니다.`,
+            'success',
+        );
+    const { mutate: trade } = useTrade(success);
+
     const handlerBookmark = () => {
+        if (!userInfo) {
+            notify('로그인 후 이용해주세요', 'warning');
+            return;
+        }
+
         const isActivate = bookMarks?.find((e) => e.stockCode === params.id);
 
         if (isActivate) {
@@ -180,23 +203,27 @@ const Info = ({ stockInfo }) => {
             const bookmark = {
                 stockCode: params.id,
                 stockName: state.name,
-                memberId: '2',
             };
             addBookMarks(bookmark);
         }
     };
 
     const handlerOrder = () => {
-        // 매매 수량이 없을때 early return
         if (quantity === '' || quantity === 0) return;
+
+        if (!userInfo || userInfo.memberId === undefined) {
+            notify('로그인 후 이용해주세요.', 'warning');
+            return;
+        }
 
         // 매수시 잔액 부족
         if (userInfo.money - quantity * stockInfo.stck_prpr < 0) {
-            console.log('잔액이 부족합니다');
+            notify('잔액이 부족합니다.', 'warning');
+            return;
         }
         // 매도시 보유한 주식수량 부족
-        else if (quantity < 0 && Math.abs(quantity) > calculation.getQuantity(params.id)) {
-            console.log('주식보유량이 부족합니다');
+        else if (quantity < 0 && Math.abs(quantity) > calculation.quantity(params.id)) {
+            notify('주식 보유 수량이 부족합니다.', 'warning');
             setQuantity('');
         }
         // 거래 체결
@@ -217,11 +244,9 @@ const Info = ({ stockInfo }) => {
                 order.quantity = Math.abs(quantity);
             }
             trade(order);
-            console.log('거래가 채결되었습니다', order);
             setQuantity('');
         }
     };
-
     return (
         <Section>
             <StockContainer>
@@ -260,19 +285,19 @@ const Info = ({ stockInfo }) => {
                 <h2>매매</h2>
                 <ItemContainer>
                     <span>보유 수량</span>
-                    <span>{`${calculation.getQuantity(params.id)} 주`}</span>
+                    <TradeNum>{`${calculation.quantity(params.id)}주`}</TradeNum>
                 </ItemContainer>
                 <ItemContainer>
                     <span>주문 금액</span>
-                    <span>{`${numberToKR(quantity * stockInfo.stck_prpr)} 원`}</span>
+                    <TradeNum>{`${numberToKR(quantity * stockInfo.stck_prpr)}원`}</TradeNum>
                 </ItemContainer>
                 <ItemContainer>
                     <span>나의 잔고</span>
-                    <span>{`${numberToKR(userInfo?.money)} 원`}</span>
+                    <TradeNum>{`${numberToKR(userInfo?.money)}원`}</TradeNum>
                 </ItemContainer>
                 <ItemContainer>
                     <span>거래 후 잔고</span>
-                    <span>{`${numberToKR(userInfo?.money - quantity * stockInfo.stck_prpr)} 원`}</span>
+                    <TradeNum>{`${numberToKR(userInfo?.money - quantity * stockInfo.stck_prpr)}원`}</TradeNum>
                 </ItemContainer>
                 <TradingButton>
                     <ButtonContainer>
@@ -281,8 +306,8 @@ const Info = ({ stockInfo }) => {
                         <button
                             onClick={() =>
                                 setQuantity((current) => {
-                                    if (current <= 0 && Math.abs(current) >= calculation.getQuantity(params.id)) {
-                                        return -calculation.getQuantity(params.id);
+                                    if (current <= 0 && Math.abs(current) >= calculation.quantity(params.id)) {
+                                        return -calculation.quantity(params.id);
                                     }
                                     return Number(current) - 1;
                                 })
@@ -291,33 +316,68 @@ const Info = ({ stockInfo }) => {
                             -
                         </button>
                     </ButtonContainer>
-                    <OrderButton disabled={marketTime === '장마감' ? 'disabled' : null} value="비활성화" onClick={handlerOrder}>
+                    <OrderButton disabled={marketTime !== '장마감' ? 'disabled' : null} value="비활성화" onClick={handlerOrder}>
                         주문
                     </OrderButton>
                 </TradingButton>
             </TradingContainer>
             <TradingContainer>
                 <h2>기록</h2>
-                <ItemContainer>
-                    <span>평단가</span>
-                    <span>{`${commaGenerator(calculation.getAverageBuyPrice(params.id))} 원`}</span>
-                </ItemContainer>
-                <ItemContainer>
-                    <span>매도 평균가</span>
-                    <span>{`${commaGenerator(calculation.getAverageSellPrice(params.id))} 원`}</span>
-                </ItemContainer>
-                <ItemContainer>
-                    <span>매수 수량</span>
-                    <span>{`${commaGenerator(calculation.getNumberOfBuy(params.id))} 주`}</span>
-                </ItemContainer>
-                <ItemContainer>
-                    <span>매도 수량</span>
-                    <span>{`${commaGenerator(calculation.getNumberOfSell(params.id))} 주`}</span>
-                </ItemContainer>
-                <ItemContainer>
-                    <span>손익</span>
-                    <span>{`${calculation.IncomeStatement(params.id, stockInfo.stck_prpr)} 원`}</span>
-                </ItemContainer>
+                <Tooltip text={described.holdingStockPrice}>
+                    <ItemContainer>
+                        <span>
+                            보유 주식
+                            <QuestionMark color={'white'} />
+                        </span>
+
+                        <TradeNum>{`${numberToKR(stockInfo.stck_prpr * calculation.quantity(params.id))}원`}</TradeNum>
+                    </ItemContainer>
+                </Tooltip>
+                <Tooltip text={described.averageUnitPrice}>
+                    <ItemContainer>
+                        <span>
+                            평단가
+                            <QuestionMark color={'white'} />
+                        </span>
+                        <TradeNum>{`${numberToKR(calculation.averageUnitPrice(params.id, stockInfo.stck_prpr))}원`}</TradeNum>
+                    </ItemContainer>
+                </Tooltip>
+                <Tooltip text={described.averageSellPrice}>
+                    <ItemContainer>
+                        <span>
+                            매도 평균가
+                            <QuestionMark color={'white'} />
+                        </span>
+                        <TradeNum>{`${numberToKR(calculation.averageSellPrice(params.id))}원`}</TradeNum>
+                    </ItemContainer>
+                </Tooltip>
+                <Tooltip text={described.numberOfBuy}>
+                    <ItemContainer>
+                        <span>
+                            매수 수량
+                            <QuestionMark color={'white'} />
+                        </span>
+                        <TradeNum>{`${commaGenerator(calculation.numberOfBuy(params.id))}주`}</TradeNum>
+                    </ItemContainer>
+                </Tooltip>
+                <Tooltip text={described.numberOfSell}>
+                    <ItemContainer>
+                        <span>
+                            매도 수량
+                            <QuestionMark color={'white'} />
+                        </span>
+                        <TradeNum>{`${commaGenerator(calculation.numberOfSell(params.id))}주`}</TradeNum>
+                    </ItemContainer>
+                </Tooltip>
+                <Tooltip text={described.incomeStatement}>
+                    <ItemContainer>
+                        <span>
+                            손익
+                            <QuestionMark color={'white'} />
+                        </span>
+                        <TradeNum>{`${numberToKR(calculation.incomeStatement(params.id, stockInfo.stck_prpr))}원`}</TradeNum>
+                    </ItemContainer>
+                </Tooltip>
             </TradingContainer>
         </Section>
     );

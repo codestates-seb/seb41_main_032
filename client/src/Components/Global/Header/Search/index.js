@@ -3,8 +3,9 @@
 
 import Autocomplete from './Autocomplete';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useKOSDAQList, useKOSPIList } from '../../../API/ReactQueryContainer';
+import useStockSearch from '../../../Hook/useStockSearch';
 
 const Div = styled.div`
     display: flex;
@@ -39,10 +40,11 @@ const Search = () => {
     const [keyword, setKeyword] = useState('');
     const [focus, setFocus] = useState(false);
 
-    /** 42~45줄 (서버에서 데이터 받아오기), 60줄 프롭스(stockList) 전달 바꿨습니다 - 이중원*/
-    const KOSPI = useKOSPIList();
-    const KOSDAQ = useKOSDAQList();
-    const stockList = [].concat(KOSPI, KOSDAQ);
+    const [data, setWord] = useStockSearch();
+    useEffect(() => {
+        if (keyword === '' || keyword === undefined) return;
+        setWord(keyword);
+    }, [keyword]);
 
     return (
         <Div
@@ -57,7 +59,7 @@ const Search = () => {
                 <Input placeholder="어떤 종목이 궁금하세요?" type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)}></Input>
                 <button onClick={() => setKeyword('')}>⌫</button>
             </div>
-            {keyword.length && focus ? <Autocomplete keyword={keyword} stockList={stockList} setKeyword={setKeyword} /> : null}
+            {keyword.length && focus ? <Autocomplete data={data} setWord={setWord} setKeyword={setKeyword} /> : null}
         </Div>
     );
 };

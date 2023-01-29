@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../../Function/userInfo';
 
 const Aside = styled.aside`
     display: flex;
@@ -48,6 +50,7 @@ const StyledLink = styled(Link)`
 
 const Sidebar = () => {
     const location = useLocation();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
     const [now, setNow] = useState('/');
     useEffect(() => {
         setNow(location.pathname);
@@ -81,12 +84,14 @@ const Sidebar = () => {
                     </StyledLink>
                 </li>
                 <li>
-                    <StyledLink className={now === '/board' ? 'select' : null} to="/board">
-                        게시판
+                    <StyledLink className={now.split('/')[1] === 'users' ? 'select' : null} to={`/users/${memberId}`}>
+                        마이페이지
                     </StyledLink>
                 </li>
                 <li>
-                    <StyledLink>Mypage</StyledLink>
+                    <StyledLink className={now === '/board' ? 'select' : null} to="/board">
+                        게시판
+                    </StyledLink>
                 </li>
             </ul>
         </Aside>
