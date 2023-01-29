@@ -47,6 +47,10 @@ const Chart = styled.div`
     }
 `;
 
+/**
+ * 자산관리 페이지입니다
+ * @author 이중원
+ */
 const AssetManagement = () => {
     const user = useMember();
     const navigate = useNavigate();
