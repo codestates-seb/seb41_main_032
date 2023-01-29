@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useInput from "../../../Components/Hook/useInput";
 import { userInfo } from "../../../Components/Function/userInfo";
 import { useRecoilState } from "recoil";
-import { useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import notify from "../../../Components/Function/notify";
 const Div = styled.div`
   display: flex;
@@ -26,12 +26,14 @@ const Textarea = styled.textarea`
   border: ${(props) => props.borderColor} solid 2px;
   border-radius: 10px;
   padding: 10px;
-  height: 500px;
+  min-height: 500px;
+
   line-height: 1.5em;
   resize: none;
   font-size: 0.9em;
   margin: 15px 0 20px 0;
   outline: none;
+  white-space: pre-wrap;
 `;
 
 const Button = styled.button`
@@ -48,6 +50,11 @@ const Button = styled.button`
 `;
 
 const EditArticle = () => {
+  const textRef = useRef();
+  const handleSize = useCallback(() => {
+    textRef.current.style.height = "auto";
+    textRef.current.style.height = textRef.current.scrollHeight + "px";
+  }, []);
   const navigate = useNavigate();
   const url = `${process.env.REACT_APP_API_URL}/boards`;
   const params = useParams();
@@ -96,6 +103,8 @@ const EditArticle = () => {
         ></Input>
 
         <Textarea
+          ref={textRef}
+          onInput={handleSize}
           type="text"
           id="content"
           cols="20"
