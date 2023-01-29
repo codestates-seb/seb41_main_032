@@ -40,7 +40,7 @@ const usePagination = (_data = [], numItems = 10) => {
     /** 페이지버튼 총 갯수 */
     const pages = [];
     // Math.ceil -> 나눴을때 발생하는 소수점 처리
-    for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(data?.length / itemsPerPage); i++) {
         pages.push(i);
     }
 
@@ -50,7 +50,7 @@ const usePagination = (_data = [], numItems = 10) => {
     // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
     useEffect(() => {
-        setCurrentItems(data.slice(indexOfFirstItem, indexOfLastItem));
+        setCurrentItems(data?.slice(indexOfFirstItem, indexOfLastItem));
     }, [indexOfLastItem, indexOfFirstItem, data]);
 
     /** 페이지 버튼 생성 */
