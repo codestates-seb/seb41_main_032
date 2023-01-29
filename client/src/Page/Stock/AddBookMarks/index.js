@@ -35,7 +35,6 @@ const AddBookMarks = () => {
     const [select, setSelect] = useState('stock');
     const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination([], 35);
     const [stockList, setStockList] = useState();
-
     const KOSPI = useKOSPIList();
     const KOSDAQ = useKOSDAQList();
     const [stock, setWord] = useStockSearch();
@@ -51,15 +50,22 @@ const AddBookMarks = () => {
     }, [KOSPI, KOSDAQ]);
 
     useEffect(() => {
-        if (keyword === '' && stockList) {
-            handleSelect();
-            return;
-        }
         setWord(keyword);
     }, [keyword]);
 
     useEffect(() => {
-        if (!stock || stock.length === 0) return;
+        if (!stock || stock.length === 0) {
+            if (select === 'stock') {
+                setData(stockList);
+                setCurrentPage(1);
+            }
+            if (select === 'bookMarks') {
+                setData(bookMarks);
+                setCurrentPage(1);
+            }
+            return;
+        }
+        setSelect('stock');
         setCurrentPage(1);
         setData(stock);
     }, [stock]);
@@ -70,21 +76,19 @@ const AddBookMarks = () => {
         if (select === 'bookMarks') setData(bookMarks);
     }, [bookMarks]);
 
-    const handleSelect = (select) => {
+    const handleSelect = (pick) => {
         if (!memberId) return;
-        if (select) setSelect(select);
-        switch (select) {
+        setSelect(pick);
+        switch (pick) {
             case 'bookMarks':
                 setData(bookMarks);
                 setCurrentPage(1);
                 setKeyword('');
                 break;
-            case 'stock':
+            default:
                 setData(stockList);
                 setCurrentPage(1);
                 setKeyword('');
-                break;
-            default:
                 break;
         }
     };
