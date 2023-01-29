@@ -5,8 +5,6 @@ import Clock from './Clock';
 import clearStorage from '../../Function/clearStorage';
 import { ReactComponent as HomeLogo } from '../../Img/homelogo.svg';
 import { ReactComponent as Glass } from '../../Img/glass.svg';
-import { ReactComponent as LogoutLogo } from '../../Img/logouticon.svg';
-import { ReactComponent as LoginLogo } from '../../Img/loginicon.svg';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../../Function/userInfo';
 import notify from '../../Function/notify';
