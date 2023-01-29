@@ -398,7 +398,6 @@ export const useTrade = (success) => {
 
 export const useBoards = () => {
     const API = useAPI();
-    const [memberId, setMemberId] = useRecoilState(userInfo);
     const { data, refetch } = useQuery(['Boards'], () => API.getBoards(), {
         refetchInterval: 10000, //10초마다 업데이트
         retry: 0,
