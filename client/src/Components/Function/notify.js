@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 /**
  * @param {string} text 출력할 텍스트
  * @param {string} type 메세지 타입 'error','warning','success','info'
+ * @author 이중원
  */
 const notify = (text, type) => {
     switch (type) {
