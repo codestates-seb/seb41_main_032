@@ -75,8 +75,8 @@ const StockList = ({ data, bookMarks, select }) => {
         <>
             {select === 'stock' ? (
                 <ItemList>
-                    {data?.map((el) => (
-                        <ItemBox key={el.srtnCd}>
+                    {data?.map((el, index) => (
+                        <ItemBox key={index}>
                             <div>
                                 <h3>{el.itmsNm}</h3>
                                 <p>
