@@ -4,12 +4,24 @@ import StockTable from './Components/StockTable';
 import Loading from '../../../Components/Style/Loading';
 import styled from 'styled-components';
 import { useKOSPIList, useKOSDAQList } from '../../../Components/API/ReactQueryContainer';
+import useInput from '../../../Components/Hook/useInput';
 
 const Container = styled.div`
     width: 100%;
     min-height: 800px;
     margin-bottom: 100px;
     padding: 20px;
+`;
+
+const SearchInput = styled.input`
+    height: 30px;
+    width: 300px;
+    color: #70727b;
+    border-radius: 3px;
+    border: 1px solid rgb(186 191 196);
+    margin-top: 20px;
+    padding-left: 5px;
+    margin-bottom: 10px;
 `;
 
 /**
@@ -19,6 +31,7 @@ const Container = styled.div`
 const AllList = () => {
     const KOSPI = useKOSPIList();
     const KOSDAQ = useKOSDAQList();
+    const [keyword, setKeyword, ChangeKeyword] = useInput();
 
     return (
         <Container>
@@ -28,8 +41,8 @@ const AllList = () => {
                         <Title>전체 목록</Title>
                         {<SmTitle>{`${dateOutput(KOSPI[0].basDt)} 기준`}</SmTitle>}
                     </header>
-
-                    {<StockTable KOSPI={KOSPI} KOSDAQ={KOSDAQ} />}
+                    <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword} />
+                    {<StockTable KOSPI={KOSPI} KOSDAQ={KOSDAQ} keyword={keyword} setKeyword={setKeyword} />}
                 </>
             ) : (
                 <Loading />

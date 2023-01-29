@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { ascend, descend } from '../../../../Components/Function/sort';
 import { SelectBtnContainer } from '../../../../Components/Style/Stock';
 import { PageBtn, PageList } from '../../../../Components/Style/PageBtn';
+import useStockSearch from '../../../../Components/Hook/useStockSearch';
 
 const IndexBtnContainer = styled.ul`
     display: flex;
@@ -32,33 +33,46 @@ const IndexBtnContainer = styled.ul`
 
 /** 모든 주식정보 페이지에서 주식의 테이블(표)를 만드는 컴포넌트입니다
  * @author 이중원 */
-const StockTable = ({ KOSPI, KOSDAQ }) => {
+const StockTable = ({ KOSPI, KOSDAQ, keyword, setKeyword }) => {
     const [indexSelect, setIndexSelect] = useState('KOSPI');
     const [sortSelect, setSortSelect] = useState();
     const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(KOSPI);
     const [table, setTable] = useCreateTable();
+    const [stock, setWord] = useStockSearch();
+
+    useEffect(() => {
+        setWord(keyword);
+    }, [keyword]);
+
+    useEffect(() => {
+        if (!stock || stock.length === 0) return;
+        setIndexSelect(null);
+        setSortSelect(null);
+        setCurrentPage(1);
+        setData(stock);
+    }, [stock]);
 
     /** 데이터를 나누는(페이지네이션) usePagination 의 currentItems(현재 출력해야될 데이터들) 값이 변경될때마다 실행되고
      * 랜더링을 담당하는 useCreateTable 에 currentItems을 할당합니다 */
     useEffect(() => {
-        if (currentItems.length !== 0) {
+        if (currentItems?.length !== 0) {
             setTable(currentItems);
         }
-    }, [...currentItems]);
+    }, [currentItems]);
 
     /** 클릭한 버튼을 기준으로 코스피와 코스닥 주식정보를 보여줍니다
      * @param {string} select 'KOSPI' or 'KOSDAQ' */
     const handleStockSelect = (select) => {
-        if (select === 'KOSPI') {
-            if (!KOSPI) return;
-            setIndexSelect('KOSPI');
-            setData(KOSPI);
-            setSortSelect(null);
-            setCurrentPage(1);
-        } else if (select === 'KOSDAQ') {
-            if (!KOSDAQ) return;
+        if (select === 'KOSDAQ') {
             setIndexSelect('KOSDAQ');
             setData(KOSDAQ);
+            setKeyword('');
+            setSortSelect(null);
+            setCurrentPage(1);
+        } else {
+            setIndexSelect('KOSPI');
+            setData(KOSPI);
+            setKeyword('');
             setSortSelect(null);
             setCurrentPage(1);
         }

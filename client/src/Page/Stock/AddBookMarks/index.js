@@ -8,7 +8,7 @@ import StockList from './Components/StockList';
 import { PageBtn, PageList } from '../../../Components/Style/PageBtn';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../../../Components/Function/userInfo';
-
+import useStockSearch from '../../../Components/Hook/useStockSearch';
 const Section = styled.section`
     width: 100%;
     min-height: 500px;
@@ -38,18 +38,31 @@ const AddBookMarks = () => {
 
     const KOSPI = useKOSPIList();
     const KOSDAQ = useKOSDAQList();
-
+    const [stock, setWord] = useStockSearch();
     const bookMarks = useBookMarks();
     const [memberId, setMemberId] = useRecoilState(userInfo);
 
     // 코스피,코스닥이 변경되었을때 실행
     useEffect(() => {
         if (!KOSPI && !KOSDAQ) return;
-
         const stock = KOSPI?.concat(KOSDAQ);
         setStockList(stock);
         if (select === 'stock') setData(stock);
     }, [KOSPI, KOSDAQ]);
+
+    useEffect(() => {
+        if (keyword === '' && stockList) {
+            handleSelect();
+            return;
+        }
+        setWord(keyword);
+    }, [keyword]);
+
+    useEffect(() => {
+        if (!stock || stock.length === 0) return;
+        setCurrentPage(1);
+        setData(stock);
+    }, [stock]);
 
     //북마크가 변경되었을때 실행
     useEffect(() => {
@@ -59,34 +72,20 @@ const AddBookMarks = () => {
 
     const handleSelect = (select) => {
         if (!memberId) return;
-        setSelect(select);
+        if (select) setSelect(select);
         switch (select) {
             case 'bookMarks':
                 setData(bookMarks);
                 setCurrentPage(1);
+                setKeyword('');
                 break;
             case 'stock':
                 setData(stockList);
                 setCurrentPage(1);
+                setKeyword('');
                 break;
             default:
                 break;
-        }
-    };
-
-    const Submit = (e) => {
-        if (e.key === 'Enter') {
-            if (keyword) {
-                setData(
-                    stockList.filter((el) => {
-                        if (el.itmsNm.includes(keyword)) return true;
-                        else return false;
-                    }),
-                );
-                setKeyword('');
-                setSelect('stock');
-                setCurrentPage(1);
-            }
         }
     };
 
@@ -96,7 +95,7 @@ const AddBookMarks = () => {
                 <Title>{'관심종목 추가'}</Title>
             </header>
 
-            <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword} onKeyPress={Submit} />
+            <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword} />
 
             <SelectBtnContainer>
                 <li>

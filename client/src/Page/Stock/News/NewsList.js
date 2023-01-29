@@ -55,15 +55,15 @@ const NewsList = ({ news }) => {
     }, [news]);
 
     useEffect(() => {
-        if (currentItems.length !== 0) {
+        if (currentItems?.length !== 0) {
             setNewsList(currentItems);
         }
-    }, [...currentItems]);
+    }, [currentItems]);
 
     return (
         <>
             <Container>
-                {currentItems.map((el, index) => (
+                {currentItems?.map((el, index) => (
                     <li key={index} onClick={() => window.open(el.link)}>
                         <h3 className="title" dangerouslySetInnerHTML={{ __html: el.title }}></h3>
                         <p className="description" dangerouslySetInnerHTML={{ __html: el.description }}></p>
