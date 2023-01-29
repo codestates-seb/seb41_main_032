@@ -43,12 +43,17 @@ const Table = styled.table`
         }
         :hover {
             background-color: #c7d3ef;
+            transform: scale(1.01);
+            transition: 0.5s ease-in-out;
         }
     }
     tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
         :hover {
             background-color: #c7d3ef;
+
+            transform: scale(1.01);
+            transition: 0.5s ease-in-out;
         }
     }
 `;

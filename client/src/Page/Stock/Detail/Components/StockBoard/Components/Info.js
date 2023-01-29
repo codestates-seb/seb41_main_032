@@ -127,7 +127,8 @@ const OrderButton = styled.button`
     border-radius: 5px;
     cursor: pointer;
     :hover {
-        transform: scale(1.1);
+        transform: scale(1.2);
+        transition: 0.5s ease-in-out;
     }
     :disabled {
         background-color: gray;

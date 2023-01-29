@@ -43,6 +43,10 @@ const ItemBox = styled.li`
             width: 20px;
             height: 20px;
         }
+        :hover {
+            transform: scale(1.3);
+            transition: 0.5s ease-in-out;
+        }
     }
 `;
 

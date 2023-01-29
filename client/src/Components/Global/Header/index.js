@@ -72,6 +72,7 @@ const LogDiv = styled.div`
         cursor: pointer;
         :hover {
             transform: scale(1.1);
+            transition: 0.5s ease-in-out;
         }
     }
     .user {

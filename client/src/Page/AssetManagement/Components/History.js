@@ -35,6 +35,8 @@ const Table = styled.table`
         }
         :hover {
             background-color: #c7d3ef;
+            transform: scale(1.01);
+            transition: 0.5s ease-in-out;
         }
     }
     tbody tr:nth-of-type(even) {
@@ -54,11 +56,11 @@ const Section = styled.section`
     }
 `;
 
+// 매매한 기록을 출력하는 컴포넌트
 const History = ({ tradeInfo }) => {
     const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination(tradeInfo, 8);
     const navigate = useNavigate();
     const handlerLink = (data) => {
-        console.log('🚀  data', data);
         navigate(`/stock/${data.stockCode}`, { state: { name: data.stockName } });
     };
     return (
@@ -81,7 +83,7 @@ const History = ({ tradeInfo }) => {
                         return (
                             <tr key={index} onClick={(e) => handlerLink(el)}>
                                 <td>{el.stockName}</td>
-                                <td>{el.tradeType}</td>
+                                <td>{el.tradeType === 'BUY' ? '매수' : '매도'}</td>
                                 <td>{el.price}</td>
                                 <td>{el.quantity}</td>
                                 <td>{timeForToday(new Date(el.createdAt))}</td>

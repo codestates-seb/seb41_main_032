@@ -24,6 +24,10 @@ const Container = styled.ul`
         justify-content: space-evenly;
         border-bottom: 1px solid rgb(193, 195, 197);
         height: 100px;
+        :hover {
+            transform: scale(1.01);
+            transition: 0.5s ease-in-out;
+        }
     }
 
     .title {
