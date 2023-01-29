@@ -6,7 +6,7 @@ import { userInfo } from "../../../Components/Function/userInfo";
 import { useRecoilState } from "recoil";
 import DeleteModal from "./deleteModal";
 import Portal from "../../../Components/Function/Portal";
-
+import notify from "../../../Components/Function/notify";
 const Div = styled.div`
   display: flex;
 
@@ -58,25 +58,29 @@ const Article = () => {
     setModalOn(!modalOn);
   };
   const [data, setData] = useState({});
-  //TODO : 백엔드 작업에 따라 get 경로 변경
-  //const url =`${process.env.REACT_APP_API_URL}`
-  const url = `https://jsonplaceholder.typicode.com/posts`;
+  const url = `${process.env.REACT_APP_API_URL}`;
   useEffect(() => {
-    axios.get(`${url}/${params.num}`).then((res) => {
+    axios.get(`${url}/boards/${params.num}`).then((res) => {
       setData(res.data);
     });
   }, []);
-
   const deleteHandler = () => {
     console.log("delete");
-    axios.delete(`${url}/${params.num}`).then((res) => console.log(res));
+    axios.delete(`${url}/boards/${params.num}`).then(() => {
+      navigate("/board");
+      notify("삭제되었습니다", "success");
+    });
   };
   return (
     <Div>
       <Box className="title">{data.title}</Box>
       <Box className="writer">
-        <div>Writer {data.userId}</div>
-        {Number(memberId) === data.userId ? (
+        <div>
+          {data.nickname}
+          &nbsp;
+          {new Date(data.createdAt).toLocaleString()}
+        </div>
+        {Number(memberId) === data.memberId ? (
           <div>
             <Button onClick={() => navigate(`/board/edit/${params.num}`)}>
               수정
@@ -88,7 +92,6 @@ const Article = () => {
             </Portal>
             <Button
               onClick={() => {
-                console.log("삭제");
                 handleModal();
               }}
             >
@@ -99,7 +102,7 @@ const Article = () => {
           <></>
         )}
       </Box>
-      <Box className="body">{data.body}</Box>
+      <Box className="body">{data.content}</Box>
     </Div>
   );
 };

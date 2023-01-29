@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useMember } from "../../../Components/API/ReactQueryContainer";
 import Article from "./Article";
-
+import notify from "../../../Components/Function/notify";
 const Div = styled.div`
   min-height: 100%;
   padding: 30px 50px;
@@ -35,14 +35,18 @@ const NewArticle = styled(Link)`
 
 const Board = () => {
   const memberInfo = useMember();
-  //TODO: board 일괄 조회 api로 url 변경
-  //  const url = `${process.env.REACT_APP_API_URL}/board`;
-  const url = "https://jsonplaceholder.typicode.com/posts";
+  const url = `${process.env.REACT_APP_API_URL}/boards`;
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get(url).then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get(url)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        notify("조회 실패(잠시 후 다시 시도해주세요)", "error");
+      });
   }, []);
 
   return (
@@ -52,7 +56,9 @@ const Board = () => {
         {memberInfo ? (
           <NewArticle to="/board/new">새 글 작성</NewArticle>
         ) : (
-          <NewArticle onClick={() => alert("로그인 후 작성 가능합니다")}>
+          <NewArticle
+            onClick={() => notify("로그인 후 작성 가능합니다", "warning")}
+          >
             새 글 작성
           </NewArticle>
         )}

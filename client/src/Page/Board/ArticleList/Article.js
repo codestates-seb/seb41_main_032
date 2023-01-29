@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import usePagination from "../../../Components/Hook/usePagination";
 import { PageBtn, PageList } from "../../../Components/Style/PageBtn";
 import { useEffect } from "react";
+import timeForToday from "../../../Components/Function/timeForToday";
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,12 +57,17 @@ const Article = ({ article }) => {
       {currentItems.map((el, index) => (
         <Li key={index}>
           <Div>
-            <StyledLink to={`/board/detail/${el.id}`}>{el.title}</StyledLink>
+            <StyledLink to={`/board/detail/${el.boardId}`}>
+              {el.title}
+            </StyledLink>
             <div className="writer">
-              Writer &nbsp;
-              {el.userId}
+              {el.nickname}&nbsp;{timeForToday(el.createdAt)}
             </div>
-            <p>{el.body.slice(0, 20)}...</p>
+            <p>
+              {el.content.length > 20
+                ? `${el.content.slice(0, 20)}...`
+                : el.content}
+            </p>
           </Div>
         </Li>
       ))}
