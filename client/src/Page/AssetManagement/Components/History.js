@@ -59,9 +59,9 @@ const History = ({ tradeInfo }) => {
                 </tr>
             </thead>
             <tbody>
-                {tradeInfo?.map((el) => {
+                {tradeInfo?.map((el, index) => {
                     return (
-                        <tr>
+                        <tr key={index}>
                             <td>{el.stockName}</td>
                             <td>{el.tradeType}</td>
                             <td>{el.price}</td>
