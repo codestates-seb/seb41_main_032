@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import timeForToday from '../../../Components/Function/timeForToday';
 import usePagination from '../../../Components/Hook/usePagination';
 import { PageBtn, PageList } from '../../../Components/Style/PageBtn';
+import numberToKR from '../../../Components/Function/numberToKR';
 const Table = styled.table`
     margin-top: 10px;
     width: 100%;
@@ -75,6 +76,7 @@ const History = ({ tradeInfo }) => {
                         <th>거래타입</th>
                         <th>가격</th>
                         <th>수량</th>
+                        <th>총 가격</th>
                         <th>날짜</th>
                     </tr>
                 </thead>
@@ -84,8 +86,9 @@ const History = ({ tradeInfo }) => {
                             <tr key={index} onClick={(e) => handlerLink(el)}>
                                 <td>{el.stockName}</td>
                                 <td>{el.tradeType === 'BUY' ? '매수' : '매도'}</td>
-                                <td>{el.price}</td>
+                                <td>{`${numberToKR(el.price)}원`}</td>
                                 <td>{el.quantity}</td>
+                                <td>{`${numberToKR(el.price * el.quantity)}원`}</td>
                                 <td>{timeForToday(new Date(el.createdAt))}</td>
                             </tr>
                         );
