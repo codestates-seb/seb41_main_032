@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useInput from "../../../Components/Hook/useInput";
 import { userInfo } from "../../../Components/Function/userInfo";
 import { useRecoilState } from "recoil";
+import { useEffect } from "react";
 const Div = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,56 +46,61 @@ const Button = styled.button`
   }
 `;
 
-const NewArticle = () => {
+const EditArticle = () => {
   // const navigate = useNavigate();
+  // const url = `${process.env.REACT_APP_API_URL}/board`;
+  const url = `https://jsonplaceholder.typicode.com/posts`;
+  const params = useParams();
   const [memberId, setMemberId] = useRecoilState(userInfo);
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO : 서버 배포되면 기능 마저 구현
-    // const url = `url`;
-    // const options = {
-    //   method: "POST",
-    //   data: data,
-    // };
-    console.log(data);
-    console.log(memberId);
-    // axios(url, options).then((res) => {
+    console.log(inputValue);
+    // axios.patch(`${url}/${params.num}`, inputValue).then((res) => {
     //   console.log(res);
-    //   navigate("/board");
+    //   navigate(`/board/detail/${params.num}`);
     //  });
   };
   // 글 데이터
-  const [data, handleChange] = useInput({
-    memberId: memberId,
-    title: "",
-    content: "",
-  });
-  const handleDisable = !(memberId && data.title && data.content);
+  const [inputValue, setInputValue] = useInput({});
+  useEffect(() => {
+    axios.get(`${url}/${params.num}`).then((res) => {
+      setInputValue({
+        memberId: memberId,
+        title: res.data.title,
+        content: res.data.body,
+      });
+    });
+  }, []);
+
+  const handleDisable = !(memberId && inputValue.title && inputValue.content);
 
   return (
     <form onSubmit={handleSubmit}>
       <Div>
-        <h2>새 글 작성</h2>
+        <h2>글 수정</h2>
         <Input
           type="text"
           id="title"
+          value={inputValue.title || ""}
           onChange={(e) =>
-            handleChange({ ...data, [e.target.id]: e.target.value })
+            setInputValue({ ...inputValue, [e.target.id]: e.target.value })
           }
           placeholder="제목을 입력해주세요(20자까지)"
           maxLength="20"
-          borderColor={data.title ? "#eff5f5" : "#0081C9"}
+          borderColor={inputValue.title ? "#eff5f5" : "#0081C9"}
         ></Input>
 
         <Textarea
           type="text"
           id="content"
           cols="20"
+          value={inputValue.content || ""}
           onChange={(e) =>
-            handleChange({ ...data, [e.target.id]: e.target.value })
+            setInputValue({ ...inputValue, [e.target.id]: e.target.value })
           }
           placeholder="본문을 입력해주세요"
-          borderColor={data.content ? "#eff5f5" : "#0081C9"}
+          borderColor={inputValue.content ? "#eff5f5" : "#0081C9"}
         ></Textarea>
 
         <Button type="submit" disabled={handleDisable}>
@@ -105,4 +111,4 @@ const NewArticle = () => {
   );
 };
 
-export default NewArticle;
+export default EditArticle;

@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import Layout from './Components/Style/Layout';
 import AssetManagement from './Page/AssetManagement';
 import Board from './Page/Board/ArticleList';
+import EditArticle from './Page/Board/Edit/index';
 import Article from './Page/Board/Detail';
 import NewArticle from './Page/Board/NewArticle';
 import Home from './Page/Home';
@@ -17,7 +18,6 @@ import StockTopList from './Page/Stock/TopList';
 import Login from './Page/User/Login';
 import MyPage from './Page/User/MyPage';
 import SignUp from './Page/User/SignUp/index';
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -36,12 +36,12 @@ function App() {
                         <Route path="/board" element={<Board />} />
                         <Route path="/board/new" element={<NewArticle />} />
                         <Route path="/board/detail/:num" element={<Article />} />
+                        <Route path="/board/edit/:num" element={<EditArticle />} />
                         <Route path="/users/:id" element={<MyPage />} />
                         <Route path="/AssetManagement" element={<AssetManagement />} />
                     </Routes>
                 </Layout>
             </RecoilRoot>
-            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
             <ToastContainer
                 position="top-center"
                 autoClose={3000}
@@ -54,6 +54,7 @@ function App() {
                 pauseOnHover
                 theme="colored"
             />
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         </QueryClientProvider>
     );
 }
