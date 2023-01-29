@@ -6,6 +6,8 @@ import usePagination from '../../../Components/Hook/usePagination';
 import useInput from '../../../Components/Hook/useInput';
 import StockList from './Components/StockList';
 import { PageBtn, PageList } from '../../../Components/Style/PageBtn';
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../../../Components/Function/userInfo';
 
 const Section = styled.section`
     width: 100%;
@@ -38,6 +40,7 @@ const AddBookMarks = () => {
     const KOSDAQ = useKOSDAQList();
 
     const bookMarks = useBookMarks();
+    const [memberId, setMemberId] = useRecoilState(userInfo);
 
     // 코스피,코스닥이 변경되었을때 실행
     useEffect(() => {
@@ -55,6 +58,7 @@ const AddBookMarks = () => {
     }, [bookMarks]);
 
     const handleSelect = (select) => {
+        if (!memberId) return;
         setSelect(select);
         switch (select) {
             case 'bookMarks':
@@ -100,11 +104,13 @@ const AddBookMarks = () => {
                         주식 리스트
                     </button>
                 </li>
-                <li>
-                    <button className={select === 'bookMarks' ? 'select' : null} onClick={() => handleSelect('bookMarks')}>
-                        북마크
-                    </button>
-                </li>
+                {bookMarks ? (
+                    <li>
+                        <button className={select === 'bookMarks' ? 'select' : null} onClick={() => handleSelect('bookMarks')}>
+                            북마크
+                        </button>
+                    </li>
+                ) : null}
             </SelectBtnContainer>
 
             <StockList data={currentItems} bookMarks={bookMarks} select={select} />

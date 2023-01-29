@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Ul = styled.ul`
@@ -18,18 +18,13 @@ const List = styled.li`
     padding: 5px 9px;
     background-color: ${(props) => props.color};
 `;
-const Autocomplete = ({ keyword, stockList, setKeyword }) => {
+const Autocomplete = ({ data, setWord, setKeyword }) => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState('white');
-    const [similar, setSimilar] = useState([]);
-    /** 27줄 data => stockList로 변경 - 이중원*/
-    useEffect(() => {
-        setSimilar(stockList.filter((el) => el.itmsNm.includes(keyword.toUpperCase())));
-    }, [keyword]);
 
     return (
         <Ul>
-            {similar.map((el) => (
+            {data?.map((el) => (
                 <List
                     key={el.srtnCd}
                     onClick={() => {
@@ -37,7 +32,7 @@ const Autocomplete = ({ keyword, stockList, setKeyword }) => {
                             state: { name: `${el.itmsNm}` },
                         });
                         setKeyword('');
-                        setSimilar([]);
+                        setWord(null);
                     }}
                     onMouseOver={() => setSelected(el.srtnCd)}
                     color={selected === el.srtnCd ? '#f7f7f7' : 'white'}

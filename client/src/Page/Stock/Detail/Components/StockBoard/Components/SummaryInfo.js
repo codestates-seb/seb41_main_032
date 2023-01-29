@@ -4,7 +4,7 @@ import Chart from 'react-apexcharts';
 import dateOutput from '../../../../../../Components/Function/dateOutput';
 import Tooltip from '../../../../../../Components/Global/Tooltip';
 import described from './tooltipText';
-import QuestionMark from '../../../../../../Components/Img/Help/white.png';
+import QuestionMark from '../../../../../../Components/Style/QuestionMark';
 
 const InfoBox = styled.ul`
     display: flex;
@@ -181,7 +181,7 @@ const SummaryInfo = ({ stockInfo, stockInvestor }) => {
                     <Tooltip text={described.turnoverRatio}>
                         <InfoItem>
                             <p>
-                                거래 회전율 <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                                거래 회전율 <QuestionMark color={'white'} />
                             </p>
                             <p>{stockInfo.vol_tnrt}</p>
                         </InfoItem>
@@ -189,7 +189,7 @@ const SummaryInfo = ({ stockInfo, stockInvestor }) => {
                     <Tooltip text={described.PER}>
                         <InfoItem>
                             <p>
-                                PER <QuestionMarkImg src={QuestionMark} alt="tooltip" />{' '}
+                                PER <QuestionMark color={'white'} />
                             </p>
                             <p>{stockInfo.per}</p>
                         </InfoItem>
@@ -197,7 +197,7 @@ const SummaryInfo = ({ stockInfo, stockInvestor }) => {
                     <Tooltip text={described.PBR}>
                         <InfoItem>
                             <p>
-                                PBR <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                                PBR <QuestionMark color={'white'} />
                             </p>
                             <p>{stockInfo.pbr}</p>
                         </InfoItem>
@@ -205,7 +205,7 @@ const SummaryInfo = ({ stockInfo, stockInvestor }) => {
                     <Tooltip text={described.EPS}>
                         <InfoItem>
                             <p>
-                                EPS <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                                EPS <QuestionMark color={'white'} />
                             </p>
                             <p>{commaGenerator(Math.floor(stockInfo.eps))}</p>
                         </InfoItem>
@@ -213,7 +213,7 @@ const SummaryInfo = ({ stockInfo, stockInvestor }) => {
                     <Tooltip text={described.BPS}>
                         <InfoItem>
                             <p>
-                                BPS <QuestionMarkImg src={QuestionMark} alt="tooltip" />
+                                BPS <QuestionMark color={'white'} />
                             </p>
                             <p>{commaGenerator(Math.floor(stockInfo.bps))}</p>
                         </InfoItem>

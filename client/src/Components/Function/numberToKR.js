@@ -6,10 +6,22 @@
  * @return 347441344410000 => 347조4413억
  */
 const numberToKR = (data) => {
+    if (!data) return 0;
     const unitWords = ['', '만', '억', '조', '경'];
     let result = String(data);
     if (result.length < 5) return result;
-    if (result.length < 9) return `${result.slice(0, result.length - 4)}만 ${result.slice(result.length - 4, result.length)}`;
+    if (result.length < 9) {
+        result = `${result.slice(0, result.length - 4)}만 ${result.slice(result.length - 4, result.length)}`;
+        if (result.charAt(result.length - 4) === '0') {
+            let count = 0;
+            for (let i = result.length - 4; i < result.length; i++) {
+                if (result[i] === '0') count++;
+                else break;
+            }
+            result = `${result.slice(0, result.length - 5)}${result.slice(result.length - (4 - count))}`;
+        }
+        return `${result.slice(0, result.length - 4)}${result.slice(result.length - 4, result.length)}`;
+    }
 
     let count = Math.floor(result.length / 4) * 4;
 
