@@ -45,7 +45,11 @@ const StockTable = ({ KOSPI, KOSDAQ, keyword, setKeyword }) => {
     }, [keyword]);
 
     useEffect(() => {
-        if (!stock || stock.length === 0) return;
+        if (!stock || stock.length === 0) {
+            setData(KOSPI);
+            setCurrentPage(1);
+            return;
+        }
         setIndexSelect(null);
         setSortSelect(null);
         setCurrentPage(1);
