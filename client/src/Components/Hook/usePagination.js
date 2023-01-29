@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const PageBtn = styled.li`
@@ -26,6 +26,7 @@ const usePagination = (_data = [], numItems = 10) => {
     const [currentPage, setCurrentPage] = useState(1); //현재 페이지
     const [itemsPerPage, setItemsPerPage] = useState(numItems); //아이템 갯수
     const [pageLimit, setPageLimit] = useState(5); // 페이지 버튼갯수
+    const [currentItems, setCurrentItems] = useState();
 
     // 페이지이동시 버튼값 변경을 위한 값
     const [maxPageLimit, setMaxPageLimit] = useState(5);
@@ -46,7 +47,11 @@ const usePagination = (_data = [], numItems = 10) => {
     // 현재 페이지를 기준으로 데이터를 잘라서 보여줌 (itemsPerPage = 아이템 갯수 ,currentPage= 현재 페이지 )
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+    useEffect(() => {
+        setCurrentItems(data.slice(indexOfFirstItem, indexOfLastItem));
+    }, [indexOfLastItem, indexOfFirstItem, data]);
 
     /** 페이지 버튼 생성 */
     const renderPageNumbers = pages.map((num) => {
