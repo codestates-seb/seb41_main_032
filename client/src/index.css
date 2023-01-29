@@ -4,5 +4,8 @@
     border: 0;
     box-sizing: border-box;
     font-family: 'Nanum Gothic', sans-serif;
+}
+
+.Toastify {
     white-space: pre-line;
 }
