@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
+import { useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import useInput from "../../../Components/Hook/useInput";
 import { userInfo } from "../../../Components/Function/userInfo";
@@ -25,12 +26,13 @@ const Textarea = styled.textarea`
   border: ${(props) => props.borderColor} solid 2px;
   border-radius: 10px;
   padding: 10px;
-  height: 500px;
+  min-height: 500px;
   line-height: 1.5em;
   resize: none;
   font-size: 0.9em;
   margin: 15px 0 20px 0;
   outline: none;
+  white-space: pre-wrap;
 `;
 
 const Button = styled.button`
@@ -47,6 +49,10 @@ const Button = styled.button`
 `;
 
 const NewArticle = () => {
+  const textRef = useRef();
+  const handleSize = useCallback(() => {
+    textRef.current.style.height = textRef.current.scrollHeight + "px";
+  }, []);
   const navigate = useNavigate();
   const [memberId, setMemberId] = useRecoilState(userInfo);
   const handleSubmit = (e) => {
@@ -86,6 +92,8 @@ const NewArticle = () => {
         ></Input>
 
         <Textarea
+          ref={textRef}
+          onInput={handleSize}
           type="text"
           id="content"
           cols="20"

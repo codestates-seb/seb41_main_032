@@ -32,6 +32,7 @@ const Div = styled.div`
   .body {
     height: 100%;
     min-height: 300px;
+    white-space: pre-wrap;
   }
 `;
 const Box = styled.div`
