@@ -8,7 +8,6 @@ const Table = styled.table`
     font-size: 0.9em;
     min-width: 400px;
     border-radius: 5px 5px 0 0;
-    overflow: hidden;
     margin: 50px 30px;
     th,
     td {
