@@ -8,7 +8,6 @@ import { stockList } from '../Function/userInfo';
  * setKeyword로 사용자가 검색창에 입력했을 경우 해당 키워드의와 일치하는 map 키값을 리턴합니다
  */
 const useStockSearch = () => {
-    console.time('createPDF');
     const [stock, setStock] = useRecoilState(stockList);
     const [keyword, setKeyword] = useState();
     const [dataMap, setDataMap] = useState();
@@ -35,11 +34,10 @@ const useStockSearch = () => {
             setSortData(null);
             return;
         }
-        console.time('개선 이후');
         const sortData = dataMap.get(keyword[0].toUpperCase());
+
         const findData = sortData?.filter((el) => el.itmsNm.includes(keyword.toUpperCase()));
         setSortData(findData);
-        console.timeEnd('개선 이후');
     }, [keyword]);
     return [sortData, setKeyword];
 };
