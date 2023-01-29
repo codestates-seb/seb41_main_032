@@ -13,9 +13,7 @@ const Div = styled.div`
   border: solid 3px #eff5f5;
   margin: 30px auto 30px 0;
   padding: 20px 30px;
-  li {
-    list-style: none;
-  }
+
   .writer {
     font-size: 0.9em;
     color: #7c7c7c;
@@ -25,6 +23,9 @@ const Div = styled.div`
     font-size: 0.9em;
     margin-top: 10px;
   }
+`;
+const Li = styled.li`
+  list-style: none;
 `;
 const StyledLink = styled(Link)`
   color: black;
@@ -53,16 +54,16 @@ const Article = ({ article }) => {
   return (
     <>
       {currentItems.map((el, index) => (
-        <Div>
-          <li key={index}>
+        <Li key={index}>
+          <Div>
             <StyledLink to={`/board/detail/${el.id}`}>{el.title}</StyledLink>
             <div className="writer">
               Writer &nbsp;
               {el.userId}
             </div>
             <p>{el.body.slice(0, 20)}...</p>
-          </li>
-        </Div>
+          </Div>
+        </Li>
       ))}
 
       <PageList>

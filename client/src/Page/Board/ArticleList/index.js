@@ -2,10 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { useMember } from "../../../Components/API/ReactQueryContainer";
 import Article from "./Article";
-
-// 게시판의 글 목록 조회 페이지 입니다. 각 목록은 ArticleThumbnail
 
 const Div = styled.div`
   min-height: 100%;
@@ -15,6 +13,9 @@ const Div = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+  span {
+    font-size: 0.7em;
   }
 `;
 
@@ -33,9 +34,10 @@ const NewArticle = styled(Link)`
 `;
 
 const Board = () => {
+  const memberInfo = useMember();
+  //TODO: board 일괄 조회 api로 url 변경
   //  const url = `${process.env.REACT_APP_API_URL}/board`;
   const url = "https://jsonplaceholder.typicode.com/posts";
-  // 현재 보고 있는 페이지의 데이터
   const [data, setData] = useState([]);
   useEffect(() => {
     axios.get(url).then((res) => {
@@ -47,7 +49,13 @@ const Board = () => {
     <Div>
       <div className="top">
         <h2> 게시판</h2>
-        <NewArticle to="/board/new">새 글 작성</NewArticle>
+        {memberInfo ? (
+          <NewArticle to="/board/new">새 글 작성</NewArticle>
+        ) : (
+          <NewArticle onClick={() => alert("로그인 후 작성 가능합니다")}>
+            새 글 작성
+          </NewArticle>
+        )}
       </div>
       <div className="listcontainer">
         <Article article={data} />
