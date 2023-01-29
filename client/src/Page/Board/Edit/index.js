@@ -52,6 +52,7 @@ const Button = styled.button`
 const EditArticle = () => {
   const textRef = useRef();
   const handleSize = useCallback(() => {
+    textRef.current.style.height = "auto";
     textRef.current.style.height = textRef.current.scrollHeight + "px";
   }, []);
   const navigate = useNavigate();

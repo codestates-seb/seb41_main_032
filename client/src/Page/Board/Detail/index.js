@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import DeleteModal from "./deleteModal";
 import Portal from "../../../Components/Function/Portal";
 import notify from "../../../Components/Function/notify";
+import Comment from "../Comment/index";
+import CommentForm from "../Comment/form";
 const Div = styled.div`
   display: flex;
 
@@ -73,38 +75,51 @@ const Article = () => {
     });
   };
   return (
-    <Div>
-      <Box className="title">{data.title}</Box>
-      <Box className="writer">
-        <div>
-          {data.nickname}
-          &nbsp;
-          {new Date(data.createdAt).toLocaleString()}
-        </div>
-        {Number(memberId) === data.memberId ? (
+    <>
+      <Div>
+        <Box className="title">{data.title}</Box>
+        <Box className="writer">
           <div>
-            <Button onClick={() => navigate(`/board/edit/${params.num}`)}>
-              수정
-            </Button>
-            <Portal>
-              {modalOn && (
-                <DeleteModal forDelete={deleteHandler} onClose={handleModal} />
-              )}
-            </Portal>
-            <Button
-              onClick={() => {
-                handleModal();
-              }}
-            >
-              삭제
-            </Button>
+            {data.nickname}
+            &nbsp;
+            {new Date(data.createdAt).toLocaleString()}
           </div>
+          {Number(memberId) === data.memberId ? (
+            <div>
+              <Button onClick={() => navigate(`/board/edit/${params.num}`)}>
+                수정
+              </Button>
+              <Portal>
+                {modalOn && (
+                  <DeleteModal
+                    forDelete={deleteHandler}
+                    onClose={handleModal}
+                  />
+                )}
+              </Portal>
+              <Button
+                onClick={() => {
+                  handleModal();
+                }}
+              >
+                삭제
+              </Button>
+            </div>
+          ) : (
+            <></>
+          )}
+        </Box>
+        <Box className="body">{data.content}</Box>
+      </Div>
+      <Div>
+        <Comment memberId={memberId} boardId={params.num} />
+        {memberId ? (
+          <CommentForm memberId={memberId} boardId={params.num} />
         ) : (
           <></>
         )}
-      </Box>
-      <Box className="body">{data.content}</Box>
-    </Div>
+      </Div>
+    </>
   );
 };
 
