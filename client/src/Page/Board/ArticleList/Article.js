@@ -44,7 +44,7 @@ const Article = ({ article }) => {
 
     return (
         <>
-            {currentItems.map((el, index) => (
+            {currentItems?.map((el, index) => (
                 <Li key={index}>
                     <Div>
                         <StyledLink to={`/board/detail/${el.boardId}`}>{el.title}</StyledLink>

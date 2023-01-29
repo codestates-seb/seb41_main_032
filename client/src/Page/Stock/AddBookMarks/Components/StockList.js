@@ -88,8 +88,8 @@ const StockList = ({ data, bookMarks, select }) => {
                 </ItemList>
             ) : (
                 <ItemList>
-                    {data?.map((el) => (
-                        <ItemBox key={el.stockCode}>
+                    {data?.map((el, index) => (
+                        <ItemBox key={index}>
                             <div>
                                 <h3>{el.stockName}</h3>
                                 <p>{el.stockCode}</p>
