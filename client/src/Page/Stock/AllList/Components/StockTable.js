@@ -25,7 +25,6 @@ const IndexBtnContainer = styled.ul`
     }
     button {
         cursor: pointer;
-
         padding: 10px;
         width: 100%;
     }
