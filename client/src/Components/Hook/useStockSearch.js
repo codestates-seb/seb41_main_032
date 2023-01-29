@@ -19,6 +19,7 @@ const useStockSearch = () => {
         let map = new Map();
         if (KOSPI && KOSDAQ) {
             const stockList = [].concat(KOSPI, KOSDAQ);
+            setStock(stockList);
             for (let i = 0; i < stockList.length; i++) {
                 map.set(stockList[i].itmsNm[0], []);
             }
