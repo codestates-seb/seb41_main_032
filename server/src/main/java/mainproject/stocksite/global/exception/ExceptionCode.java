@@ -18,6 +18,7 @@ public enum ExceptionCode {
     COMMENT_NOT_FOUND(404, "Comment not found"),
     BOOKMARK_NOT_FOUND(404, "Bookmark not found"),
     HAVE_NO_STOCK(404, "You don't have this stock."),
+    CANNOT_FOUND_STOCK_DATA(404, "No data in database"),
 
     // 409 CONFLICT 중복된 리소스
     MEMBER_EXISTS(409, "Member exists"),
