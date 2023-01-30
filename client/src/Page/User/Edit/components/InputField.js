@@ -12,10 +12,9 @@ const Container = styled.div`
   gap: 6px;
 `;
 
-// 회원가입 페이지에서 아이디, 닉네임, 이메일 인풋 영역
-const InputField = ({ id, user, isValidInput, setUser, setIsValidInput }) => {
+// 아이디, 닉네임, 이메일 인풋 영역
+const InputField = ({ id, user, isValidInput, setUser, setIsValidInput, disabled }) => {
   const value = user[id];
-
   const [isEntered, setIsEntered] = useState(false);
 
   useEffect(() => {
@@ -54,6 +53,7 @@ const InputField = ({ id, user, isValidInput, setUser, setIsValidInput }) => {
         isValid={isValidInput[id]}
         placeholder={getPlaceholderText()}
         onChange={handleChange}
+        disabled={disabled}
       />
       {isValidInput[id] === false && <Warning>{getWarningText()}</Warning>}
     </Container>

@@ -1,14 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import clearStorage from "../../../../Components/Function/clearStorage";
+import notify from "../../../../Components/Function/notify";
 
 const Button = styled.button`
-  align-self: flex-end;
   padding: 2px;
   color: #6d7991;
   background-color: #ffffff;
   font-size: 12px;
-  text-align: bottom;
   text-decoration: none;
   cursor: pointer;
 
@@ -18,9 +17,8 @@ const Button = styled.button`
 `;
 
 // 회원탈퇴 버튼
-const DeleteButton = () => {
+const DeleteButton = ({ memberId }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const handleClick = () => {
     const answer = window.confirm("정말 탈퇴하시겠습니까?");
@@ -28,7 +26,7 @@ const DeleteButton = () => {
   };
 
   const requestDelete = () => {
-    const url = `${process.env.REACT_APP_API_URL}/members/${id}`;
+    const url = `${process.env.REACT_APP_API_URL}/members/${memberId}`;
     const options = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -43,7 +41,7 @@ const DeleteButton = () => {
           throw response;
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => notify("회원탈퇴 실패", "error"));
   };
 
   return <Button onClick={handleClick}>회원탈퇴</Button>;
