@@ -55,7 +55,7 @@ const Posts = ({ memberId }) => {
       <Subtitle>작성글</Subtitle>
       <Contents>
         {posts.length > 0 ? (
-          posts.map((post) => <Post key={post.borderId} {...post} />)
+          posts.map((post) => <Post key={post.boardId} {...post} />)
         ) : (
           <EmptyMessage>없음</EmptyMessage>
         )}
