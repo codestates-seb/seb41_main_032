@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import clearStorage from "../../../../Components/Function/clearStorage";
+import notify from "../../../../Components/Function/notify";
 
 const Button = styled.button`
   align-self: flex-end;
@@ -37,13 +38,13 @@ const DeleteButton = () => {
       .then((response) => {
         if (response.ok) {
           clearStorage();
-          alert("탈퇴를 완료했습니다.");
+          notify("탈퇴를 완료했습니다.", "success");
           navigate("/");
         } else {
           throw response;
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => notify(`회원탈퇴 실패 (error code: ${error.status})`, "error"));
   };
 
   return <Button onClick={handleClick}>회원탈퇴</Button>;

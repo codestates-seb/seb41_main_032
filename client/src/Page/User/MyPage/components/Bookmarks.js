@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import notify from "../../../../Components/Function/notify";
 import Subtitle from "../../../../Components/Style/User/Subtitle";
 import WhiteButton from "../../../../Components/Style/User/WhiteButton";
 import Bookmark from "./Bookmark";
@@ -61,7 +62,7 @@ const Bookmarks = ({ memberId, isOwner }) => {
         throw response;
       })
       .then((bookmarks) => setBookmarks(bookmarks))
-      .catch((error) => console.log(error));
+      .catch((error) => notify(`북마크 조회 실패 (error code: ${error.status})`, "error"));
   };
 
   return (
