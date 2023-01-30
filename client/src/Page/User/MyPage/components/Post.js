@@ -17,10 +17,14 @@ const Container = styled.div`
 `;
 
 // 작성글 컴포넌트
-const Post = ({ borderId, title }) => {
+const Post = ({ boardId, title }) => {
   const navigate = useNavigate();
 
-  return <Container onClick={() => navigate(`/board/detail/${borderId}`)}>{title}</Container>;
+  return (
+    <Container onClick={() => navigate(`/board/detail/${boardId}`)}>
+      {title}
+    </Container>
+  );
 };
 
 export default Post;
