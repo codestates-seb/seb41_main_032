@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useRef, useCallback, useState } from "react";
+import notify from "../../../Components/Function/notify";
 
 const Div = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ const CommentForm = ({ memberId, boardId }) => {
       })
       .then(() => {
         setComment("");
-        window.location.reload();
+        notify("댓글을 작성했습니다", "success");
       });
   };
   return (
