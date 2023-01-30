@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  max-width: 50%;
+  width: 50%;
   padding: 10px;
   border: 1px solid #cccccc;
   border-radius: 5px;
