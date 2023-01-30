@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Title from "../../../Components/Style/User/Title";
 import Form from "./components/Form";
-import OAuth from "./components/OAuth";
 
 const Container = styled.main`
   width: 360px;
@@ -33,7 +32,6 @@ const SignUp = () => {
     <Container>
       <Title>회원가입</Title>
       <Link to="/login">이미 계정이 있으신가요?</Link>
-      <OAuth />
       <Form />
     </Container>
   );

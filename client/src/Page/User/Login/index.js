@@ -5,7 +5,6 @@ import getStorage from "../../../Components/Function/getStorage";
 import Title from "../../../Components/Style/User/Title";
 import Form from "./components/Form";
 import GoSignUp from "./components/GoSignUp";
-import OAuth from "./components/OAuth";
 
 const Container = styled.main`
   width: 360px;
@@ -43,7 +42,6 @@ const Login = () => {
     <Container>
       <Title>로그인</Title>
       <Form />
-      <OAuth />
       <GoSignUp />
     </Container>
   );
