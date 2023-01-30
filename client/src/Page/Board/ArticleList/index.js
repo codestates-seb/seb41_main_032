@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { useMember, useBoards } from '../../../Components/API/ReactQueryContainer';
 import Article from './Article';
 import notify from '../../../Components/Function/notify';
