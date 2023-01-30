@@ -127,7 +127,8 @@ const OrderButton = styled.button`
     border-radius: 5px;
     cursor: pointer;
     :hover {
-        transform: scale(1.1);
+        transform: scale(1.2);
+        transition: 0.5s ease-in-out;
     }
     :disabled {
         background-color: gray;
@@ -316,9 +317,7 @@ const Info = ({ stockInfo }) => {
                             -
                         </button>
                     </ButtonContainer>
-                    <OrderButton disabled={marketTime !== '장마감' ? 'disabled' : null} value="비활성화" onClick={handlerOrder}>
-                        주문
-                    </OrderButton>
+                    <OrderButton onClick={handlerOrder}>주문</OrderButton>
                 </TradingButton>
             </TradingContainer>
             <TradingContainer>

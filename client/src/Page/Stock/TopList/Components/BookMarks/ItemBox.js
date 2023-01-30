@@ -1,17 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
 const Item = styled.li`
+    cursor: pointer;
+    height: 70px;
+    border: 1px solid rgb(193, 195, 197);
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-right: 20px;
-    border: 1px solid #333;
-    border-radius: 7px;
-    width: 150px;
-    height: 100px;
+    margin: 10px;
+    padding: 0px 10px;
+    border-radius: 10px;
+
+    :hover {
+        transform: scale(1.1);
+        transition: 0.5s ease-in-out;
+    }
 `;
 
 const StockName = styled.div`

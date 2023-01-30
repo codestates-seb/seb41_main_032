@@ -43,6 +43,10 @@ const ItemBox = styled.li`
             width: 20px;
             height: 20px;
         }
+        :hover {
+            transform: scale(1.3);
+            transition: 0.5s ease-in-out;
+        }
     }
 `;
 
@@ -71,8 +75,8 @@ const StockList = ({ data, bookMarks, select }) => {
         <>
             {select === 'stock' ? (
                 <ItemList>
-                    {data?.map((el) => (
-                        <ItemBox key={el.srtnCd}>
+                    {data?.map((el, index) => (
+                        <ItemBox key={index}>
                             <div>
                                 <h3>{el.itmsNm}</h3>
                                 <p>
@@ -88,8 +92,8 @@ const StockList = ({ data, bookMarks, select }) => {
                 </ItemList>
             ) : (
                 <ItemList>
-                    {data?.map((el) => (
-                        <ItemBox key={el.stockCode}>
+                    {data?.map((el, index) => (
+                        <ItemBox key={index}>
                             <div>
                                 <h3>{el.stockName}</h3>
                                 <p>{el.stockCode}</p>

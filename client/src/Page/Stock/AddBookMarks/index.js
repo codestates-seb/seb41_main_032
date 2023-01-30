@@ -8,7 +8,7 @@ import StockList from './Components/StockList';
 import { PageBtn, PageList } from '../../../Components/Style/PageBtn';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../../../Components/Function/userInfo';
-
+import useStockSearch from '../../../Components/Hook/useStockSearch';
 const Section = styled.section`
     width: 100%;
     min-height: 500px;
@@ -35,21 +35,40 @@ const AddBookMarks = () => {
     const [select, setSelect] = useState('stock');
     const [currentItems, currentPage, setCurrentPage, pages, renderPageNumbers, handlePrevBtn, handleNextBtn, data, setData] = usePagination([], 35);
     const [stockList, setStockList] = useState();
-
     const KOSPI = useKOSPIList();
     const KOSDAQ = useKOSDAQList();
-
+    const [stock, setWord] = useStockSearch();
     const bookMarks = useBookMarks();
     const [memberId, setMemberId] = useRecoilState(userInfo);
 
     // 코스피,코스닥이 변경되었을때 실행
     useEffect(() => {
         if (!KOSPI && !KOSDAQ) return;
-
         const stock = KOSPI?.concat(KOSDAQ);
         setStockList(stock);
         if (select === 'stock') setData(stock);
     }, [KOSPI, KOSDAQ]);
+
+    useEffect(() => {
+        setWord(keyword);
+    }, [keyword]);
+
+    useEffect(() => {
+        if (!stock || stock.length === 0) {
+            if (select === 'stock') {
+                setData(stockList);
+                setCurrentPage(1);
+            }
+            if (select === 'bookMarks') {
+                setData(bookMarks);
+                setCurrentPage(1);
+            }
+            return;
+        }
+        setSelect('stock');
+        setCurrentPage(1);
+        setData(stock);
+    }, [stock]);
 
     //북마크가 변경되었을때 실행
     useEffect(() => {
@@ -57,36 +76,20 @@ const AddBookMarks = () => {
         if (select === 'bookMarks') setData(bookMarks);
     }, [bookMarks]);
 
-    const handleSelect = (select) => {
+    const handleSelect = (pick) => {
         if (!memberId) return;
-        setSelect(select);
-        switch (select) {
+        setSelect(pick);
+        switch (pick) {
             case 'bookMarks':
                 setData(bookMarks);
                 setCurrentPage(1);
-                break;
-            case 'stock':
-                setData(stockList);
-                setCurrentPage(1);
+                setKeyword('');
                 break;
             default:
-                break;
-        }
-    };
-
-    const Submit = (e) => {
-        if (e.key === 'Enter') {
-            if (keyword) {
-                setData(
-                    stockList.filter((el) => {
-                        if (el.itmsNm.includes(keyword)) return true;
-                        else return false;
-                    }),
-                );
-                setKeyword('');
-                setSelect('stock');
+                setData(stockList);
                 setCurrentPage(1);
-            }
+                setKeyword('');
+                break;
         }
     };
 
@@ -96,7 +99,7 @@ const AddBookMarks = () => {
                 <Title>{'관심종목 추가'}</Title>
             </header>
 
-            <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword} onKeyPress={Submit} />
+            <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword} />
 
             <SelectBtnContainer>
                 <li>

@@ -1,5 +1,9 @@
 import { useIsOpen } from '../API/ReactQueryContainer';
 
+/**
+ * 주식 장이 열리는 날인지 열렸으면 현재의 장은 무엇인지 알려줍니다
+ * @author 이중원
+ */
 const useStockTime = () => {
     const isOpen = useIsOpen();
     if (!isOpen) return '장마감';

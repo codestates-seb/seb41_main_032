@@ -1,3 +1,8 @@
+/**
+ * 거래기록을 계산해주는 함수입니다
+ * @author 이중원
+ * @param {Array} data 계산할 데이터
+ */
 const tradeCalculator = (data = []) => {
     let map = new Map();
     for (let i = 0; i < data.length; i++) {

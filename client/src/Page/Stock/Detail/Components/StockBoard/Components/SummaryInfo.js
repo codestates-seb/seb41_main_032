@@ -40,10 +40,6 @@ const InfoContainer = styled.div`
     }
 `;
 
-const QuestionMarkImg = styled.img`
-    margin-left: 5px;
-`;
-
 /** 매매동향을 차트로 그려주는 컴포넌트입니다
  *
  * 개인,기관, 외국인의 매매와 매수정보를 이용하여 bar 차트를 그립니다*/

@@ -100,6 +100,7 @@ export const SelectBtnContainer = styled.ul`
 
         :hover {
             transform: scale(1.1);
+            transition: 0.5s ease-in-out;
         }
     }
     .select {

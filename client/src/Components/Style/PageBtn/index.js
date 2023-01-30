@@ -12,6 +12,8 @@ export const PageBtn = styled.li`
     pointer-events: ${(props) => (props.disabled ? 'none' : null)};
     :hover {
         background-color: rgb(159, 207, 243);
+        transform: scale(1.1);
+        transition: 0.5s ease-in-out;
     }
 `;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import numberToKR from '../../../Components/Function/numberToKR';
-const Testa = ({ trade }) => {
+const AssetHistory = ({ trade }) => {
     const chartData = {
         series: [
             {
@@ -144,4 +144,4 @@ const Testa = ({ trade }) => {
     return <Chart options={chartData.options} series={chartData.series} height={270} type="line" />;
 };
 
-export default Testa;
+export default AssetHistory;

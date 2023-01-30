@@ -7,6 +7,9 @@ import Pie from './Components/Pie';
 import AssetHistory from './Components/AssetHistory';
 import { useNavigate } from 'react-router-dom';
 import History from './Components/History';
+import Tooltip from '../../Components/Global/Tooltip';
+import QuestionMark from '../../Components/Style/QuestionMark';
+
 const Section = styled.section`
     background-color: #212223;
     padding: 20px;
@@ -44,6 +47,10 @@ const Chart = styled.div`
     }
 `;
 
+/**
+ * 자산관리 페이지입니다
+ * @author 이중원
+ */
 const AssetManagement = () => {
     const user = useMember();
     const navigate = useNavigate();
@@ -64,26 +71,54 @@ const AssetManagement = () => {
                     <Section>
                         <Asset>
                             <h2>자산 현황</h2>
-                            <ItemContainer>
-                                <div className="category">총자산</div>
-                                <div className="value">{`${numberToKR(trade.totalStockPrice() + user?.money)}원`}</div>
-                            </ItemContainer>
-                            <ItemContainer>
-                                <div className="category">예수금</div>
-                                <div className="value">{`${numberToKR(user?.money)}원`}</div>
-                            </ItemContainer>
-                            <ItemContainer>
-                                <div className="category">보유 주식</div>
-                                <div className="value">{`${numberToKR(trade.totalStockPrice())}원`}</div>
-                            </ItemContainer>
-                            <ItemContainer>
-                                <div className="category">손익</div>
-                                <div className="value">{`${numberToKR(trade.totalEstimatedAssets())}원`}</div>
-                            </ItemContainer>
-                            <ItemContainer>
-                                <div className="category">손익률</div>
-                                <div className="value">{`${((trade.totalEstimatedAssets() / 10000000) * 100)?.toFixed(2)}%`}</div>
-                            </ItemContainer>
+                            <Tooltip text={'예수금과 보유 주식 가치를 더한 값입니다'}>
+                                <ItemContainer>
+                                    <div className="category">
+                                        총자산
+                                        <QuestionMark color={'white'} />
+                                    </div>
+                                    <div className="value">{`${numberToKR(trade.totalStockPrice() + user?.money)}원`}</div>
+                                </ItemContainer>
+                            </Tooltip>
+
+                            <Tooltip text={'현재 사용 할 수 있는 금액을 의미합니다'}>
+                                <ItemContainer>
+                                    <div className="category">
+                                        예수금
+                                        <QuestionMark color={'white'} />
+                                    </div>
+                                    <div className="value">{`${numberToKR(user?.money)}원`}</div>
+                                </ItemContainer>
+                            </Tooltip>
+
+                            <Tooltip text={'현재 보유한 주식의 총 가치를 나타냅니다'}>
+                                <ItemContainer>
+                                    <div className="category">
+                                        보유 주식
+                                        <QuestionMark color={'white'} />
+                                    </div>
+                                    <div className="value">{`${numberToKR(trade.totalStockPrice())}원`}</div>
+                                </ItemContainer>
+                            </Tooltip>
+                            <Tooltip text={'이제까지 누적된 손실과 이익을 나타냅니다'}>
+                                <ItemContainer>
+                                    <div className="category">
+                                        손익
+                                        <QuestionMark color={'white'} />
+                                    </div>
+                                    <div className="value">{`${numberToKR(trade.totalEstimatedAssets())}원`}</div>
+                                </ItemContainer>
+                            </Tooltip>
+
+                            <Tooltip text={'이제까지 누적된 손실과 이익을 백분율로 나타냅니다'}>
+                                <ItemContainer>
+                                    <div className="category">
+                                        손익률
+                                        <QuestionMark color={'white'} />
+                                    </div>
+                                    <div className="value">{`${((trade.totalEstimatedAssets() / 10000000) * 100)?.toFixed(2)}%`}</div>
+                                </ItemContainer>
+                            </Tooltip>
                         </Asset>
                         <Pie trade={trade} />
                         <Chart>
@@ -91,7 +126,7 @@ const AssetManagement = () => {
                         </Chart>
                     </Section>
                     <section>
-                        <History tradeInfo={tradeInfo}></History>
+                        <History tradeInfo={[...tradeInfo].reverse()}></History>
                     </section>
                 </>
             ) : null}
