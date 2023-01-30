@@ -135,6 +135,9 @@ const useAPI = () => {
     const getBoards = () => {
         return axios.get(`${API_URL_LIST[pointer]}/boards`);
     };
+    const getComment = (boardId) => {
+        return axios.get(`${API_URL_LIST[pointer]}/comments?board=${boardId}`);
+    };
 
     const list = {
         getIndexKOSPI,
@@ -154,6 +157,7 @@ const useAPI = () => {
         getTradeInfo,
         postTrade,
         getBoards,
+        getComment,
     };
 
     return list;
@@ -402,6 +406,18 @@ export const useBoards = () => {
         refetchInterval: 10000, //10초마다 업데이트
         retry: 0,
         notifyOnChangeProps: 'tracked', //랜더링 최적화 (data값이 변경안되면 랜더링 X)
+        onError: () => balancer(refetch),
+        onSuccess: () => (count = 0),
+        select: (data) => data.data,
+    });
+    return data;
+};
+
+export const useComment = (boardId) => {
+    const API = useAPI();
+    const { data, refetch } = useQuery(['Comment', boardId], () => API.getComment(boardId), {
+        refetchInterval: 10000, //10초마다 업데이트
+        retry: 0,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => data.data,
