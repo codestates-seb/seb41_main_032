@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import clearStorage from "../../../../Components/Function/clearStorage";
+import notify from "../../../../Components/Function/notify";
 
 const Button = styled.button`
   padding: 2px;
@@ -40,7 +41,7 @@ const DeleteButton = ({ memberId }) => {
           throw response;
         }
       })
-      .catch((error) => alert(`회원탈퇴 실패 (error code: ${error.status})`));
+      .catch((error) => notify("회원탈퇴 실패", "error"));
   };
 
   return <Button onClick={handleClick}>회원탈퇴</Button>;

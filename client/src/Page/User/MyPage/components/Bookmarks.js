@@ -62,7 +62,7 @@ const Bookmarks = ({ memberId, isOwner }) => {
         throw response;
       })
       .then((bookmarks) => setBookmarks(bookmarks))
-      .catch((error) => notify(`북마크 조회 실패 (error code: ${error.status})`, "error"));
+      .catch((error) => notify("북마크 조회 실패", "error"));
   };
 
   return (

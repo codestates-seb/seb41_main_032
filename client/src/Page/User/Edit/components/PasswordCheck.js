@@ -43,7 +43,7 @@ const PasswordCheck = ({ passwordCheck, setPasswordCheck }) => {
           throw response;
         }
       })
-      .catch((error) => notify(`회원정보 조회 실패 (error code: ${error.status})`, "error"));
+      .catch((error) => notify("회원정보 조회 실패", "error"));
   };
 
   const inputFieldProps = { user, isValidPassword, setUser, setIsValidPassword, setPasswordCheck };

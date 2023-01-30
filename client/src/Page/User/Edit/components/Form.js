@@ -49,7 +49,7 @@ const Form = () => {
         }
       })
       .then((data) => setUser(data))
-      .catch((error) => notify(`회원정보 수정 실패 (error code: ${error.status})`, "error"));
+      .catch((error) => notify("회원정보 가져오기 실패", "error"));
   };
 
   const handleSubmit = (event) => {
@@ -75,7 +75,7 @@ const Form = () => {
         }
       })
       .then((data) => navigate(`/users/${memberId}`))
-      .catch((error) => console.log(error));
+      .catch((error) => notify("회원정보 수정 실패", "error"));
   };
 
   const inputFieldProps = {

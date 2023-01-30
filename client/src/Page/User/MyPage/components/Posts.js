@@ -47,7 +47,7 @@ const Posts = ({ memberId }) => {
         throw response;
       })
       .then((posts) => setPosts(posts))
-      .catch((error) => notify(`작성글 조회 실패 (error code: ${error.status})`, "error"));
+      .catch((error) => notify("작성글 조회 실패", "error"));
   };
 
   return (

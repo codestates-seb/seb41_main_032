@@ -50,7 +50,7 @@ const MyPage = () => {
         setUser(userData);
         setIsOwner(getStorage("memberId") === userData.memberId.toString());
       })
-      .catch((error) => notify(`회원정보 조회 실패 (error code: ${error.status})`, "error"));
+      .catch((error) => notify("회원정보 조회 실패", "error"));
   };
 
   return (
