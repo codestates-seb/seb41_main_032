@@ -40,7 +40,7 @@ const Article = ({ article }) => {
 
     useEffect(() => {
         setData(article);
-    }, [currentItems]);
+    }, [article]);
 
     return (
         <>
