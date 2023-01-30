@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import notify from "../../../../Components/Function/notify";
 import BlueButton from "../../../../Components/Style/User/BlueButton";
 import InputField from "./InputField";
 import PasswordInputField from "./PasswordInputField";
@@ -51,7 +52,7 @@ const Form = () => {
         throw response;
       })
       .then(() => navigate("/login"))
-      .catch((error) => alert(`회원가입 실패 (error code: ${error.status})`));
+      .catch((error) => notify("회원가입 실패", "error"));
   };
 
   const inputFieldProps = {
