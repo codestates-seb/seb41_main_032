@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import { userInfo } from '../../Function/userInfo';
 import notify from '../../Function/notify';
 import { useMember } from '../../API/ReactQueryContainer';
+import Logo from '../../Img/logo.png';
 // 헤더 기본 구조
 // 로고 / 검색창 / 시계 / 로그인버튼
 
@@ -45,12 +46,15 @@ const Main = styled.header`
         }
     }
     .name {
-        font-weight: 800;
+        font-weight: bold;
         margin: 20px auto auto 8px;
     }
 `;
 
 const LogDiv = styled.div`
+    position: fixed;
+    top: 10px;
+    right: 10px;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
@@ -83,6 +87,27 @@ const LogDiv = styled.div`
     }
 `;
 
+const StyledLink = styled(Link)`
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 10px;
+    img {
+        width: 50px;
+        height: 50px;
+    }
+    h1 {
+        margin-left: 10px;
+        color: #000000;
+        font-size: 1.3em;
+        font-weight: bold;
+    }
+`;
+
 const Header = () => {
     const navigate = useNavigate();
     const [memberId, setMemberId] = useRecoilState(userInfo);
@@ -96,15 +121,15 @@ const Header = () => {
     return (
         <Main>
             <div className="logo">
-                <Link to="/">
-                    <HomeLogo className="icon" width="40" fill="#113CFC" />
-                </Link>
-                <div className="name">시가총액32조</div>
+                <StyledLink to="/stock/top">
+                    <img src={Logo} alt="logo" />
+                    <h1>STOCK BOX</h1>
+                </StyledLink>
             </div>
+
             <div className="search">
                 <div>
                     <Search />
-                    <Glass className="sicon" width="20" height="60" />
                     <Clock />
                 </div>
             </div>

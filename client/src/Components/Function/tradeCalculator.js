@@ -23,22 +23,26 @@ const tradeCalculator = (data = []) => {
     };
 
     // 평단가
-    const averageUnitPrice = (stockCode, price) => {
+    const averageUnitPrice = (stockCode) => {
         const stock = map.get(stockCode);
-        let count = 0;
         if (stock === undefined || stock.length === 0) {
             return 0;
-        } else {
-            const total = stock.reduce((accumulator, currentValue) => {
-                if (currentValue.tradeType === 'BUY') {
-                    count += currentValue.quantity;
-                    return accumulator + currentValue.price * currentValue.quantity;
-                }
-                return accumulator;
-            }, 0);
-            if (total === 0) return 0;
-            return Math.floor(total / count);
         }
+        let count = stock[stock?.length - 1].totalStockHoldings;
+        let index = stock?.length - 1;
+        let sum = 0;
+        while (count > 0) {
+            if (stock[index].tradeType === 'BUY') {
+                let quantity = stock[index].quantity;
+                while (count > 0 && quantity > 0) {
+                    sum += stock[index].price;
+                    count--;
+                    quantity--;
+                }
+            }
+            index--;
+        }
+        return Math.floor(sum / stock[stock?.length - 1].totalStockHoldings);
     };
 
     // 매도 평균가
