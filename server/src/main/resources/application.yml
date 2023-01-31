@@ -1,0 +1,34 @@
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://main-32.cd7gr6hr0ucd.ap-northeast-2.rds.amazonaws.com:13306/main32?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: admin
+    password: mainproject32
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    include: secret
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId:
+            clientSecret:
+            redirect-uri: http://ec2-13-125-246-152.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+mail:
+  address:
+    admin: admin@gmail.com
+jwt:
+  key:
+  access-token-expiration-minutes: 40
+  refresh-token-expiration-minutes: 420
+config:
+  domain: http://main-32.s3-website.ap-northeast-2.amazonaws.com
