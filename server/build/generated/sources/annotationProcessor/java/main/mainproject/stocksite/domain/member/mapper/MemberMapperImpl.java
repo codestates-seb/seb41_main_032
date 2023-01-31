@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-10T15:04:32+0900",
-    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 11.0.16.1 (Azul Systems, Inc.)"
+    date = "2023-01-31T12:43:57+0900",
+    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 11.0.15.1 (Oracle Corporation)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
@@ -46,6 +46,7 @@ public class MemberMapperImpl implements MemberMapper {
         memberResponseDto.setPassword( member.getPassword() );
         memberResponseDto.setNickname( member.getNickname() );
         memberResponseDto.setEmail( member.getEmail() );
+        memberResponseDto.setMoney( member.getMoney() );
 
         return memberResponseDto;
     }

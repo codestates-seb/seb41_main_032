@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,28 +32,40 @@ public class OverallStockService {
         List<KOSPIStockIndex> foundIndices = kospiStockIndexRepository.findAll();
         verifyExistsData(foundIndices);
 
-        return foundIndices;
+        String theMostRecentBasDt = foundIndices.get(0).getBasDt();
+        List<KOSPIStockIndex> theMostRecentStockIndices = foundIndices.stream().filter(e -> e.getBasDt().equals(theMostRecentBasDt)).collect(Collectors.toList());
+
+        return theMostRecentStockIndices;
     }
 
     public List<KOSDAQStockIndex> getKOSDAQStockIndex() {
         List<KOSDAQStockIndex> foundIndices = kosdaqStockIndexRepository.findAll();
         verifyExistsData(foundIndices);
+        
+        String theMostRecentBasDt = foundIndices.get(0).getBasDt();
+        List<KOSDAQStockIndex> theMostRecentStockIndices = foundIndices.stream().filter(e -> e.getBasDt().equals(theMostRecentBasDt)).collect(Collectors.toList());
 
-        return foundIndices;
+        return theMostRecentStockIndices;
     }
 
     public List<KOSPIStockList> getKOSPIStockList() {
         List<KOSPIStockList> foundLists = kospiStockListRepository.findAll();
         verifyExistsData(foundLists);
 
-        return foundLists;
+        String theMostRecentBasDt = foundLists.get(0).getBasDt();
+        List<KOSPIStockList> theMostRecentStockIndices = foundLists.stream().filter(e -> e.getBasDt().equals(theMostRecentBasDt)).collect(Collectors.toList());
+
+        return theMostRecentStockIndices;
     }
 
     public List<KOSDAQStockList> getKOSDAQStockList() {
         List<KOSDAQStockList> foundLists = kosdaqStockListRepository.findAll();
         verifyExistsData(foundLists);
 
-        return foundLists;
+        String theMostRecentBasDt = foundLists.get(0).getBasDt();
+        List<KOSDAQStockList> theMostRecentStockIndices = foundLists.stream().filter(e -> e.getBasDt().equals(theMostRecentBasDt)).collect(Collectors.toList());
+
+        return theMostRecentStockIndices;
     }
 
     private void verifyExistsData(List<?> data) {
