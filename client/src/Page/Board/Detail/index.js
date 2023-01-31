@@ -11,7 +11,6 @@ import Comment from "../Comment/index";
 import CommentForm from "../Comment/form";
 const Div = styled.div`
   display: flex;
-
   flex-direction: column;
   margin: 30px 50px;
   padding: 50px 50px;
@@ -35,6 +34,9 @@ const Div = styled.div`
     height: 100%;
     min-height: 300px;
     white-space: pre-wrap;
+  }
+  > span {
+    color: gray;
   }
 `;
 const Box = styled.div`
@@ -116,7 +118,7 @@ const Article = () => {
         {memberId ? (
           <CommentForm memberId={memberId} boardId={params.num} />
         ) : (
-          <></>
+          <span>댓글은 로그인 시 작성 가능합니다</span>
         )}
       </Div>
     </>
