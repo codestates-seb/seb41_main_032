@@ -5,6 +5,8 @@ import Loading from '../../../Components/Style/Loading';
 import styled from 'styled-components';
 import { useKOSPIList, useKOSDAQList } from '../../../Components/API/ReactQueryContainer';
 import useInput from '../../../Components/Hook/useInput';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Container = styled.div`
     width: 100%;
@@ -29,9 +31,16 @@ const SearchInput = styled.input`
  * @author 이중원
  */
 const AllList = () => {
+    const location = useLocation();
     const KOSPI = useKOSPIList();
     const KOSDAQ = useKOSDAQList();
-    const [keyword, setKeyword, ChangeKeyword] = useInput();
+    const [keyword, setKeyword, ChangeKeyword] = useInput('');
+
+    useEffect(() => {
+        if (location.state?.name.length !== 0) {
+            setKeyword(location.state?.name);
+        }
+    }, [location.state?.name]);
 
     return (
         <Container>
@@ -41,7 +50,7 @@ const AllList = () => {
                         <Title>전체 목록</Title>
                         {<SmTitle>{`${dateOutput(KOSPI[0].basDt)} 기준`}</SmTitle>}
                     </header>
-                    <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword} />
+                    <SearchInput type="text" placeholder="검색" onChange={ChangeKeyword} value={keyword || ''} />
                     {<StockTable KOSPI={KOSPI} KOSDAQ={KOSDAQ} keyword={keyword} setKeyword={setKeyword} />}
                 </>
             ) : (

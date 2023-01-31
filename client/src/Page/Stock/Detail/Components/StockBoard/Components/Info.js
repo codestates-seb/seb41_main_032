@@ -338,7 +338,7 @@ const Info = ({ stockInfo }) => {
                             평단가
                             <QuestionMark color={'white'} />
                         </span>
-                        <TradeNum>{`${numberToKR(calculation.averageUnitPrice(params.id, stockInfo.stck_prpr))}원`}</TradeNum>
+                        <TradeNum>{`${numberToKR(calculation.averageUnitPrice(params.id))}원`}</TradeNum>
                     </ItemContainer>
                 </Tooltip>
                 <Tooltip text={described.averageSellPrice}>
@@ -374,7 +374,11 @@ const Info = ({ stockInfo }) => {
                             손익
                             <QuestionMark color={'white'} />
                         </span>
-                        <TradeNum>{`${numberToKR(calculation.incomeStatement(params.id, stockInfo.stck_prpr))}원`}</TradeNum>
+                        <TradeNum>{`${
+                            calculation.incomeStatement(params.id, stockInfo.stck_prpr) > 0
+                                ? numberToKR(calculation.incomeStatement(params.id, stockInfo.stck_prpr))
+                                : `-${numberToKR(Math.abs(calculation.incomeStatement(params.id, stockInfo.stck_prpr)))}`
+                        }원`}</TradeNum>
                     </ItemContainer>
                 </Tooltip>
             </TradingContainer>

@@ -19,7 +19,7 @@ date.setDate(date.getDate() - 7);
 const day = `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
 
 // 서버 리스트(로드밸런서를 위한)
-const API_URL_LIST = [process.env.REACT_APP_API_URL, process.env.REACT_APP_API_URL];
+const API_URL_LIST = [process.env.REACT_APP_API_URL, process.env.REACT_APP_API_URL2];
 
 // 서버를 가리키는 포인터
 let pointer = Math.floor(Math.random() * API_URL_LIST.length);
@@ -198,9 +198,16 @@ export const useKOSPIList = () => {
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => {
+            const map = new Map();
             const pivot = data.data[0].basDt; //가장 최신 데이터의 날짜
-            const latestDateData = data.data.filter((el) => el.basDt === pivot);
-            return latestDateData;
+            data.data.map((el) => {
+                if (el.basDt === pivot) {
+                    map.set(el.srtnCd, el);
+                }
+            });
+            let arr = Array.from(map.values());
+            // const latestDateData = data.data.filter((el) => el.basDt === pivot);
+            return arr;
         },
     });
     return data;
@@ -214,12 +221,21 @@ export const useKOSDAQList = () => {
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),
         select: (data) => {
+            const map = new Map();
             const pivot = data.data[0].basDt; //가장 최신 데이터의 날짜
-            const latestDateData = data.data.filter((el) => el.basDt === pivot);
-            return latestDateData;
+            data.data.map((el) => {
+                if (el.basDt === pivot) {
+                    map.set(el.srtnCd, el);
+                }
+            });
+            let arr = Array.from(map.values());
+
+            // const pivot = data.data[0].basDt; //가장 최신 데이터의 날짜
+            // const latestDateData = data.data.filter((el) => el.basDt === pivot);
+            // return latestDateData;
+            return arr;
         },
     });
-
     return data;
 };
 
