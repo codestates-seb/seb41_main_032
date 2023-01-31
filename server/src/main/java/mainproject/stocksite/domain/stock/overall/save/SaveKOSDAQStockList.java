@@ -32,8 +32,7 @@ public class SaveKOSDAQStockList {
     private final RestTemplate restTemplate;
 
     @PostConstruct
-//    @Scheduled(cron = "15 5 11 * * *", zone = "Asia/Seoul")  // 매일 오전 11시 5분에 주식시세정보 데이터 불러옴
-    @Scheduled(cron = "15 */5 * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "15 5 11 * * *", zone = "Asia/Seoul")  // 매일 오전 11시 5분 15초에 주식시세정보 데이터 불러옴
     public void getAndSaveKOSDAQStockList() {
 
         String url = STOCK_DEFAULT_URL + "/getStockPriceInfo";
@@ -89,9 +88,8 @@ public class SaveKOSDAQStockList {
         }
     }
 
-    // 매일 오전 11시 4분에 DB에 있는 주식시세정보 데이터 삭제
-//    @Scheduled(cron = "0 5 11 * * *", zone = "Asia/Seoul")
-    @Scheduled(cron = "0 */5 * * * *", zone = "Asia/Seoul")
+    // 매일 오전 11시 5분에 DB에 있는 주식시세정보 데이터 삭제
+    @Scheduled(cron = "0 5 11 * * *", zone = "Asia/Seoul")
     public void deleteKOSDAQStockList() {
         kosdaqStockListRespository.deleteAll();
     }
