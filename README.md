@@ -1,4 +1,5 @@
 # 시가총액 32조 팀 프로젝트
+
 <br />
 
 ## ✔️ 팀원 소개
@@ -6,6 +7,8 @@
 |-|-|-|-|-|-|
 |[이중원](https://github.com/LeeJoongWon)|[박인우](https://github.com/FE41PIW)|[양우진](https://github.com/yan9vvoojin)|[박시환](https://github.com/psh1379)|[방재영](https://github.com/bangjaeyoung)|[임동규](https://github.com/pepsi160ml)
 |FE 팀장<br/>(프로젝트 부팀장)|FE 팀원|FE 팀원|BE 팀장<br/>(프로젝트 팀장)|BE 팀원|BE 팀원|
+
+<br />
 
 ## ✔️ 기술 스택
 ### Front-End
