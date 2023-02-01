@@ -3,15 +3,22 @@ package mainproject.stocksite.domain.stock.overall.config;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Getter
 @Component
 public class DateConfig {
-    LocalDate now = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-    String formattedNow = now.format(formatter);
 
-    String fromFiveDaysAgoToNow = String.valueOf(Integer.parseInt(formattedNow) - 5);
+    public String getFromFiveDaysAgoToNow() {
+        Calendar cal = Calendar.getInstance();
+
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
+
+        cal.add(Calendar.DATE, -5);
+
+        String fromFiveDaysAgoToNow = sdformat.format(cal.getTime());
+
+        return fromFiveDaysAgoToNow;
+    }
 }
