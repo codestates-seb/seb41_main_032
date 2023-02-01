@@ -77,7 +77,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 # 👪 FE 
 
-## FE 팀장 이중원 (프로젝트 부팀장)
+## ⭐ FE 팀장 이중원 (프로젝트 부팀장)
 ### 담당한 작업들
 * 주식
 * 뉴스
@@ -233,7 +233,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-## FE 양우진 팀원 
+## ⭐ FE 양우진 팀원 
 ### 담당한 작업들
 * 로그인
 * 회원가입
@@ -278,7 +278,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-## FE 박인우 팀원 
+## ⭐ FE 박인우 팀원 
 ### 담당한 작업들
 * 헤더, 푸터, 사이드바
 * 게시판
@@ -330,7 +330,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 <br />
 
 # 👪 BE
-## BE 임동규 팀원
+## ⭐ BE 임동규 팀원
 ### 담당한 작업들
 * 3개의 테이블 crud 기능
 * 실시간 채팅기능
@@ -370,7 +370,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-## BE 방재영 팀원
+## ⭐ BE 방재영 팀원
 ### 담당한 작업들
 * 스케링 기능
 * 외부 API
@@ -435,7 +435,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-## BE 팀장 박시환 (프로젝트 팀장)
+## ⭐ BE 팀장 박시환 (프로젝트 팀장)
 ### 담당한 작업들
 * AWS 배포 
 * 로그인 기능
