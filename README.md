@@ -2,7 +2,7 @@
 
 <br />
 
-## ✔️ 팀원 소개
+## 👪 팀원 소개
 |<img src="https://avatars.githubusercontent.com/u/83052628?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/111216062?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/106802169?v=4" width="150px"/>|<img src="https://avatars.githubusercontent.com/u/110961521?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/80241053?v=4" width="150px"/>|<img src="https://avatars.githubusercontent.com/u/111164516?v=4" width="150px" />|
 |-|-|-|-|-|-|
 |[이중원](https://github.com/LeeJoongWon)|[박인우](https://github.com/FE41PIW)|[양우진](https://github.com/yan9vvoojin)|[박시환](https://github.com/psh1379)|[방재영](https://github.com/bangjaeyoung)|[임동규](https://github.com/pepsi160ml)
@@ -10,7 +10,7 @@
 
 <br />
 
-## ✔️ 기술 스택
+## 🔧 기술 스택
 ### Front-End
 <div align=left> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
@@ -57,7 +57,21 @@
 
 <br />
 
-## ✔️ 배포링크
+## 💡 프로젝트 구상 배경
+
+주식을 처음 접하시는 분들을 위한 모의거래 사이트를 만들고 싶었습니다
+
+주식을 처음 접하시는 분들이 실제 주식거래를 하면 대부분 경험과 지식이 없어서 손해를 볼 가능성이 높습니다
+
+저희는 해당 문제를 해결하고자 가상의 돈으로 현실의 주식정보를 실시간으로 가져와 모의거래가 가능한 서비스를 만들고 싶었습니다
+
+<br />
+
+## 🔗 배포링크
+
+http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
+
+<br />
 
 ✔️ Git Commit Message Convention
 
