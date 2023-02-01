@@ -1,8 +1,10 @@
 # 시가총액 32조 팀 프로젝트
 
+![1](https://user-images.githubusercontent.com/83052628/215926277-6250440b-134a-4cd8-b05c-00c524c9fe60.JPG)
+
 <br />
 
-## 👪 팀원 소개
+# 👪 팀원 소개
 |<img src="https://avatars.githubusercontent.com/u/83052628?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/111216062?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/106802169?v=4" width="150px"/>|<img src="https://avatars.githubusercontent.com/u/110961521?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/80241053?v=4" width="150px"/>|<img src="https://avatars.githubusercontent.com/u/111164516?v=4" width="150px" />|
 |-|-|-|-|-|-|
 |[이중원](https://github.com/LeeJoongWon)|[박인우](https://github.com/FE41PIW)|[양우진](https://github.com/yan9vvoojin)|[박시환](https://github.com/psh1379)|[방재영](https://github.com/bangjaeyoung)|[임동규](https://github.com/pepsi160ml)
@@ -10,7 +12,7 @@
 
 <br />
 
-## 🔧 기술 스택
+# 🔧 기술 스택
 ### Front-End
 <div align=left> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
@@ -57,7 +59,7 @@
 
 <br />
 
-## 💡 프로젝트 구상 배경
+#1 💡 프로젝트 구상 배경
 
 주식을 처음 접하시는 분들을 위한 모의거래 사이트를 만들고 싶었습니다
 
@@ -70,6 +72,57 @@
 ## 🔗 배포링크
 
 http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
+
+<br />
+
+# 🔗 FE 
+
+## FE 팀장 이중원 (프로젝트 부팀장)
+### 담당한 작업들
+* 주식
+* 뉴스
+* 북마크
+* 자산관리 
+* 툴팁기능
+* 알림기능
+* 로드밸런서
+* 페이지네이션
+* 검색기능 개선
+* 리엑트 쿼리, 리코일
+* 숫자를 한글표시와 3자리 숫자마다 콤마를 찍어주는 기능
+* 주식거래기록 계산기(매도,매수평균가,손익,일자별 거래기록등등)
+* 날짜를 한글표시로 (~분전, ~일전, ~년전으로 바꿔주는) 바꿔주는 기능
+* 
+<br />
+
+### 1️⃣ 주식상세 페이지 
+![Lee1](https://user-images.githubusercontent.com/83052628/215926402-7391d861-8519-405c-b478-7039e3d549ab.gif)
+
+* 실시간 주식정보 기능  
+* 현재 주식 장 시간이 어떤 시간인지 표시하는 기능
+* 사용자의 편의를 위한 숫자를 한글표시로 바꿔주는 기능
+* 매매에 성공 또는 실패에 따른 알림기능 (3초후 자동으로 닫힘)
+* 사용자의 편의를 위한 3자리 숫자마다 콤마를 찍어서 보여주는 기능
+* 사용자가 어려워할 만한 투자지표애 마우스오버를 하면 툴팁으로 설명을 보여주는 기능
+* 매매를 돕기위해 평단가와 손익 매수금액 매도금액등을 계산하여 사용자에게 알려주는 기능
+* 사용자가 보유한 주식수량보다 적을떄와 예수금이 부족할떄 사용자가 거래를 할 수 없도록 막는 기능
+
+<br />
+
+### 2️⃣ 주식 전체페이지 & TOP10 페이지
+![Lee2](https://user-images.githubusercontent.com/83052628/215929568-316a8cec-a165-4c36-87c4-b72e84d3b4ad.gif)
+* 주식 검색기능
+* 코스피와 코스닥 주식을 구분 할 수 있는 탭 기능
+* 시가총액, 상승폭, 하락폭, 거래량, 거래대금에 따른 정렬기능
+
+<br />
+
+### 3️⃣ 관심종목 페이지
+북마크 기능을 사용자가 좀더 쉽게 사용 할 수 있도록 만든 페이지 
+![Lee3](https://user-images.githubusercontent.com/83052628/215930365-76c9ee75-3e03-4aef-8801-2ae1a4adf1aa.gif)
+
+* 검색기능
+* 전체주식 리스트와 북마크한 주식을 나누어 탭 기능 구현 (사용자 편의성을 위한)
 
 <br />
 
