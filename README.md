@@ -372,7 +372,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 ## BE 방재영 팀원
 ### 담당한 작업들
-* 스케쥴링 기능
+* 스케링 기능
 * 외부 API
 * 가상 모의 투자 기능
 
@@ -392,7 +392,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 <br />
 
 ### 외부 API
-![1](https://user-images.githubusercontent.com/83052628/215951972-32015a7d-83f7-499f-8b47-ec40f4b7df67.gif)
+![1](https://user-images.githubusercontent.com/83052628/215958195-31962ea0-e983-481d-9c63-cb8d4b099843.JPG)
 
 코스피, 코스닥 정보와 코스피,코스닥 주식리스트 정보를 가져오기 위해 누리집 API를 사용하였습니다
 
