@@ -75,7 +75,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-# 🔗 FE 
+# 👪 FE 
 
 ## FE 팀장 이중원 (프로젝트 부팀장)
 ### 담당한 작업들
@@ -329,7 +329,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-# 🔗 BE
+# 👪 BE
 ## BE 임동규 팀원
 ### 담당한 작업들
 * 3개의 테이블 crud 기능
@@ -337,7 +337,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-###  crud 기능
+### 1️⃣ crud 기능
 ![1](https://user-images.githubusercontent.com/83052628/215942231-a8ec4f05-3758-481f-8293-c81a835431f1.JPG)
 
 3개의 테이블의 crud 기능을 구현하였습니다
@@ -347,7 +347,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 여러 테이블의 연관관계를 구성하였습니다
 
 
-### 실시간 채팅기능
+### 2️⃣ 실시간 채팅기능
 ![2](https://user-images.githubusercontent.com/83052628/215943654-64c04f93-9263-4056-bb15-1e8bc8677773.JPG)
 
 실시간 채팅을 구현하기 위해 웹소켓 기능을 구현하였습니다
@@ -378,7 +378,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-### 주식 모의 투자 기능
+### 1️⃣ 주식 모의 투자 기능
 ![1](https://user-images.githubusercontent.com/83052628/215947494-fadddf9f-81b5-4228-a987-3b6c5a00ee58.JPG)
 
 사용자마다 기본금 1000만원씩을 가지고 매매를 할 수 있게 구현을 했습니다
@@ -391,7 +391,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-### 외부 API
+### 2️⃣ 외부 API
 ![1](https://user-images.githubusercontent.com/83052628/215958195-31962ea0-e983-481d-9c63-cb8d4b099843.JPG)
 
 코스피, 코스닥 정보와 코스피,코스닥 주식리스트 정보를 가져오기 위해 누리집 API를 사용하였습니다
@@ -444,7 +444,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-### 거래소 기능 설계
+### 1️⃣ 거래소 기능 설계
 
 거래소 기능에 대한 1차적인 설계를 하였습니다
 
@@ -454,7 +454,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-### 로그인 기능
+### 2️⃣ 로그인 기능
 ![1](https://user-images.githubusercontent.com/83052628/215956986-8387a97e-74ac-4fdb-8435-7950bdff0f42.JPG)
 
 저희 서비스의 로그인 기능은 JWT 토큰기능 기반으로 설계되었습니다
@@ -469,7 +469,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 
 <br />
 
-### AWS 배포
+### 3️⃣ AWS 배포
 ![2](https://user-images.githubusercontent.com/83052628/215957072-230692c0-d5f6-4295-ae1f-82697532a849.JPG)
 
 저희 서비스는 아마존의 EC2라는 클라우드 컴퓨팅 서비스를 이용하여 가상 컴퓨터를 통해 서버를 구축하였고
