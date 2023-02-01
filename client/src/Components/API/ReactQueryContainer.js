@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 import notify from '../Function/notify';
@@ -434,4 +434,32 @@ export const useComment = (boardId) => {
         select: (data) => data.data,
     });
     return data;
+};
+
+const createChat = () => {
+    return axios.post('ws:ec2-54-180-152-179.ap-northeast-2.compute.amazonaws.com:8080/api/chat');
+};
+
+const getChat = () => {
+    return axios.get(`ws:ec2-54-180-152-179.ap-northeast-2.compute.amazonaws.com:8080/ws/chat`);
+};
+
+export const useChat = () => {
+    const queryClient = useQueryClient();
+    useEffect(() => {
+        const websocket = new WebSocket('ws:ec2-54-180-152-179.ap-northeast-2.compute.amazonaws.com:8080/ws/chat');
+        websocket.onopen = () => {
+            console.log('connected');
+        };
+
+        websocket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const queryKey = [...data.entity, data.id].filter(Boolean);
+            queryClient.invalidateQueries(queryKey); // 메세지를 받았을 경우 리패칭
+        };
+
+        return () => {
+            websocket.close();
+        };
+    }, [queryClient]);
 };
