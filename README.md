@@ -4,7 +4,7 @@
 ## ✔️ 팀원 소개
 |<img src="https://avatars.githubusercontent.com/u/83052628?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/95217370?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/110921798?v=4" width="150px"/>|<img src="https://avatars.githubusercontent.com/u/110961521?v=4" width="150px" />|<img src="https://avatars.githubusercontent.com/u/80241053?v=4" width="150px"/>|<img src="https://avatars.githubusercontent.com/u/110894708?v=4" width="150px" />|
 |-|-|-|-|-|-|
-|[이중원](https://github.com/LeeJoongWon)|[박인우]|[양우진]|[박시환](https://github.com/psh1379)|[방재영](https://github.com/bangjaeyoung)|[임동규]
+|[이중원](https://github.com/LeeJoongWon)|[박인우](https://github.com/FE41PIW)|[양우진](https://github.com/yan9vvoojin)|[박시환](https://github.com/psh1379)|[방재영](https://github.com/bangjaeyoung)|[임동규](https://github.com/pepsi160ml)
 |FE 팀장<br/>(프로젝트 부팀장)|FE 팀원|FE 팀원|BE 팀장<br/>(프로젝트 팀장)|BE 팀원|BE 팀원|
 
 
