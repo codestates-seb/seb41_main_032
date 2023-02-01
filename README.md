@@ -288,7 +288,7 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 <br />
 
 ### 1️⃣ 헤더, 푸터, 사이드바 와 레이아웃
-![1](https://user-images.githubusercontent.com/83052628/215933134-eeb4aa16-87c6-41c3-99f7-f15ab9146b53.JPG)
+![1](https://user-images.githubusercontent.com/83052628/215939159-10117519-4dd4-4432-9bae-44408e6b20b9.JPG)
 
 * 사이드바가 컨텐츠랑 겹처지 안도록 하는 기능
 * 화면를 확대하거나 축소해도 푸터의 위치를 하단으로 고정하는 기능
@@ -298,7 +298,25 @@ http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
 <br />
 
 ### 2️⃣ 검색창 기능
-![1](https://user-images.githubusercontent.com/83052628/215933134-eeb4aa16-87c6-41c3-99f7-f15ab9146b53.JPG)
+![2](https://user-images.githubusercontent.com/83052628/215940146-c0cb47b9-055a-4ed4-b992-e5357bc6bda6.gif)
+
+* 검색어를 초기화주는 버튼 기능
+* 추천검색어 클릭시 해당 주식페이지로 이동하는 기능
+* 페이지 이동시 검색창의 검색어를 초기화해주는 기능
+* 검색시 검색어와 유사한 주식목록을 추천검색어로 보여주는 기능
+* 검색창의 onfocus와 onblur 이벤트 기능
+
+사용자가 검색창 바깥영역을 클릭했을 시 추천검색어 목록이 닫히고 다시 검색창을 클릭하면 추천검색어를 보여주는 기능을 구현하였습니다
+
+<br />
+
+### 3️⃣ 게시판 페이지
+![1](https://user-images.githubusercontent.com/83052628/215940353-9aa07612-5ac5-4e83-94fe-b277c72fc52c.gif)
+<br />
+![2](https://user-images.githubusercontent.com/83052628/215940356-ddacfd95-ef23-47c9-aa44-ae18e60306e7.gif)
+
+
+
 
 * 검색어를 초기화주는 버튼 기능
 * 추천검색어 클릭시 해당 주식페이지로 이동하는 기능
