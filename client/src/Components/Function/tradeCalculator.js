@@ -12,7 +12,7 @@ const tradeCalculator = (data = []) => {
         map.set(data[i].stockCode, [].concat(map.get(data[i].stockCode), data[i]));
     }
 
-    // 보유수량
+    // 특정 주식 보유수량
     const quantity = (stockCode) => {
         const stock = map.get(stockCode);
         if (stock === undefined || stock.length === 0) {
@@ -22,7 +22,7 @@ const tradeCalculator = (data = []) => {
         }
     };
 
-    // 평단가
+    // 특정 주식 평단가
     const averageUnitPrice = (stockCode) => {
         const stock = map.get(stockCode);
         if (stock === undefined || stock.length === 0) {
@@ -45,7 +45,7 @@ const tradeCalculator = (data = []) => {
         return Math.floor(sum / stock[stock?.length - 1].totalStockHoldings);
     };
 
-    // 매도 평균가
+    // 특정 주식 매도 평균가
     const averageSellPrice = (stockCode) => {
         const stock = map.get(stockCode);
         if (stock === undefined || stock.length === 0) {
@@ -65,7 +65,7 @@ const tradeCalculator = (data = []) => {
         }
     };
 
-    // 매수 수량
+    // 특정 주식 매수 수량
     const numberOfBuy = (stockCode) => {
         const stock = map.get(stockCode);
         if (stock === undefined || stock.length === 0) {
@@ -81,7 +81,7 @@ const tradeCalculator = (data = []) => {
         return total;
     };
 
-    // 매도 수량
+    // 특정 주식 매도 수량
     const numberOfSell = (stockCode) => {
         const stock = map.get(stockCode);
         if (stock === undefined || stock.length === 0) {
@@ -96,7 +96,7 @@ const tradeCalculator = (data = []) => {
         return total;
     };
 
-    // 투자손익
+    // 특정 주식 투자손익
     const incomeStatement = (stockCode, currentPrice) => {
         const stock = map.get(stockCode);
         if (stock === undefined || stock.length === 0) {
@@ -132,7 +132,7 @@ const tradeCalculator = (data = []) => {
         return total;
     };
 
-    // 손익
+    // 전체 손익
     const totalEstimatedAssets = () => {
         if (data === undefined || data.length === 0) {
             return 0;
@@ -154,6 +154,7 @@ const tradeCalculator = (data = []) => {
         return total;
     };
 
+    // 보유주식들 이름과 총 가격을 배열로
     const holdingStock = () => {
         let price = [];
         let stockName = [];
@@ -169,19 +170,28 @@ const tradeCalculator = (data = []) => {
     };
 
     const history = () => {
-        // 예수금
+        // 초기 예수금
         let money = 10000000;
+        // 거래에 따른 예수금 변화
         let moneyHistory = [];
 
         //보유주식
         let holdingStockPrice = [];
+
         // 손익
         let incomeStatement = [];
 
         if (data === undefined || data.length === 0) {
             return { moneyHistory, holdingStockPrice, incomeStatement };
         }
-        // 주식 가격 기록
+
+        /**
+         * 보유주식의 현재가를 알 수 없습니다
+         * 그렇기 때문에 마지막에 거래한 주식가격을 기준으로
+         * 각각의 주식 가격을 매매할떄마다 얻은 최신 가격정보로 보유주식 가치를 업데이트 합니다
+         */
+
+        // 각각의 주식 가격 기록
         let stockPrice = new Map();
         for (let i = 0; i < data.length; i++) {
             stockPrice.set(data[i].stockCode, 0);
@@ -192,20 +202,24 @@ const tradeCalculator = (data = []) => {
                 money -= data[i].price * data[i].quantity;
                 moneyHistory.push(money);
                 stockPrice.set(data[i].stockCode, data[i].price * data[i].totalStockHoldings);
+
                 let totalStockPrice = 0;
                 for (let item of stockPrice) {
                     totalStockPrice += item[1];
                 }
+
                 holdingStockPrice.push(totalStockPrice);
                 incomeStatement.push(money + totalStockPrice - 10000000);
             } else if (data[i].tradeType === 'SELL') {
                 money += data[i].price * data[i].quantity;
                 moneyHistory.push(money);
                 stockPrice.set(data[i].stockCode, data[i].price * data[i].totalStockHoldings);
+
                 let totalStockPrice = 0;
                 for (let item of stockPrice) {
                     totalStockPrice += item[1];
                 }
+
                 holdingStockPrice.push(totalStockPrice);
                 incomeStatement.push(money + totalStockPrice - 10000000);
             }
