@@ -8,7 +8,7 @@ import { userInfo } from '../../Function/userInfo';
 import notify from '../../Function/notify';
 import { useMember } from '../../API/ReactQueryContainer';
 import Logo from '../../Img/logo.png';
-import { useEffect } from 'react';
+
 // 헤더 기본 구조
 // 로고 / 검색창 / 시계 / 로그인버튼
 
@@ -63,7 +63,7 @@ const LogDiv = styled.div`
     p {
         font-size: 1em;
         color: #000;
-        font-weight: 600;
+        font-weight: 700;
         margin-right: 10px;
     }
     button {
@@ -72,6 +72,7 @@ const LogDiv = styled.div`
         border-radius: 10px;
         border: 1px solid gray;
         margin-right: 20px;
+        font-weight: 500;
         cursor: pointer;
         :hover {
             transform: scale(1.1);
@@ -103,7 +104,7 @@ const StyledLink = styled(Link)`
         margin-left: 10px;
         color: #000000;
         font-size: 1.3em;
-        font-weight: 900;
+        font-weight: bold;
     }
 `;
 
