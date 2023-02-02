@@ -1,12 +1,15 @@
 package mainproject.stocksite.domain.comment.mapper;
 
+import mainproject.stocksite.domain.board.entity.Board;
 import mainproject.stocksite.domain.comment.dto.CommentPatchDto;
 import mainproject.stocksite.domain.comment.dto.CommentPostDto;
 import mainproject.stocksite.domain.comment.dto.CommentResponseDto;
 import mainproject.stocksite.domain.comment.entity.Comment;
+import mainproject.stocksite.domain.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -42,6 +45,7 @@ public interface CommentMapper {
 
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.username", target = "username")
+    @Mapping(source = "member.nickname", target = "nickname")
     @Mapping(source = "board.boardId", target = "boardId")
     CommentResponseDto commentToResponseDto(Comment comment);
 
