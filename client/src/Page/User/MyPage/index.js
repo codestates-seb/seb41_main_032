@@ -29,7 +29,7 @@ const MyPage = () => {
     useEffect(() => {
         // id값이 없을때 null 타입이 아니라 문자열 null이 들어옴
         if (id === 'null' || id === undefined) {
-            navigate('/login'); // 비로그인시 로그인페이지로 유도 - 이중원
+            navigate('/login'); // 비로그인시 로그인페이지로 유도
             return;
         }
         fetchUserData();
