@@ -12,5 +12,6 @@ public class CommentResponseDto {
     private Long memberId;
     private Long boardId;
     private String username;
+    private String nickname;
     private String content;
 }
