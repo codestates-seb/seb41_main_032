@@ -78,6 +78,7 @@ const Form = () => {
             })
             .then((data) => {
                 queryClient.invalidateQueries(['Member', memberId]);
+                notify('회원정보가 수정되었습니다', 'success');
                 navigate(`/users/${memberId}`);
             })
             .catch((error) => notify('회원정보 수정 실패', 'error'));
