@@ -57,7 +57,7 @@ const MyPage = () => {
         <Container>
             {user ? (
                 <>
-                    <Header memberId={id} username={user?.username} isOwner={isOwner} />
+                    <Header memberId={id} username={user?.nickname} isOwner={isOwner} />
                     <Bookmarks memberId={id} isOwner={isOwner} />
                     <Posts memberId={id} />
                 </>
