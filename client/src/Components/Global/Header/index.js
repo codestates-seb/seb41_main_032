@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Search from './Search/index';
 import Clock from './Clock';
 import clearStorage from '../../Function/clearStorage';
-import { ReactComponent as HomeLogo } from '../../Img/homelogo.svg';
-import { ReactComponent as Glass } from '../../Img/glass.svg';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../../Function/userInfo';
 import notify from '../../Function/notify';
@@ -112,6 +110,7 @@ const Header = () => {
     const navigate = useNavigate();
     const [memberId, setMemberId] = useRecoilState(userInfo);
     const memberInfo = useMember();
+
     const handlerLogout = () => {
         clearStorage();
         setMemberId(null);
