@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import getStorage from '../../../../Components/Function/getStorage';
@@ -19,6 +20,7 @@ const Container = styled.form`
 
 // 회원정보 수정 서식
 const Form = () => {
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
     const memberId = getStorage('memberId');
     const [user, setUser] = useState(null);
@@ -74,7 +76,10 @@ const Form = () => {
                     throw response;
                 }
             })
-            .then((data) => navigate(`/users/${memberId}`))
+            .then((data) => {
+                queryClient.invalidateQueries(['Member', memberId]);
+                navigate(`/users/${memberId}`);
+            })
             .catch((error) => notify('회원정보 수정 실패', 'error'));
     };
 
