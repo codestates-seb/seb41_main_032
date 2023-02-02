@@ -42,6 +42,7 @@ public interface CommentMapper {
 
     @Mapping(source = "member.memberId", target = "memberId")
     @Mapping(source = "member.username", target = "username")
+    @Mapping(source = "member.nickname", target = "nickname")
     @Mapping(source = "board.boardId", target = "boardId")
     CommentResponseDto commentToResponseDto(Comment comment);
 
