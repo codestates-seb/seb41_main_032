@@ -8,6 +8,7 @@ import { userInfo } from '../../Function/userInfo';
 import notify from '../../Function/notify';
 import { useMember } from '../../API/ReactQueryContainer';
 import Logo from '../../Img/logo.png';
+import { useEffect } from 'react';
 // 헤더 기본 구조
 // 로고 / 검색창 / 시계 / 로그인버튼
 
@@ -114,7 +115,7 @@ const Header = () => {
     const handlerLogout = () => {
         clearStorage();
         setMemberId(null);
-        notify(`${memberInfo.username}님 다음에 만나요!`, 'info');
+        notify(`${memberInfo.nickname}님 다음에 만나요!`, 'info');
         navigate('/stock/top');
     };
     return (
@@ -137,7 +138,7 @@ const Header = () => {
                     <>
                         <button onClick={handlerLogout}>로그아웃</button>
                         <Link to={`/users/${memberId}`}>
-                            <p>{`${memberInfo.username}님`}</p>
+                            <p>{`${memberInfo.nickname}님`}</p>
                         </Link>
                     </>
                 ) : (

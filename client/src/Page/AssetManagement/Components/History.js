@@ -97,11 +97,11 @@ const History = ({ tradeInfo }) => {
             </Table>
             <PageList>
                 <PageBtn onClick={handlePrevBtn} disabled={currentPage === pages[0] ? true : false}>
-                    Prev
+                    이전
                 </PageBtn>
                 {renderPageNumbers}
                 <PageBtn onClick={handleNextBtn} disabled={currentPage === pages[pages.length - 1] ? true : false}>
-                    Next
+                    다음
                 </PageBtn>
             </PageList>
         </Section>

@@ -89,7 +89,7 @@ const Sidebar = () => {
                     </StyledLink>
                 </li>
                 <li>
-                    <StyledLink className={now === '/board' ? 'select' : null} to="/board">
+                    <StyledLink className={now.split('/')[1] === 'board' ? 'select' : null} to="/board">
                         게시판
                     </StyledLink>
                 </li>
