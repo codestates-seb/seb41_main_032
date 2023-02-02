@@ -103,7 +103,7 @@ const StyledLink = styled(Link)`
         margin-left: 10px;
         color: #000000;
         font-size: 1.3em;
-        font-weight: bold;
+        font-weight: 900;
     }
 `;
 

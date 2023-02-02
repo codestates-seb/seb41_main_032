@@ -38,6 +38,10 @@ const Div = styled.div`
     > span {
         color: gray;
     }
+    .isNotLogin {
+        padding: 10px 0px;
+        font-weight: bold;
+    }
 `;
 const Box = styled.div`
     width: 100%;
@@ -105,8 +109,9 @@ const Article = () => {
                 <Box className="body">{data.content}</Box>
             </Div>
             <Div>
+                {!memberId ? <div className={`isNotLogin`}>댓글은 로그인 시 작성 가능합니다</div> : null}
                 <Comment memberId={memberId} boardId={params.num} />
-                {memberId ? <CommentForm memberId={memberId} boardId={params.num} /> : <span>댓글은 로그인 시 작성 가능합니다</span>}
+                {memberId ? <CommentForm memberId={memberId} boardId={params.num} /> : null}
             </Div>
         </>
     );
