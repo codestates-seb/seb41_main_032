@@ -51,7 +51,10 @@ const Form = () => {
                 if (response.ok) return response.json();
                 throw response;
             })
-            .then(() => navigate('/login'))
+            .then(() => {
+                notify(`${user.nickname}님 회원가입에 성공하였습니다`, 'success');
+                navigate('/login');
+            })
             .catch((error) => {
                 if (error.status === 409) {
                     notify('이미 존재하는 회원입니다', 'warning');

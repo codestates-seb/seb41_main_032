@@ -41,7 +41,7 @@ const InputField = ({ id, user, isValidInput, setUser, setIsValidInput }) => {
 
     const getWarningText = () => {
         if (id === 'email') return '이메일 형식에 맞게 입력해주세요.';
-        if (id === 'nickname') return '2글자에서 6글자 사이의 닉네임을 입력해주세요';
+        if (id === 'nickname') return '4~8글자 사이 영문이나 숫자 또는 한글 닉네임을 입력해주세요.';
         return '5~16글자 사이 영문이나 숫자를 입력해주세요.';
     };
 

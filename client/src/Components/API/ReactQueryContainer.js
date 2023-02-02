@@ -344,8 +344,8 @@ export const useLogin = (user, keepLogin, success, error) => {
                 sessionStorage.setItem('refresh', data.headers.refresh);
             }
             queryClient.invalidateQueries(['Member', memberId]);
-            notify(`${user.username}님 환영합니다`, 'success');
             success(data);
+            notify('Welcome to STOCK BOX', 'info');
         },
         onError: (data) => {
             error(data);
@@ -427,7 +427,7 @@ export const useBoards = () => {
 export const useComment = (boardId) => {
     const API = useAPI();
     const { data, refetch } = useQuery(['Comment', boardId], () => API.getComment(boardId), {
-        refetchInterval: 10000, //10초마다 업데이트
+        refetchInterval: 5000, //5초마다 업데이트
         retry: 0,
         onError: () => balancer(refetch),
         onSuccess: () => (count = 0),

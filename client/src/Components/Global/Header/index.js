@@ -8,6 +8,7 @@ import { userInfo } from '../../Function/userInfo';
 import notify from '../../Function/notify';
 import { useMember } from '../../API/ReactQueryContainer';
 import Logo from '../../Img/logo.png';
+import { useEffect } from 'react';
 // 헤더 기본 구조
 // 로고 / 검색창 / 시계 / 로그인버튼
 

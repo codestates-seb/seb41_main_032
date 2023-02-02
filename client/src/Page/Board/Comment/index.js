@@ -50,7 +50,6 @@ const Comment = ({ memberId, boardId }) => {
     };
 
     const deleteHandler = (e) => {
-        console.log('delete');
         axios.delete(`${url}/comments/${e}`).then(() => {
             window.location.reload();
         });

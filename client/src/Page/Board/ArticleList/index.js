@@ -45,7 +45,7 @@ const Board = () => {
                     <NewArticle onClick={() => notify('로그인 후 작성 가능합니다', 'warning')}>새 글 작성</NewArticle>
                 )}
             </div>
-            <div className="listcontainer">{boards ? <Article article={boards} /> : null}</div>
+            <div className="listcontainer">{boards ? <Article article={[...boards].reverse()} /> : null}</div>
         </Div>
     );
 };

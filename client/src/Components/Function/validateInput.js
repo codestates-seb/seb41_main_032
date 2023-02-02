@@ -2,7 +2,7 @@
 const validateInput = (id, value) => {
     if (id === 'password') return /^[a-zA-Z0-9]{8,20}$/.test(value);
     if (id === 'email') return /^[a-zA-Z0-9.\-_]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]/.test(value);
-    if (id === 'nickname') return /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,6}$/.test(value);
+    if (id === 'nickname') return /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{4,8}$/.test(value);
     return /^[a-zA-Z0-9]{5,16}$/.test(value);
 };
 
