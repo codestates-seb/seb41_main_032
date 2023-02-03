@@ -65,7 +65,7 @@ const Comment = ({ memberId, boardId }) => {
                 <Li key={index}>
                     <Box>
                         <div className="user">
-                            <div className="nickname"> {el.username}</div>
+                            <div className="nickname"> {el.nickname}</div>
                             {Number(memberId) === Number(el.memberId) ? (
                                 <>
                                     <Portal>{modalOn && <DeleteModal forDelete={() => deleteHandler(el.commentId)} onClose={handleModal} />}</Portal>
