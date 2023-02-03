@@ -375,7 +375,7 @@ const Info = ({ stockInfo }) => {
                             <QuestionMark color={'white'} />
                         </span>
                         <TradeNum>{`${
-                            calculation.incomeStatement(params.id, stockInfo.stck_prpr) > 0
+                            calculation.incomeStatement(params.id, stockInfo.stck_prpr) >= 0
                                 ? numberToKR(calculation.incomeStatement(params.id, stockInfo.stck_prpr))
                                 : `-${numberToKR(Math.abs(calculation.incomeStatement(params.id, stockInfo.stck_prpr)))}`
                         }원`}</TradeNum>
