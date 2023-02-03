@@ -101,7 +101,7 @@ const useCreateTable = (data) => {
                                           <div className="red">{commaGenerator(el.clpr)}</div>
                                           <SmFontContainer>
                                               <RedTriangle />
-                                              <span className="red">{el.vs}</span>
+                                              <span className="red">{commaGenerator(el.vs)}</span>
                                           </SmFontContainer>
                                       </td>
                                   ) : (
@@ -109,7 +109,7 @@ const useCreateTable = (data) => {
                                           <div className="blue">{commaGenerator(el.clpr)}</div>
                                           <SmFontContainer>
                                               <BlueTriangle />
-                                              <span className="blue">{el.vs}</span>
+                                              <span className="blue">{commaGenerator(el.vs)}</span>
                                           </SmFontContainer>
                                       </td>
                                   )}

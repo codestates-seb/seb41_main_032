@@ -29,7 +29,7 @@ const StyledLink = styled(Link)`
     font-size: 0.8em;
     padding: 10px;
     border-radius: 7px;
-
+    font-weight: 500;
     &:hover {
         background-color: #f0f0f0;
         transform: scale(1.1);

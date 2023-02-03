@@ -13,6 +13,7 @@ export const Title = styled.h2`
 export const SmFont = styled.span`
     margin-right: 5px;
     font-size: 0.8em;
+    color: #70727b; ;
 `;
 /**
  *  타이들 옆에 작은 글씨를 표현할때 사용합니다
@@ -96,6 +97,7 @@ export const SelectBtnContainer = styled.ul`
         border-radius: 15px;
         border: 1px solid gray;
         margin-right: 10px;
+        font-weight: 500;
         cursor: pointer;
 
         :hover {

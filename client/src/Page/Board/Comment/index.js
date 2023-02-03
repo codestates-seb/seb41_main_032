@@ -8,16 +8,20 @@ import { useComment } from '../../../Components/API/ReactQueryContainer';
 const Box = styled.div`
     display: flex;
     flex-direction: column;
-    border-bottom: solid 1px gray;
+    border-bottom: 1px solid rgb(193, 195, 197);
     padding: 15px 0 15px 0;
     .user {
         display: flex;
-        font-size: 0.9em;
         margin-bottom: 10px;
         justify-content: space-between;
     }
     .comment {
         white-space: pre-wrap;
+        font-size: 0.9em;
+    }
+    .nickname {
+        font-weight: 600;
+        font-size: 1em;
     }
 `;
 const Li = styled.li`
@@ -61,7 +65,7 @@ const Comment = ({ memberId, boardId }) => {
                 <Li key={index}>
                     <Box>
                         <div className="user">
-                            {el.username}
+                            <div className="nickname"> {el.nickname}</div>
                             {Number(memberId) === Number(el.memberId) ? (
                                 <>
                                     <Portal>{modalOn && <DeleteModal forDelete={() => deleteHandler(el.commentId)} onClose={handleModal} />}</Portal>

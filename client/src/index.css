@@ -1,9 +1,32 @@
+@font-face {
+    font-family: 'NanumSquare';
+
+    src: url(../font/NanumSquareNeoTTF-bRg.woff);
+}
+@font-face {
+    font-family: 'NanumSquare';
+    font-weight: 500;
+    src: url(../font/NanumSquareNeoTTF-cBd.woff);
+}
+
+@font-face {
+    font-family: 'NanumSquare';
+    font-weight: 700;
+    src: url(../font/NanumSquareNeoTTF-dEb.woff);
+}
+
+@font-face {
+    font-family: 'NanumSquare';
+    font-weight: bold;
+    src: url(../font/NanumSquareNeoTTF-eHv.woff);
+}
+
 * {
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'NanumSquare';
 }
 
 .Toastify {
