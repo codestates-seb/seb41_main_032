@@ -69,12 +69,6 @@
 
 <br />
 
-# 🔗 배포링크
-
-http://stockboxtest.s3-website.ap-northeast-2.amazonaws.com/
-
-<br />
-
 # 👪 FE 
 
 ## ⭐ FE 팀장 이중원 (프로젝트 부팀장)
